@@ -16,7 +16,7 @@
     "test:security": "node scripts/security-check.mjs",
     "test:performance": "node scripts/performance.mjs",
     "build:vercel": "npm run build && node scripts/vercel-output.mjs",
-    "test:secrets": "node scripts/secret-scan.mjs",
+    "test:secrets": "node scripts/secret-scan.mjs --include-export",
     "test:deployment": "node scripts/check-deployment.mjs",
     "build:preview": "node scripts/build-preview.mjs"
   },

@@ -77,6 +77,14 @@ export async function generateMetadata({
             locale: locale === "ar" ? "ar_JO" : "en_GB",
             alternateLocale: locale === "ar" ? "en_GB" : "ar_JO",
             siteName: "TEVORLI",
+            images: [
+              {
+                url: "/assets/social/og-image-1200x630.png",
+                width: 1200,
+                height: 630,
+                alt: "TEVORLI — Built Smart. Built Secure.",
+              },
+            ],
             url: pathFor(locale, slug),
           },
         }

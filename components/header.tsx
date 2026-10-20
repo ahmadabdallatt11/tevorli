@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Globe2, Menu, X } from "lucide-react";
 import type { Locale } from "@/lib/site";
 import { pathFor } from "@/lib/navigation";
-import { contact } from "@/lib/contact";
+import { quoteEmailHref } from "@/lib/contact";
+import { BrandLogo } from "./brand-logo";
 const paths = ["", "services", "work", "about", "contact"];
 type HeaderLabels = {
   nav: readonly string[];
@@ -59,7 +60,7 @@ export function Header({
           className="wordmark"
           aria-label={locale === "ar" ? "TEVORLI — الرئيسية" : "TEVORLI — Home"}
         >
-          TEVORLI
+          <BrandLogo priority />
         </Link>
         <nav
           ref={nav}
@@ -96,7 +97,7 @@ export function Header({
             {t.switch}
           </Link>
           <a
-            href={contact.emailHref}
+            href={quoteEmailHref(locale)}
             className="button button-small header-cta"
           >
             {t.secondary}

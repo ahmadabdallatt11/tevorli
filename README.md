@@ -1,42 +1,43 @@
-# TEVORLI — Preview
+# TEVORLI — review Preview
 
-Arabic/English Digital Solutions website for Jordan. Next.js static export, TypeScript, React, Tailwind, Lucide, Zod, and local Inter/Cairo fonts. No database, authentication, backend contact form, analytics, payments, internal shop-system integrations, or application credentials.
+Bilingual Digital Solutions website for Jordan: **Built Smart. Built Secure.** Next.js App Router static export, React, TypeScript, Tailwind, Lucide, Zod, local Inter/Cairo fonts. No database, accounts, backend form, tracking, paid integration or shop-system integration.
 
-## Approved configuration
+## Review changes
 
-- TEVORLI · Digital Solutions · Jordan · **Built Smart. Built Secure.**
-- Email: [tevorli.digital.solutions@gmail.com](mailto:tevorli.digital.solutions@gmail.com)
-- Instagram: [@tevorli](https://www.instagram.com/tevorli/)
-- Palette: Midnight Navy `#081220`, Electric Blue `#2563EB`, Sky Blue `#60A5FA`, White `#FFFFFF`.
-- Five service groups: Websites & Landing Pages; Digital Menus; Smart QR Solutions; Digital Business Cards & NFC; Digital Catalogs & Smart Pages.
-- Pricing: **Request a Quote**. Privacy/security included without extra fees, with no absolute security guarantees.
-- No WhatsApp, phone, office address, registered legal identity or custom domain is claimed. Legal registration is unconfirmed. Policies remain drafts. The work page does not claim client projects.
+- Owner-supplied horizontal logo in header/footer/404; supplied favicon, Apple icon, T mark and desktop background. Selected assets are unchanged; `docs/brand-assets.sha256.json` and `npm run test:deployment` verify source/export integrity. See [asset notes](docs/BRAND_ASSETS.md).
+- Explicit route scroll reset to the top, route focus management, same-route reset, initial/deep section hashes, and correct section focus. Modifier/new-tab/external links keep normal browser behavior. Initial load does not steal keyboard focus from the skip link.
+- Five clearer service cards, audience guidance, a genuine help card, and native keyboard-accessible FAQs. No fabricated projects, reviews, achievements or contact details.
+- Per-service quote links open the approved email with a safely encoded service subject. Contact/Instagram alternatives stay available; no message is sent automatically.
+- Reduced-motion support, intrinsic logo dimensions, lazy noncritical SVGs, lightweight mobile artwork and no new animation library or third-party requests.
 
-**Protected remote Preview: BLOCKED pending Vercel access/network configuration. Public production release: BLOCKED.** See [deployment checklist](DEPLOYMENT_CHECKLIST.md), [security report](SECURITY_AUDIT_REPORT.md), and [QA report](QA_TEST_REPORT.md).
+Approved contact: [tevorli.digital.solutions@gmail.com](mailto:tevorli.digital.solutions@gmail.com) · [Instagram @tevorli](https://www.instagram.com/tevorli/). No phone or WhatsApp. Pricing is project-based Request a Quote. Privacy/security are included, never an absolute guarantee. Legal registration and custom domain are unconfirmed; policies remain drafts.
 
-The owner uploaded TEVORLI-Brand-Kit-FINAL (1).zip, but its transfer exceeds the file tool limit of 32 MiB. The archive could not be downloaded or inspected; original logo/T assets are not yet usable in the checkout. The current brand text and blank favicon are placeholders, not a replacement logo. Supply the approved assets before brand-complete review.
+## Status and hosting
 
-## Setup and local preview
+Local build/functional/security evidence is in [QA_TEST_REPORT.md](QA_TEST_REPORT.md) and [SECURITY_AUDIT_REPORT.md](SECURITY_AUDIT_REPORT.md). Review and launch steps are in [DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md).
 
-Use Node 24.19.0 (`.node-version`) and npm; Node >=22 is supported. Use this existing isolated checkout; do not create a worktree unless requested.
+The owner supplied the existing protected Preview URL: `https://tevorli-mh3zk947z-dentfiy.vercel.app/`. It is a previous immutable deployment, not automatically the newest one. GitHub shows an existing successful Vercel integration for branch `preview/tevorli`; pushing this branch can update its Preview through that integration. GitHub status/dashboard evidence is tracked separately from a direct current application URL.
+
+Vercel Authentication settings have not been changed or disabled. They are reported enabled by the owner; independent enforcement and authenticated-page checks remain unverified because this environment's proxy denied access to that app host before reaching Vercel, and the Vercel API token requirement has no saved binding. A CONNECT proxy 403 is not a Vercel Authentication result. The dashboard host is also blocked by network policy. Required observed host additions are saved in the environment draft, not automatically applied to runtime.
+
+No Production deploy command, custom domain, purchase or paid service is authorized. `vercel.json` uses a build guard that rejects `VERCEL_ENV=production` and main/master. Preview remains noindex in meta, HTTP headers and robots regardless of optional public origin. **noindex is not access control.** Existing platform protection must remain enabled through review.
+
+## Setup
+
+Node 24.19.0 (`.node-version`), npm; Node >=22 accepted. Use this existing isolated checkout, without a worktree unless requested.
 
 ```sh
 cd /workspace/tevorli
 npm ci --no-fund --no-audit
-# Work on the development branch, never main:
-git branch --show-current
+# On preview/tevorli for a guarded Preview build:
 npm run build:preview
 npm run test:deployment
 npm start
 ```
 
-Use `/ar/` and `/en/`; exported `/` serves Arabic. For editing use `npm run dev` and explicit locale paths. Stop the static server before rebuilding and restart afterward: its CSP is read at startup. Processes do not survive environment snapshots even if installed files do.
+Use `/ar/` and `/en/`; exported `/` is Arabic. `npm run dev` is for editing at explicit locale paths. The local-only artifact builder `npm run build:vercel` also supports a pinned detached checkout and does not deploy. Stop the static server before a rebuild, then restart: its CSP is loaded at startup. Installed files can survive a snapshot, running processes cannot.
 
-`vercel.json` runs `npm run build:preview`. That command rejects `VERCEL_ENV=production` and main/master branches. `build:vercel` remains a local artifact builder and does not deploy anything. Actual Vercel Production deployment must stay disabled/unapproved.
-
-All pages and exported HTTP headers remain **noindex, nofollow** even if an origin is supplied. `robots.txt` disallows crawling. These do not restrict access: Vercel Deployment Protection must be configured and verified before the remote preview is considered protected. No protection setting has been applied remotely yet.
-
-## Checks
+## Verification
 
 ```sh
 npm run lint
@@ -44,23 +45,30 @@ npm run typecheck
 npm test
 npm audit
 npm run test:secrets
-npm run test:e2e
 npm run test:deployment
-# With the matching static server running:
+npm run test:e2e
+# Run after browser scans finish, with the matching server still running:
 npm run test:security
 npm run test:performance
 ```
 
-Run only one Playwright invocation at a time. Run Lighthouse after browser/security scans finish to avoid CPU contention. Current result files are in ignored `artifacts/`; historical evidence is separated under `artifacts/previous-release/`. Scripts fail on actual test failures; do not infer success from file existence alone.
+Run only one Playwright command at a time. Standard E2E uses `/usr/bin/chromium` (or `CHROMIUM_PATH`) for desktop/Pixel 7/iPad Mini profiles. Additional engine configuration reuses the full suite:
 
-The default three browser projects use installed Chromium. Set `CHROMIUM_PATH` for a different executable. Additional Firefox/WebKit checks require their Playwright browser downloads and system libraries; see QA report for actual availability. Browser profiles are not evidence of Safari or real iOS compatibility.
+```sh
+PLAYWRIGHT_BROWSERS_PATH=/tmp/tevorli-browsers npx playwright install firefox
+PLAYWRIGHT_BROWSERS_PATH=/tmp/tevorli-browsers TEST_BROWSER=firefox npx playwright test --config playwright.additional.config.ts
+# Only where WebKit and required host libraries are available:
+PLAYWRIGHT_BROWSERS_PATH=/tmp/tevorli-browsers TEST_BROWSER=webkit npx playwright test --config playwright.additional.config.ts
+```
 
-## Content and routes
+Firefox became downloadable after the network settings changed. See the current QA report for actual completed engine results. WebKit was downloaded but lacks host libraries; real Safari/iOS and human screen-reader review are separate unverified checks. Lighthouse is synthetic local measurement, not field performance or a security guarantee.
 
-`lib/site.ts` contains bilingual service/page copy, allowlisted locale/route validation and optional public HTTPS origin validation. `lib/contact.ts` contains only owner-approved **public** contact links. The header receives only its required labels, keeping Zod and unrelated content out of its client import graph. There are 12 content routes per language, including five detail pages. The old landing-pages, nfc-cards and business-pages URLs redirect to their grouped canonical service routes on the local server and in the Vercel manifest.
+Reports/artifacts are under ignored `artifacts/`; prior revision evidence is kept separately. `test:secrets` scans authored source and exported text files with limited signatures, never reports values, and is not a Git-history/entropy audit. Semgrep finding dispositions are in the security report.
 
-Email links open the visitor's configured mail application. Instagram opens an external service with noopener/noreferrer. Tests verify destinations and popup navigation with a local fixture; they do not send email or establish external account availability. No messages were sent during verification.
+## Structure and configuration
 
-`.env.example` contains no credentials. The application requires no secret. Optional `NEXT_PUBLIC_SITE_URL` is public metadata, not a secret, and cannot enable indexing. Vercel deployment credentials belong only in secure environment settings or authenticated tooling, never in the repository/chat/client bundle. Do not add a mail provider or backend form without separate implementation and abuse/privacy testing.
+`components/navigation-effects.tsx` handles scroll/focus; `brand-logo.tsx` serves the supplied SVG; `lib/experience.ts` contains bilingual guidance/FAQs; `lib/contact.ts` holds public contact/quote URI helpers; `lib/site.ts` holds typed locale/routes/service content. There are 12 content routes per locale, plus root/custom 404. Fixed legacy aliases preserve old service links. Unknown locales/services and malformed paths fail safely.
 
-The font license notices are included under `public/licenses/`. Next's global-not-found support is experimental in the pinned version; keep its regression tests on upgrades. Read [Vercel deployment instructions](docs/DEPLOYMENT.md) before any external action. No custom domain, paid service, or Production deployment is authorized.
+No application secret is needed. `.env.example` contains only instructions; `NEXT_PUBLIC_*` data is public. Keep deployment credentials in secure settings/authenticated tooling, never source or chat. Optional HTTPS origin is validated metadata only and cannot enable Preview indexing. Self-hosted font license notices are under `public/licenses/`. Next's global-not-found feature is experimental; regression tests cover its current export.
+
+Before domain launch: obtain owner content/design sign-off, confirm responsible legal/policy wording without inventing registration, verify hosted protection/app behavior and real-domain DNS/TLS/redirects/canonical metadata. Production and indexing require a separate explicit authorization. Do not purchase a domain or activate a paid feature.

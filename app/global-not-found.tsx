@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BrandLogo } from "@/components/brand-logo";
 import "./globals.css";
 import { fontClasses } from "./fonts";
 export const metadata: Metadata = {
@@ -12,7 +13,7 @@ export default function GlobalNotFound() {
       <body>
         <main className="container not-found">
           <Link prefetch={false} href="/ar/" className="wordmark">
-            TEVORLI
+            <BrandLogo />
           </Link>
           <p className="error-code">404</p>
           <h1>هذه الصفحة سلكت طريقًا آخر.</h1>

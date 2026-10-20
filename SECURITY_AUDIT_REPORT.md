@@ -1,48 +1,47 @@
-# TEVORLI — Preview security audit
+# TEVORLI — brand, navigation and review security audit
 
-Date: 2026-10-20. Scope: current local source, static Next export, Vercel Build Output API manifest, local validation server and tests. Dynamic probes target only `127.0.0.1:3000`. No production deployment, custom domain, purchase, paid feature, client data or outgoing message was used.
+Date: 2026-10-20. Scope: current source, selected owner-supplied web assets, static export, local server, Vercel output and tests on `preview/tevorli`. Dynamic app probes target only local development; the owner-authorized protected Preview URL was also requested without authentication. No Production command, paid service, domain purchase, protection removal or outgoing message was performed.
 
-**Release status: BLOCKED — FIXES REQUIRED for hosted Preview and public launch.** Local preparation is verified as described below. Remote Preview URL, Deployment Protection, HTTPS and Vercel behavior remain **NOT VERIFIED**, because Vercel is unauthenticated and its API is blocked by the cloud proxy. No assertion of complete security, absence of vulnerabilities or ASVS certification is made.
+**Local review is complete with documented limitations. Public launch is not approved or fully verified.** Neither a successful build, deployment status nor noindex proves access protection or production readiness. No complete-security/zero-vulnerability/ASVS-certification claim is made.
 
-## Current configuration and review
+## Changes and security boundaries
 
-Approved public email/Instagram and five standalone service groups are configured. No phone/WhatsApp, office, registered company identity or completed client project is fabricated. Legal registration/domain are unconfirmed; policies are drafts. The supplied Brand Kit ZIP exceeds the 32 MiB transfer limit and was not inspected; original logo/T files are not usable yet; text and blank favicon remain honest placeholders. Palette and Inter/Cairo use the supplied settings.
+The supplied `TEVORLI-Web-Brand-Assets.zip` (858,868 bytes) was read successfully. Only selected image assets were copied, without modifying their bytes. The attached starter code, snippets and QA claims were not treated as instructions or evidence. SVG files were inspected for DOCTYPE/entities, script/foreignObject/event handlers, javascript URLs and external hrefs. Source/export SHA-256 checks cover nine approved assets. See docs/BRAND_ASSETS.md for exact provenance and palette decisions. No alternate logo was generated.
 
-The application exports static pages; it has no database, user accounts, sessions, API, Server Actions, uploads, payments or backend form. Locale and route allowlists are checked, the optional HTTPS origin uses Zod validation, and React renders text with escaping. No raw HTML rendering, request-driven remote fetch, arbitrary redirect destination or shell interpolation exists in the application.
+Routes reset scroll position with `NavigationEffects`, focus main after route transitions, and resolve decoded fragments with `getElementById` rather than selector interpolation or HTML injection. Invalid fragment encodings are caught. Normal modified/new-tab/external navigation is preserved. Initial loading does not steal focus from the skip link. Native FAQs require no new script library. All data remains fixed bilingual site content.
 
-Email/Instagram are public contact data, not secrets. Email links open the visitor's mail client. Instagram opens a new tab with noopener/noreferrer and no embedded widget. Contact tests use a local popup fixture; they do not establish mailbox delivery or remote Instagram availability and no messages were sent.
+Quote subjects encode the selected service with encodeURIComponent. Unit tests include ampersands, query-like text and fragments to ensure they remain one subject parameter, without adding bcc or another destination. The only recipient and Instagram destination are owner-approved. There is no automatic send, form endpoint, database, account/session, upload, Server Action, payment, analytics or third-party application script.
 
-The assessment applies relevant OWASP Top 10/ASVS principles, input-validation and Node.js security guidance to this actual static scope. OWASP Input Validation and Node.js cheat sheets were consulted during initial setup. It is not a complete ASVS audit or external penetration test.
+React text encoding, static locale/route allowlists and build-time Zod HTTPS-origin validation remain. No request-driven shell command, SQL, raw HTML rendering or remote application fetch exists. CSS/image/font resources are local. Source and exported text files are scanned for secret signatures without printing candidate values; credentials are not copied from environment or files into code.
 
-| Control                          | Result / boundary                                                                                                                                                                                                                                                         |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| XSS/output encoding              | React text rendering, no untrusted HTML, CSP script hashes for each build, no script unsafe-inline/unsafe-eval; browser regression test blocks unapproved inline JavaScript.                                                                                              |
-| Injection/SSRF                   | No SQL, command-executing request handler or server-side outbound application fetch. Fixed local test/build requests are distinct from public behavior.                                                                                                                   |
-| CSRF/auth/session                | N/A: no authenticated or state-changing app features. No fake auth/rate-limiting implementation was added.                                                                                                                                                                |
-| Forms/spam/rate limits/retention | N/A to disabled backend submissions. Unsupported methods are rejected. Any future form requires server validation, request/body/time limits, rate limits, spam controls, privacy/retention and email-provider testing before activation.                                  |
-| Redirects                        | Three fixed same-origin service aliases; canonical URLs generated from approved service IDs. Local alias membership uses own-property checking. No `next` query value is used as a target.                                                                                |
-| Headers                          | CSP, MIME sniff protection, frame restrictions, Permissions Policy, Referrer Policy, COOP, HSTS and X-Robots-Tag in the export. Local checks pass; hosted propagation/TLS NOT VERIFIED.                                                                                   |
-| CSP tradeoff                     | Style unsafe-inline retained for framework compatibility. No user CSS/HTML is accepted. Same-origin scripts plus exact SHA-256 hashes are allowed. Regenerate on every build; do not inject scripts afterward.                                                            |
-| Preview indexing                 | Meta noindex/nofollow, HTTP noindex/nofollow/noarchive, robots disallow regardless of optional origin. **Not access control.**                                                                                                                                            |
-| Production guard                 | Vercel build command rejects Production target and main/master branches; three rejection cases executed. This does not prevent a project administrator overriding settings, prebuilt uploads or manual deployments, so do not claim platform-level Production prevention. |
-| Privacy                          | No app trackers, cookies or form collection. External email/Instagram and hosting logs have their own processing/retention; final legal review is pending.                                                                                                                |
-| Secrets                          | No app credential required; none checked into source or client code. Limited source pattern scan passed. Vercel credential requirement was saved for secure entry only; no value was supplied or copied.                                                                  |
-| Local server                     | Dotfile/traversal guards, generic errors, GET/HEAD only, request/header timeouts, no request-body logging. It is an internal test utility; intended hosted runtime is Vercel static delivery.                                                                             |
+## Controls actually assessed
 
-## Review passes and remediation
+| Area                         | Evidence and applicability                                                                                                                                                                        |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| XSS                          | React encoding, no user-authored HTML, per-build SHA-256 inline-script CSP hashes; browser rejects an unapproved inline script. SVGs have no inspected active/external content.                   |
+| Script/style CSP             | script-src self + exact hashes; no script unsafe-inline/unsafe-eval. Style unsafe-inline retained for framework compatibility; no untrusted style/HTML input. No CSP expansion for third parties. |
+| Input/redirects              | Locale/service allowlists, safe fixed same-origin legacy aliases using Object.hasOwn, malformed URL handling and non-reflection of injected queries/paths. Quote URI parameter encoding tested.   |
+| Backend/CSRF/auth/form abuse | N/A to the app: no authenticated state or mutating endpoint/contact form. Unsupported methods rejected; no fake rate limiter or unconfigured email API added.                                     |
+| Data minimization            | No submitted personal data, app cookies or trackers. Public email/Instagram are deliberate public contact data. External contact processing and host logs still need final policy review.         |
+| Headers                      | CSP, nosniff, frame restrictions, referrer/permissions policies, COOP, HSTS and X-Robots-Tag generated and checked locally, including error responses. Hosted propagation remains unverified.     |
+| Preview                      | Meta noindex/nofollow, robots disallow and X-Robots-Tag noindex/nofollow/noarchive. These do not control access. Production/main/master build rejections remain.                                  |
+| Local server                 | GET/HEAD only; safe path/dotfile handling, aliases, MIME types including WebP, generic errors, timeouts and no request-body logging. Not the intended production runtime.                         |
+| Vercel Authentication        | Owner reports existing Authentication. No setting was changed/disabled. Independent logged-out/authorized checks were blocked by the environment proxy before reaching the app host.              |
 
-1. Source review covered locale/content routes, contact destinations, header props/client import boundaries, aliases, build/export utilities, environment use and Vercel output. TypeScript/ESLint and browser behavior provide separate checks.
-2. Automated analysis ran npm audit, Semgrep CE with official public JavaScript/TypeScript rules, and source secret signatures. No known confirmed High/Critical issue remains in the assessed code. Zero audit records does not prove no undiscovered issue exists.
-3. Functional browser coverage includes both locales, all current pages/links, responsive profiles/widths, quote paths, popup destination fixture, root/service language switching, error recovery and absent form behavior.
-4. Local dynamic tests cover sensitive paths, malformed input, query/path injection non-reflection, unsupported methods, redirects, security headers and CSP behavior. **OWASP ZAP was not run**; this is a focused HTTP/browser assessment of a static site, not an equivalent comprehensive scanner.
-5. Production export, type check, lint, unit/E2E, axe and Lighthouse ran; actual counts/scores are in QA_TEST_REPORT.md.
-6. A fresh second review by the same agent re-read critical components, scripts and generated routes after edits. It found an inherited-property edge case in the local alias lookup: `__proto__`, `constructor` and `toString` could be treated as aliases. **Low severity / correctness-hardening:** targets remained same-origin, but unknown paths should not redirect. Fixed with `Object.hasOwn` and added three negative HTTP regressions. Relevant tests and SAST were rerun after this change. This was not a separate human assessor.
+The review follows applicable OWASP input-validation, Top 10/ASVS and Node/Next security principles for this static architecture. It is not a complete ASVS verification. The official OWASP Input Validation/Node.js sheets and official Vercel build-output source were consulted during setup.
 
-Earlier dependency remediation removed the High braces chain pulled by eslint-config-next; current maintained ESLint/TypeScript/React Hooks tooling has no reported npm audit vulnerability. Historical results are separated under artifacts/previous-release and are not current evidence.
+## Multiple review passes and fixes
 
-## Commands and evidence
+1. Reviewed the entire change inventory and critical rendering/routes, navigation effects, quote helper, assets, environment use, server and deployment builder. Source protection and user-approved business data were preserved.
+2. Ran type/lint/unit checks, dependency audit, source+export secret signatures and Semgrep JavaScript/TypeScript rules. No warning was hidden by a suppression or disabled assertion.
+3. Ran actual browser flows across every page in both locales and three Chromium profiles: logo/image loading, bottom-to-new-page/top reset, same-route reset, section/deep hashes/focus, quote links, FAQ keyboard interaction, menu/Escape, reduced motion, error recovery, noindex and legacy redirects. axe scanned all localized routes.
+4. Ran 29 focused HTTP security checks and browser CSP checks. A comprehensive OWASP ZAP scan was **not run**; these are bounded local assertions, not a substitute claim for a full scanner.
+5. Ran the production static export, manifest/asset integrity checks and Lighthouse. Mobile decorative-image work was reduced after measuring its LCP cost; approved asset files themselves were not changed. Actual final metrics and failed/unrun engine cases appear in QA_TEST_REPORT.md.
+6. Re-read critical components and scripts after the fixes and repeated relevant checks. The initially overstrict last-section alignment test was corrected to account for document-end scroll clamping on tall tablets, while still requiring the exact target to be visible and focused. No user-facing scroll assertion was removed. This was a second pass by the same agent, not an independent human assessor.
 
-From `/workspace/tevorli` on `preview/tevorli`:
+Earlier local alias inherited-property hardening remains covered by three negative probes (`__proto__`, constructor, toString). Earlier High braces dependency findings were remediated by removing the affected Next lint dependency chain; current npm audit is independent and includes development dependencies.
+
+## Commands and actual evidence
 
 ```sh
 npm run build:preview
@@ -53,15 +52,16 @@ npm test -- --reporter=json --outputFile=artifacts/vitest.json
 npm audit --json > artifacts/npm-audit.json
 npm run test:secrets
 npm start
-# With the matching static server running, sequential browser runs:
+# Matching static server, one browser invocation at a time:
 npm run test:security
 npm run test:e2e
 npm run test:performance
+PLAYWRIGHT_BROWSERS_PATH=/tmp/tevorli-browsers TEST_BROWSER=firefox npx playwright test --config playwright.additional.config.ts
 ```
 
-Production guard rejection cases were invoked with `VERCEL_ENV=production` or `VERCEL_GIT_COMMIT_REF=main/master` and must exit nonzero before building. These are expected rejections, not failures of the accepted Preview build.
+The last Firefox command did **not** pass: engine launch failed before app assertions. A separate persistent-profile/XDG diagnosis exposed unsupported namespace writes (EROFS); the owned hung process was terminated without disabling browser sandbox protection. WebKit lacks required host libraries. These are engine/environment limitations, not successful application compatibility results.
 
-Semgrep 1.181.0 runs with official rules checkout `17e31e11ebac99fb7dfe1cd288f7a32151b6f3f9`; registry semgrep.dev access was denied, so the official Git checkout is used without TLS bypass:
+Semgrep CE 1.181.0 uses official rule checkout `17e31e11ebac99fb7dfe1cd288f7a32151b6f3f9`:
 
 ```sh
 SEMGREP_LOG_FILE=/tmp/tevorli-semgrep.log \
@@ -75,28 +75,28 @@ SEMGREP_SETTINGS_FILE=/tmp/tevorli-semgrep-settings.yml \
  --json --output artifacts/semgrep.json .
 ```
 
-Current scan: **203 rules, 42 targets, 29 reviewed findings, 0 scan errors**. These findings are not a clean-scan claim; every group is assessed below.
+Final Semgrep: **203 effective rules, 52 targets, 26 findings, 0 scan errors**. Findings by rule: `typescript.react.portability.i18next.jsx-not-internationalized`: 17; `javascript.lang.correctness.no-stringify-keys`: 1; `javascript.lang.security.html-in-template-string`: 1; `javascript.audit.detect-replaceall-sanitization`: 2; `javascript.lang.correctness.no-replaceall`: 2; `typescript.react.security.react-insecure-request`: 3. No findings were silently suppressed.
 
-| Rule group                     | Findings  | Assessment                                                                                                                                                                                                                          |
-| ------------------------------ | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| jsx-not-internationalized      | 20 INFO   | Brand/service name Instagram, approved English slogan, aria-hidden decorative mockup, and deliberately bilingual 404. Actual page copy/routes are Arabic/English. These are portability suggestions, not confirmed security issues. |
-| no-stringify-keys              | 1 WARNING | JSON diagnostic report serialization with fixed header-property access; no JSON-derived object key or canonical-order reliance. False positive.                                                                                     |
-| html-in-template-string        | 1 WARNING | Build-time XML sitemap text, not HTML execution or user rich content. Origin validated by Zod during build; route text is fixed and XML text escapes ampersand/less-than. Not confirmed XSS in this scope.                          |
-| detect-replaceall-sanitization | 2 INFO    | Same XML text escaping, not an attempt to sanitize user HTML.                                                                                                                                                                       |
-| no-replaceall                  | 2 WARNING | Node >=22 build utility supports replaceAll; not an older-browser code path.                                                                                                                                                        |
-| react-insecure-request         | 3 ERROR   | Fixed loopback HTTP test destinations, no remote personal data/credentials. Not insecure production fetching. Production TLS remains unverified separately.                                                                         |
+| Rule group                                               | Disposition                                                                                                                                                                                                          |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| jsx-not-internationalized                                | Portability suggestions for approved brand/Instagram/slogan text, the aria-hidden illustration and deliberately bilingual 404. Actual navigable content uses typed locale copy; no security issue requiring i18next. |
+| no-stringify-keys                                        | Diagnostic JSON serialization, with fixed header-name property access, not JSON-derived object keys or canonical-order dependence. False positive.                                                                   |
+| html-in-template-string / detect-replaceall-sanitization | Build-time XML sitemap text, not executable HTML or rich user content. Build validates origin; routes are fixed and XML text escapes ampersand/less-than. Not confirmed XSS in this scope.                           |
+| no-replaceall                                            | Node >=22 build utility supports replaceAll; no older-browser dependency here.                                                                                                                                       |
+| react-insecure-request                                   | Fixed loopback HTTP assertions, no remote secrets/customer data. Does not establish hosted HTTPS.                                                                                                                    |
 
-No warning was silently suppressed, no assertions were disabled, and no security verification/checksum/TLS protection was bypassed. Secret scanning is a limited signature check, excluding dependency/generated trees, Git history and lockfile; it is not a high-entropy/history scan.
+Raw findings/counts and reviewed groups are retained in artifacts/semgrep.json. Source/export secret scanning is signature-based and excludes Git history, dependency trees and binary assets; it cannot prove absence of unknown secrets or provide a high-entropy audit. Package integrity/TLS checks were not disabled and no credential value is printed in reports.
 
-## Access findings and remaining risk
+## Hosted evidence and remaining limits
 
-- Vercel CLI 64.7.0 reports **Logged out** after supported writable XDG locations were used. No project link or VERCEL_TOKEN was present. No anonymous temporary deploy was attempted.
-- `api.vercel.com`, `api.github.com` and the direct Instagram URL returned proxy HTTP 403. Native Git read succeeds and initially returned no refs; this does not establish API/write/Vercel integration access. Native Git write to `preview/tevorli` subsequently succeeded and the remote ref was verified; no main ref was written. GitHub API/Vercel integration access remains unverified.
-- Required observed domains and a VERCEL_TOKEN requirement are saved in the cloud draft. Saving does not apply live network changes, populate secrets, authenticate Vercel or publish. Enter credentials only securely in settings; never chat or source.
-- **NOT VERIFIED:** actual Preview URL/project/Git integration, free Deployment Protection availability/settings, logged-out denial/authorized access, hosted headers/TLS/redirects/404 and hosted tests. noindex is not a substitute for any of these.
-- **NOT VERIFIED:** Firefox (download returned 403), WebKit (downloaded but fails launch due to missing host libraries), actual Safari/iOS and human screen-reader review. Install-deps dry-run could not locate required system packages; no sudo/system installation capability was available.
-- **NOT VERIFIED:** Dependabot alerts (GitHub API denied), full ZAP/commercial SAST/ASVS conformance or independent human audit.
-- The original logo assets could not be extracted from the oversized uploaded ZIP; no substitute logo was created. Legal registration is unconfirmed, policies need qualified review, hosting log/region/retention settings are unknown, and no custom domain exists. None of those facts are replaced with invented data.
-- Next global-not-found is experimental in the pinned release; custom-404 regressions cover the local export only.
+- Existing owner-provided previous deployment: `https://tevorli-mh3zk947z-dentfiy.vercel.app/`. Do not label this immutable old URL as the newest code without evidence. GitHub shows an existing Vercel integration/status; final current-commit deployment observations are captured in artifacts/hosting-final.json and the delivery message when available.
+- GitHub API/native Git now work. Dependabot responds that alerts are disabled for this repository (403); it is **not a passed Dependabot audit**. No paid security feature was enabled. npm audit still ran.
+- Vercel API responds forbidden; CLI is logged out and secure VERCEL_TOKEN has no saved binding. The token is not required in the application or in the repository to use an existing Git deployment integration.
+- The owner-provided app host and Vercel dashboard were denied by the environment's CONNECT proxy. This is **not a site authentication response or HTTPS/certificate check**. Exact observed domains were added to the network draft, preserving existing entries; saving a draft does not apply live permissions or authenticate.
+- **NOT VERIFIED:** newest direct app URL/project deployment target through Vercel API, actual Authentication enforcement and authorized access, hosted app headers/CSP/TLS, protected page navigation and hosted browser/a11y/performance. Protection settings were not modified or bypassed.
+- **NOT VERIFIED:** actual Firefox/Safari/WebKit application compatibility, real iOS/device coverage and human assistive-technology review. Chromium device emulation and axe do not establish those.
+- **NOT VERIFIED:** comprehensive ZAP, entropy/history secret scan, independent human/external audit or full ASVS compliance. No confirmed unresolved High/Critical vulnerability is known in this scoped review; unknown issues can remain.
+- Legal registration is unconfirmed; draft privacy/terms, responsible operator, hosting log/retention and domain settings need owner review before a separately authorized public launch. No fabricated legal/company/project data was introduced.
+- Next global-not-found is experimental in the pinned release; local custom-404 regression tests remain required on upgrades.
 
-Local tests/evidence do not make a hosted preview protected or a public release ready. Do not deploy Production or activate paid services without explicit authorization.
+The source supports review and local development with these limits. Production authorization and hosted verification must precede domain launch; a build or CI success alone is insufficient.

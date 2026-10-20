@@ -1186,3 +1186,172 @@ p {
     padding-inline: 12px;
   }
 }
+/* Approved brand assets have intrinsic dimensions so layout does not shift. */
+.brand-logo {
+  display: block;
+  width: 190px;
+  height: auto;
+}
+.footer-top .brand-logo {
+  width: 230px;
+}
+.not-found .brand-logo {
+  width: 230px;
+}
+.hero-art {
+  background: url("/assets/backgrounds/hero-bg-1920x1080.webp") center / cover
+    no-repeat;
+  border-radius: 24px;
+}
+.hero-brand-mark {
+  position: absolute;
+  width: 42px;
+  height: auto;
+  inset-inline-start: 25px;
+  bottom: 30px;
+  z-index: 2;
+}
+.section-jumps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-block: 26px 0;
+}
+.section-jumps a {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 17px;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  color: #d4dff1;
+  font-size: 12px;
+  min-height: 44px;
+}
+.section-jumps a:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+.service-fit {
+  border-top: 1px solid var(--line);
+  padding-top: 15px;
+  margin-block: 0 22px;
+}
+.service-fit span {
+  display: block;
+  color: var(--cyan);
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.solution-guide {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  border: 1px dashed #3e6090;
+  border-radius: 8px;
+  padding: 25px;
+  background:
+    radial-gradient(ellipse at 0 100%, #17437c40, transparent 80%), #0d1c31;
+}
+.solution-guide h3 {
+  font-size: 22px;
+}
+.solution-guide p {
+  font-size: 13px;
+}
+.solution-guide a {
+  margin-block-start: auto;
+}
+.faq-section {
+  max-width: 960px;
+}
+.faq-section h2 {
+  margin-block: 16px 32px;
+}
+.faq-list {
+  border-top: 1px solid var(--line);
+}
+.faq-list details {
+  border-bottom: 1px solid var(--line);
+}
+.faq-list summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  cursor: pointer;
+  list-style: none;
+  padding-block: 23px;
+  font-size: 16px;
+}
+.faq-list summary::-webkit-details-marker {
+  display: none;
+}
+.faq-list summary > span {
+  color: var(--cyan);
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.faq-list details[open] summary > span {
+  transform: rotate(45deg);
+}
+.faq-list details > p {
+  max-width: 740px;
+  padding-block: 0 24px;
+  line-height: 1.9;
+  font-size: 14px;
+}
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  align-items: center;
+}
+.quote-context {
+  margin-block: 0 22px;
+  font-size: 13px;
+}
+.scope-jump {
+  margin-block-start: 18px;
+  color: var(--cyan);
+}
+#solutions,
+#process,
+#questions,
+#next-step,
+#service-scope {
+  scroll-margin-block-start: 24px;
+}
+@media (max-width: 1100px) {
+  .brand-logo {
+    width: 166px;
+  }
+}
+@media (max-width: 760px) {
+  .brand-logo {
+    width: 150px;
+  }
+  .section-jumps {
+    gap: 8px;
+  }
+  .section-jumps a {
+    padding-inline: 13px;
+    font-size: 11px;
+  }
+  .faq-list summary {
+    font-size: 15px;
+  }
+}
+@media (max-width: 360px) {
+  .brand-logo {
+    width: 138px;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-art {
+    background-image: none;
+    background-color: #0d1c31;
+  }
+}

@@ -1,19 +1,33 @@
-# Vercel Preview preparation
+# Protected Preview and eventual domain connection
 
-Read `DEPLOYMENT_CHECKLIST.md` for actionable access and protection prerequisites. The user authorizes only a protected Preview from a development branch, no custom domain and no paid service or Production deployment.
+Work only on `preview/tevorli`. The owner authorizes a protected Preview, never Production, protection removal, custom domain purchase, paid features or unapproved integrations. Follow DEPLOYMENT_CHECKLIST.md and actual report evidence.
 
-`npm run build:preview` builds Next's static export and `.vercel/output/{config.json,static/}` using Build Output API version 3. `vercel.json` selects no framework preset, frozen npm install, and this guarded build command. Vercel's official public source definitions for Build Output API were reviewed in the prior setup; the generated local manifest is verified again for this revision. Hosted execution is NOT VERIFIED until an authenticated, authorized deployment can run.
+## Current deployment mechanism
 
-The build command rejects Production and main/master. Set the Vercel Production branch explicitly to main before linking an otherwise empty remote; never allow an initial import to publish the development branch as Production. Do not use `--prod` or anonymous temporary deployments.
+The repository already has GitHub–Vercel integration: a previous commit exposes a successful Vercel status with a dashboard link for the `dentfiy/tevorli` project. Use the existing development-branch integration; do not create an anonymous temporary deployment or a new account/project as a shortcut. No protection setting has been changed. The owner reports Vercel Authentication is enabled.
 
-Every export produces SHA-256 CSP hashes for its actual inline scripts, script-src self/hashes without unsafe-inline/unsafe-eval, style-src inline compatibility allowance, frame restrictions, MIME protection, HSTS, referrer/permissions policies and COOP. Header helper files are removed from the Vercel static payload. X-Robots-Tag and page metadata force noindex/nofollow; robots.txt disallows all crawling even when a public origin is configured. This is independent of actual Vercel access control.
+`vercel.json` uses `npm run build:preview`. It rejects VERCEL_ENV=production and main/master, then emits Next static HTML/CSS/JS plus Vercel Build Output API v3 `.vercel/output/{config.json,static/}`. `npm run test:deployment` verifies fixed routes, custom 404/method guards, generated headers and nine approved image hashes in source/output. The local artifact-only `build:vercel` command never deploys and supports a pinned detached checkout.
 
-Aliases preserve the previously generated service URLs using fixed same-origin 308 redirects. GET/HEAD serve static content; unsupported mutating methods are rejected. Unknown URLs return custom HTTP 404. The static application has no API, Server Actions, backend mail, account system, analytics, third-party scripts, customer records or secrets.
+Guarded Preview builds do not prove the remote project has no administrator override. Actual Production-branch/project settings require authorized Vercel inspection. No explicit Production deploy command is allowed.
 
-For local validation stop any prior server you started, build, and restart `npm start`; do not mix an older CSP with a newer export. Only a completed matching `.vercel/output` may be deployed. Don't inject analytics or rewrite/minify inline scripts after hashing. Vercel Compression/cache/TLS/protection/header behavior must be tested remotely rather than inferred from the local server.
+## Preview URL and access evidence
 
-Vercel authentication and project linkage are absent. Direct Vercel and GitHub API connections are currently denied by the cloud network proxy; required observed domain additions are saved as a draft, not applied runtime state. Securely authenticate/link the authorized account and repository after network settings propagate. Do not store tokens in README, `.env.example`, source or browser code. This application needs no runtime secret; the owner-approved email and Instagram are deliberately public contact data.
+The supplied previous URL `https://tevorli-mh3zk947z-dentfiy.vercel.app/` is an immutable deployment. It must not be presented as the new deployment automatically. Observe the status for the actual pushed commit, retain the dashboard target, and obtain its direct current application URL from authorized Vercel metadata/UI. A successful GitHub status proves only what the integration reports.
 
-When authenticated, inspect existing project and free protection capabilities first. Enable protection before Preview deployment and test both logged-out rejection and authorized access, without disabling protection for tests. Stop if any step requires a plan upgrade or payment. Do not claim a protected Preview until the actual URL and observed access behavior are documented.
+GitHub API/native Git now work. Vercel API returns forbidden, CLI is logged out and the optional personal token requirement has no saved binding. Tokens belong only in secure settings, never source/chat/browser. The application needs no credential. Git-based deployment itself can work through the existing integration without adding an app secret.
 
-The Brand Kit ZIP has been supplied but exceeds the tool transfer limit of 32 MiB; it could not be downloaded/inspected. Direct SVG/PNG originals or a smaller archive are needed. Current text/blank favicon are placeholders. Legal registration and domain are unconfirmed; policy drafts describe these facts. Review those separately before public launch.
+The environment's proxy blocks the dashboard and supplied app host before reaching Vercel. Required exact hosts are saved in the cloud network draft, preserving existing domains; save/publish environment settings and recheck runtime access. New immutable hosts may need their observed name allowed. A proxy CONNECT 403 is not an Authentication or certificate result. Once allowed, check unauthenticated rejection and authorized content without disabling/bypassing protection to satisfy tests.
+
+## Static security and delivery
+
+Each build hashes its actual inline scripts for CSP. Never mix an older server/CSP with a newer export or inject/minify inline scripts after hashing. Stop only a prior test server you started, build, restart `npm start`, then test. Deploy only one matching completed `.vercel/output` artifact.
+
+Script CSP uses self/hashes with no unsafe-inline/eval; style inline allowance is retained for framework compatibility. Generated headers include frame/MIME/referrer/permissions protection, COOP, HSTS and forced X-Robots-Tag. Preview metadata and robots also force noindex regardless of optional origin. **Noindex is not access control.** There are no app sessions, backend form, database, Server Actions, analytics or third-party application scripts.
+
+Fixed own-property alias maps retain old service URLs; unknown URLs return HTTP 404, unsupported methods fail. Approved SVG/PNG/ICO/WebP assets are local; selected source bytes remain unchanged and fingerprints are checked. Image/code snippets from the attached kit did not replace app/security configuration. Fonts remain self-hosted/licensed. Next global-not-found is experimental and covered by regression tests.
+
+## After owner review — separate release
+
+Do not buy a domain. Obtain the owned domain, DNS access and www/non-www choice. Confirm legal/policy/responsible-operator/logging wording without inventing registration. Finish authenticated hosted regressions and resolve all confirmed High/Critical findings.
+
+Only after explicit Production authorization, review the Production build guard/indexing policy, set the verified HTTPS public origin, use DNS records actually shown by Vercel, verify certificate/HTTPS/redirects and canonical/hreflang/social image/sitemap/robots, and rerun relevant hosted checks. Preserve Preview protection/noindex separately. Never enable paid protection/integrations automatically.

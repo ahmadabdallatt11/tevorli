@@ -10,6 +10,8 @@ const skip = new Set([
   "test-results",
   "playwright-report",
 ]);
+const includeExport = process.argv.includes("--include-export");
+if (includeExport) skip.delete("out");
 const patterns = [
   ["Private key", /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/],
   ["GitHub token", /\bgh[pousr]_[A-Za-z0-9]{30,}\b/],
@@ -28,6 +30,14 @@ async function walk(dir) {
     const file = path.join(dir, e.name);
     if (e.isDirectory()) await walk(file);
     else if (e.isFile()) {
+      if (
+        !/\.(?:[cm]?js|jsx|ts|tsx|json|html|css|svg|txt|md|xml)$/i.test(
+          e.name,
+        ) &&
+        !e.name.startsWith(".") &&
+        e.name !== "LICENSE"
+      )
+        continue;
       scanned++;
       const text = await readFile(file, "utf8");
       for (const [rule, re] of patterns)
@@ -42,6 +52,9 @@ await writeFile(
   JSON.stringify(
     {
       tool: "Local pattern-based scan; no history/entropy scan",
+      scope: includeExport
+        ? "source and static export text files"
+        : "source text files",
       scanned,
       findings,
     },

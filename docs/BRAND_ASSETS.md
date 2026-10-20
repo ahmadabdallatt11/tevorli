@@ -1,0 +1,9 @@
+# Approved web brand assets
+
+Source: owner-uploaded `TEVORLI-Web-Brand-Assets.zip` (858,868 bytes). The archive was successfully read; the previous oversized Brand Kit is no longer a blocker.
+
+Selected original files are copied unchanged under `public/`. Their SHA-256 fingerprints are recorded in `brand-assets.sha256.json`. The horizontal dark-background logo is used in the header, footer and 404; supplied favicon/ICO/apple icon replace the blank placeholder. A lightweight approved white T is decorative in the hero. The supplied hero background is desktop-only to avoid adding a large LCP image on mobile. The supplied social image is ready for metadata when a verified public origin is set. Inter/Cairo remain self-hosted variable fonts with license notices.
+
+No attached starter HTML, head snippet, Tailwind snippet, executable code or supplied QA assertion was adopted as an instruction or test result. SVG files were parsed and inspected for script/foreignObject/event handlers, DOCTYPE/entities, javascript URLs and external hrefs; selected assets are static and self-contained. Raster assets are used only as images. No third-party scripts or network references were introduced.
+
+The archive's own notes say its mark was reconstructed/traced from a brand board. We make no independent claim of designer-original provenance; the owner explicitly supplied this package for website use. No logo was generated or redesigned. The package lists ink `#0B1220` and an unresolved secondary-slate distinction; the website retains the owner's explicit approved navy `#081220`, blue `#2563EB`, sky `#60A5FA`, white and accessible secondary text. An asset does not override the owner's instructions.

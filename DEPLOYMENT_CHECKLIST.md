@@ -1,44 +1,38 @@
-# TEVORLI deployment checklist
+# TEVORLI review and domain-readiness checklist
 
-Target: protected **Vercel Preview** on branch `preview/tevorli`. No custom domain, Production deployment, purchase or paid feature is authorized.
+Allowed: changes on `preview/tevorli` and protected Preview through the existing Git–Vercel integration. Not allowed: Production deploy, protection removal, domain purchase, paid services or unapproved integrations.
 
-## Local preparation
+## Completed locally
 
-- [x] Approved email/Instagram integrated; no invented phone/WhatsApp/address.
-- [x] Five grouped standalone services and Request a Quote; no internal shop-system integration.
-- [x] Approved palette, Inter/Cairo; no replacement logo.
-- [x] Development branch `preview/tevorli` created and successfully pushed to `origin`; remote ref verified. No main branch was written. The initially empty remote has no main ref yet; explicitly configure the intended Production branch before Vercel import. main/master remain guarded from Preview builds.
-- [x] Vercel Build Output API v3, per-build CSP, error routes and method guard prepared.
-- [x] Preview noindex meta, X-Robots-Tag and robots.txt, independent of optional origin.
-- [x] No application secrets/customer data/backend contact submissions.
-- [ ] Original Brand Kit/logo/T assets usable in workspace. The uploaded archive exceeds the 32 MiB transfer limit; provide a smaller archive or direct SVG/transparent PNG assets.
-- [ ] Remote source branch linked to Vercel (see final reports for push/access outcome).
+- [x] Approved public email/Instagram and five project-priced services; no fabricated phone/WhatsApp, projects, reviews or achievements.
+- [x] Supplied web Brand Kit read and selected logos/icons copied without changes. Header/footer/404 use the logo; favicon replaced. Nine source/export asset hashes verified.
+- [x] New pages start at top; same-page return links reset position; section/deep hashes target and focus the actual section. Keyboard and reduced-motion journeys tested.
+- [x] Service/audience guidance, quote subjects and native FAQs, without backend forms or extra libraries.
+- [x] Production static build, type/lint/unit/E2E/axe/HTTP security checks, dependency audit, source+export secret signatures and SAST run. See actual reports for counts and limits.
+- [x] Preview meta/HTTP/robots noindex, CSP hashes, frame/MIME/referrer/permissions/HSTS headers, safe aliases, rejected mutations and custom 404.
+- [x] No application credential/customer data added. Production/main/master build guards retained.
+- [x] Existing GitHub Vercel status observed for the previous revision; integration exists. Authentication settings were not modified.
 
-## Access required
+## Hosted Preview evidence and limits
 
-- [ ] Permit cloud egress to `api.vercel.com` and `api.github.com`. Both currently return proxy HTTP 403.
-- [ ] Authenticate Vercel in this environment securely and select the intended account/team/project. CLI currently reports logged out; no VERCEL_TOKEN binding/project link exists. Do not paste credentials in chat.
-- [ ] Ensure GitHub access permits the intended Vercel Git integration for `ahmadabdallatt11/tevorli`. A Git read alone does not establish API, write or integration permissions.
-- [ ] If external link validation is wanted, allow `www.instagram.com`; current direct request is blocked by the environment policy.
-- [ ] For Firefox/WebKit installation allow `cdn.playwright.dev` and `playwright.download.prss.microsoft.com`, plus any destination actually reported by a subsequent supported download. Do not disable TLS verification.
+Owner-provided prior URL: `https://tevorli-mh3zk947z-dentfiy.vercel.app/`. The owner reports Vercel Authentication. Do not present this immutable URL as the new deployment unless metadata proves it.
 
-Required observed domains have been added to the cloud environment **draft**, preserving package-manager presets. Review/save in environment settings and publish the development environment to activate the reusable configuration. Draft saving is not runtime permission propagation, Vercel deployment or website publication.
+- [ ] Newest deployment's **direct application URL** confirmed against the latest branch commit. GitHub's Vercel target links to the dashboard, not necessarily a direct app URL. Current status evidence is captured separately in `artifacts/hosting-final.json` when available.
+- [ ] Preview environment/project and Production branch settings read through authorized Vercel access. CLI is logged out; VERCEL_TOKEN requirement has no saved binding. Never paste its value in chat/source.
+- [ ] Anonymous request rejected by Vercel Authentication, plus successful authorized content request. The environment's CONNECT proxy denied the provided app host before Vercel; this is not an authentication test result.
+- [ ] Hosted HTTPS/certificate, application headers/CSP, statuses, assets, 404/aliases, RTL/LTR, quote links and browser-console/a11y/performance checks completed inside authorized access. Local checks and a successful deployment build alone do not prove these.
 
-## Protected Preview flow — not yet executed
+Network domain additions for `vercel.com` and the exact owner-provided app host are saved alongside existing custom domains in the cloud draft. Save/publish the development environment settings to apply reusable configuration and recheck actual runtime access. Future immutable Preview hosts may need their observed hostname added. Don't enable anonymous temporary deployment or bypass/remove protection just to run tests.
 
-1. Use an existing eligible project/plan without enabling charges. Inspect Git linkage, project ID and account/team first; verify the remote development commit.
-2. Set the intended Production branch to `main` and use the development branch only for Preview. The initial remote was empty, so do not let an initial import silently assign the development branch as Production. The checked-in build guard intentionally refuses Production builds.
-3. Enable the available no-extra-cost **Vercel Authentication/Deployment Protection** for all relevant preview URLs. If the available protection requires payment, stop and request the user's explicit decision. Do not deploy an anonymously accessible temporary preview as a workaround.
-4. Inspect Preview-scoped variables by name/presence only. This static app needs no application secret. Store deployment credentials securely; keep all values out of repository and browser bundles. Leave the custom domain unset.
-5. Deploy the reviewed development commit explicitly to Preview (never `--prod`). Do not enable analytics, injected scripts, databases, paid integrations or a mail backend.
-6. Verify the resulting URL is HTTPS and matches the intended project/commit. Verify that an unauthenticated browser cannot access the site (login challenge/401/403 as appropriate) and an authorized session can. Do not report noindex as access protection.
-7. Run hosted status/headers/TLS, RTL/LTR, all internal routes/aliases, contact links, responsive, axe, browser-console/CSP and Lighthouse checks using authorized access. Preserve protection during testing; don't disable it just to make a scanner connect.
-8. Record the actual URL, project/commit, protection settings, results and unverified checks in both reports. No URL or hosted protection result is available yet.
+GitHub API now works, but the Vercel API returns forbidden without authentication; do not describe that as a continuing GitHub API network failure. Dependabot reports alerts disabled for this repository; npm audit ran independently. No paid security feature was enabled.
 
-## Production — separate future authorization
+## Owner review before domain connection
 
-- [ ] Approved original logo assets and final content sign-off.
-- [ ] Legal operator identity and qualified privacy/terms review, including external email/Instagram processing and hosting logs/retention.
-- [ ] Purchased/verified domain supplied by owner; do not buy one.
-- [ ] Hosted testing complete and no unresolved confirmed Critical/High findings.
-- [ ] Explicit Production authorization before changing the build guard/indexing policy or deploying.
+- [ ] Review Arabic/English content, supplied logo rendition, page ordering, mobile layout and contact/quote behavior.
+- [ ] Confirm policy/responsible-operator wording and hosting logs/retention. Do not claim legal registration that has not been confirmed; no invented legal identity is required.
+- [ ] Approve a specific production release explicitly. Domain connection must not implicitly publish an unreviewed build.
+- [ ] Supply the owned domain and DNS access; do not purchase one. Choose canonical www/non-www. Use records actually supplied by the current Vercel dashboard, not guessed static IPs.
+- [ ] With separate Production authorization, review the deliberate Production build guard and indexing policy, configure the verified origin, DNS, certificate/HTTPS and redirects, and verify canonical/hreflang/social image/sitemap/robots. Keep all Preview builds unindexed and protected.
+- [ ] Run authenticated hosted regressions before/after approved launch and retain no unresolved confirmed High/Critical findings. Real Safari/iOS and assistive-technology checks remain explicitly bounded by actual test availability.
+
+No Production deployment, domain purchase, paid feature, tracking service or backend mail form has been performed during this task.

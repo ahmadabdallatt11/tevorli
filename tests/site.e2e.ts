@@ -35,12 +35,24 @@ for (const locale of ["ar", "en"] as const) {
       for (const href of await page
         .locator("a[href]")
         .evaluateAll((links) => links.map((a) => a.getAttribute("href")!))) {
-        expect(
-          href.startsWith("/") ||
-            href === "#main" ||
-            href === "mailto:tevorli.digital.solutions@gmail.com" ||
-            href === "https://www.instagram.com/tevorli/",
-        ).toBe(true);
+        if (href.startsWith("#")) {
+          expect(
+            await page.evaluate(
+              (id) =>
+                !!document.getElementById(decodeURIComponent(id.slice(1))),
+              href,
+            ),
+          ).toBe(true);
+        } else if (href.startsWith("mailto:")) {
+          const target = new URL(href);
+          expect(target.pathname).toBe("tevorli.digital.solutions@gmail.com");
+          for (const key of target.searchParams.keys())
+            expect(key).toBe("subject");
+        } else
+          expect(
+            href.startsWith("/") ||
+              href === "https://www.instagram.com/tevorli/",
+          ).toBe(true);
         if (href.startsWith("/"))
           expect((await page.request.get(href)).status()).toBe(200);
       }
@@ -80,7 +92,11 @@ for (const locale of ["ar", "en"] as const) {
       "dir",
       other === "ar" ? "rtl" : "ltr",
     );
-    await page.locator(".detail-layout .button").click();
+    await expect(page.locator(".quote-service")).toHaveAttribute(
+      "href",
+      /^mailto:tevorli\.digital\.solutions@gmail\.com\?subject=/,
+    );
+    await page.locator(".other-contact").click();
     await expect(page).toHaveURL(new RegExp(`/${other}/contact/`));
     await expect(page.locator("form,input,textarea")).toHaveCount(0);
     await expect(page.locator(".contact-panel")).toBeVisible();
@@ -193,15 +209,13 @@ test("approved contacts and quote paths work without a backend", async ({
     await expect(instagram).toBeVisible();
     await expect(instagram).toHaveAttribute("target", "_blank");
     await expect(instagram).toHaveAttribute("rel", "noopener noreferrer");
-    await page
-      .context()
-      .route("https://www.instagram.com/tevorli/", (route) =>
-        route.fulfill({
-          status: 200,
-          contentType: "text/html",
-          body: "<title>Navigation test fixture</title>",
-        }),
-      );
+    await page.context().route("https://www.instagram.com/tevorli/", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "text/html",
+        body: "<title>Navigation test fixture</title>",
+      }),
+    );
     const opened = page.waitForEvent("popup");
     await instagram.click();
     const popup = await opened;
@@ -250,4 +264,94 @@ test("Preview stays unindexed and old service links redirect safely", async ({
   expect(await (await request.get("/robots.txt")).text()).toContain(
     "Disallow: /",
   );
+});
+
+test("approved logos and icons load, FAQs work with keyboard", async ({
+  page,
+}) => {
+  for (const locale of ["ar", "en"]) {
+    await page.goto(`/${locale}/`);
+    const logo = page.locator(".site-header .brand-logo");
+    await expect(logo).toBeVisible();
+    expect(
+      await logo.evaluate(
+        (el: HTMLImageElement) => el.complete && el.naturalWidth > 0,
+      ),
+    ).toBe(true);
+    await expect(logo).toHaveAttribute("src", "/assets/logo/logo-for-dark.svg");
+    expect((await page.request.get("/favicon.svg")).status()).toBe(200);
+    const summary = page.locator(".faq-list summary").first();
+    await summary.focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator(".faq-list details").first()).toHaveAttribute(
+      "open",
+      "",
+    );
+    await page.keyboard.press("Enter");
+    await expect(page.locator(".faq-list details").first()).not.toHaveAttribute(
+      "open",
+    );
+  }
+});
+
+test("routes start at top after footer navigation; section targets stay correct", async ({
+  page,
+}) => {
+  for (const locale of ["ar", "en"]) {
+    await page.goto(`/${locale}/`);
+    await page.locator("footer").scrollIntoViewIfNeeded();
+    expect(await page.evaluate(() => scrollY)).toBeGreaterThan(200);
+    await page
+      .locator("footer .footer-links a")
+      .filter({ hasText: locale === "ar" ? "الخدمات" : "Services" })
+      .click();
+    await expect(page).toHaveURL(new RegExp(`/${locale}/services/$`));
+    await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(10);
+    await page.locator("footer").scrollIntoViewIfNeeded();
+    await page.locator("footer .wordmark").click();
+    await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(10);
+    for (const id of ["solutions", "process", "questions", "next-step"]) {
+      await page.locator(`.section-jumps a[href="#${id}"]`).click();
+      await expect
+        .poll(() =>
+          page.locator(`#${id}`).evaluate((el) => {
+            const y = el.getBoundingClientRect().top;
+            return (
+              y >= 0 && y < (el.id === "next-step" ? window.innerHeight : 180)
+            );
+          }),
+        )
+        .toBe(true);
+      await expect(page.locator(`#${id}`)).toBeFocused();
+    }
+    await page.goto(`/${locale}/services/#next-step`);
+    await expect
+      .poll(() =>
+        page.locator("#next-step").evaluate((el) => {
+          const y = el.getBoundingClientRect().top;
+          return y >= 0 && y < window.innerHeight;
+        }),
+      )
+      .toBe(true);
+    await page.locator("footer").scrollIntoViewIfNeeded();
+    await page.locator("footer .footer-links a").first().click();
+    await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(10);
+  }
+});
+
+test("reduced-motion preference keeps navigation and section links usable", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/ar/");
+  expect(
+    await page.evaluate(
+      () => getComputedStyle(document.documentElement).scrollBehavior,
+    ),
+  ).toBe("auto");
+  await page.locator('.section-jumps a[href="#questions"]').click();
+  await expect(page.locator("#questions")).toBeFocused();
+  await page.locator("footer").scrollIntoViewIfNeeded();
+  await page.locator("footer .footer-links a").first().click();
+  await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(10);
 });

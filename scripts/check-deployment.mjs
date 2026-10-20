@@ -1,9 +1,10 @@
+import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
 import { readFile, access, mkdir, writeFile } from "node:fs/promises";
 const config = JSON.parse(await readFile(".vercel/output/config.json", "utf8"));
 const headers = JSON.parse(await readFile("out/security-headers.json", "utf8"));
 assert.equal(config.version, 3);
-assert.equal(headers["X-Robots-Tag"],"noindex, nofollow, noarchive");
+assert.equal(headers["X-Robots-Tag"], "noindex, nofollow, noarchive");
 assert.deepEqual(config.routes[0].headers, headers);
 for (const locale of ["ar", "en"]) {
   for (const slug of [
@@ -51,4 +52,23 @@ await writeFile(
 );
 console.log(
   "Vercel manifest, 24 localized routes, root, 404, method guard and security headers verified locally.",
+);
+
+const approvedAssets = JSON.parse(
+  await readFile("docs/brand-assets.sha256.json", "utf8"),
+);
+for (const [name, expected] of Object.entries(approvedAssets)) {
+  for (const root of ["public", ".vercel/output/static"]) {
+    const actual = createHash("sha256")
+      .update(await readFile(`${root}/${name}`))
+      .digest("hex");
+    assert.equal(
+      actual,
+      expected,
+      `Approved brand asset changed: ${root}/${name}`,
+    );
+  }
+}
+console.log(
+  `${Object.keys(approvedAssets).length} approved brand assets match the supplied files in source and deployment output.`,
 );

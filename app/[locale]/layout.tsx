@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { fontClasses } from "../fonts";
+import { NavigationEffects } from "@/components/navigation-effects";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/site";
 import { copy, localeSchema, locales, siteOrigin } from "@/lib/site";
@@ -16,7 +17,13 @@ export const metadata: Metadata = {
   },
   ...(siteOrigin ? { metadataBase: new URL(siteOrigin) } : {}),
   robots: { index: false, follow: false },
-  icons: { icon: "/favicon.svg" },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
   applicationName: "TEVORLI",
   referrer: "strict-origin-when-cross-origin",
 };
@@ -41,13 +48,14 @@ export default async function LocaleLayout({
         <a className="skip-link" href="#main">
           {copy[locale].skip}
         </a>
+        <NavigationEffects />
         <Header
           locale={locale}
           labels={{
             nav: t.nav,
             close: t.close,
             switch: t.switch,
-            secondary: t.secondary,
+            secondary: t.quote,
             menu: t.menu,
           }}
         />

@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { BrandLogo } from "./brand-logo";
+import { experience } from "@/lib/experience";
 import {
   ArrowUpRight,
   ArrowRight,
@@ -21,7 +23,7 @@ import {
   pathFor,
   type Locale,
 } from "@/lib/site";
-import { contact } from "@/lib/contact";
+import { contact, quoteEmailHref } from "@/lib/contact";
 const icons = [Code2, Utensils, QrCode, ContactRound, BookOpen];
 export function ContactLinks({ locale }: { locale: Locale }) {
   return (
@@ -54,7 +56,7 @@ export function Footer({ locale }: { locale: Locale }) {
       <div className="container footer-top">
         <div>
           <Link prefetch={false} className="wordmark" href={pathFor(locale)}>
-            TEVORLI
+            <BrandLogo />
           </Link>
           <p>{t.footer}</p>
           <ContactLinks locale={locale} />
@@ -110,7 +112,7 @@ export function Action({
 export function Callout({ locale }: { locale: Locale }) {
   const t = copy[locale];
   return (
-    <section className="container cta-section">
+    <section id="next-step" tabIndex={-1} className="container cta-section">
       <div>
         <span className="eyebrow">
           {locale === "ar"
@@ -153,6 +155,10 @@ export function ServiceGrid({
             </div>
             <h3>{title}</h3>
             <p>{short}</p>
+            <p className="service-fit">
+              <span>{experience[locale].fit}</span>
+              {experience[locale].fits[i]}
+            </p>
             <span className="quote-label">{t.quote}</span>
             <span className="card-link">
               {t.details}
@@ -161,12 +167,36 @@ export function ServiceGrid({
           </Link>
         );
       })}
+      <aside className="solution-guide">
+        <span className="icon-box">
+          <Sparkles size={24} aria-hidden="true" />
+        </span>
+        <h3>{experience[locale].guideTitle}</h3>
+        <p>{experience[locale].guideBody}</p>
+        <Link
+          prefetch={false}
+          className="text-link"
+          href={pathFor(locale, "contact")}
+        >
+          {experience[locale].guideAction}
+          <ArrowUpRight size={16} aria-hidden="true" />
+        </Link>
+      </aside>
     </div>
   );
 }
 function HeroArt({ locale }: { locale: Locale }) {
   return (
     <div className="hero-art" aria-hidden="true">
+      <img
+        className="hero-brand-mark"
+        src="/assets/logo/logo-mark-white.svg"
+        width={119}
+        height={104}
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
       <div className="orbit orbit-one" />
       <div className="orbit orbit-two" />
       <div className="art-grid" />
@@ -275,7 +305,16 @@ export function Home({ locale }: { locale: Locale }) {
           <span>{locale === "ar" ? "عربي · إنجليزي" : "ARABIC · ENGLISH"}</span>
         </div>
       </div>
-      <section className="section container">
+      <nav
+        className="container section-jumps"
+        aria-label={experience[locale].jump}
+      >
+        <a href="#solutions">{experience[locale].solutions}</a>
+        <a href="#process">{experience[locale].process}</a>
+        <a href="#questions">{experience[locale].faqLink}</a>
+        <a href="#next-step">{t.quote}</a>
+      </nav>
+      <section id="solutions" tabIndex={-1} className="section container">
         <div className="section-heading">
           <div>
             <span className="eyebrow">
@@ -295,7 +334,7 @@ export function Home({ locale }: { locale: Locale }) {
         </div>
         <ServiceGrid locale={locale} limit={5} />
       </section>
-      <section className="process-section">
+      <section id="process" tabIndex={-1} className="process-section">
         <div className="container section">
           <span className="eyebrow">
             {locale === "ar" ? "كيف نعمل" : "HOW WE WORK"}
@@ -310,6 +349,25 @@ export function Home({ locale }: { locale: Locale }) {
               </article>
             ))}
           </div>
+        </div>
+      </section>
+      <section
+        id="questions"
+        tabIndex={-1}
+        className="container section faq-section"
+      >
+        <span className="eyebrow">{experience[locale].faqLink}</span>
+        <h2>{experience[locale].faq}</h2>
+        <div className="faq-list">
+          {experience[locale].faqs.map(([question, answer]) => (
+            <details key={question}>
+              <summary>
+                {question}
+                <span aria-hidden="true">+</span>
+              </summary>
+              <p>{answer}</p>
+            </details>
+          ))}
         </div>
       </section>
       <Callout locale={locale} />
@@ -380,9 +438,29 @@ export function ContentPage({
               </span>
               <PageIntro eyebrow={t.detailLabel} title={title} body={short} />
               <p className="detail-body">{body}</p>
-              <Action locale={locale}>{t.quote}</Action>
+              <p className="quote-context">{experience[locale].quoteNote}</p>
+              <div className="detail-actions">
+                <a
+                  className="button quote-service"
+                  href={quoteEmailHref(locale, title)}
+                >
+                  {t.quote}
+                  <ArrowUpRight size={18} aria-hidden="true" />
+                </a>
+                <Link
+                  prefetch={false}
+                  className="text-link other-contact"
+                  href={pathFor(locale, "contact")}
+                >
+                  {experience[locale].otherContact}
+                </Link>
+              </div>
+              <a className="text-link scope-jump" href="#service-scope">
+                {experience[locale].scopeLink}
+                <ArrowRight size={16} aria-hidden="true" />
+              </a>
             </div>
-            <aside className="scope-card">
+            <aside id="service-scope" tabIndex={-1} className="scope-card">
               <h2>{t.included}</h2>
               <ul>
                 {t.deliverables.map((item) => (

@@ -18,6 +18,7 @@ const types = {
   ".woff": "font/woff",
   ".svg": "image/svg+xml",
   ".png": "image/png",
+  ".webp": "image/webp",
   ".ico": "image/x-icon",
   ".xml": "application/xml; charset=utf-8",
 };

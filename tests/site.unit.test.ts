@@ -29,3 +29,19 @@ describe("Bilingual route and content integrity", () => {
     expect(isRoute("services/not-real")).toBe(false);
   });
 });
+
+import { quoteEmailHref, contact } from "../lib/contact";
+describe("Quote link safety", () => {
+  it.each(["ar", "en"] as const)(
+    "encodes %s service text in a single subject parameter",
+    (locale) => {
+      const service = "تصميم & Design?bcc=attacker@example.test#fragment";
+      const url = new URL(quoteEmailHref(locale, service));
+      expect(url.protocol).toBe("mailto:");
+      expect(url.pathname).toBe(contact.email);
+      expect([...url.searchParams.keys()]).toEqual(["subject"]);
+      expect(url.hash).toBe("");
+      expect(url.searchParams.get("subject")).toContain(service);
+    },
+  );
+});
