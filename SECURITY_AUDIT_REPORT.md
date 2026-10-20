@@ -91,7 +91,7 @@ No warning was silently suppressed, no assertions were disabled, and no security
 ## Access findings and remaining risk
 
 - Vercel CLI 64.7.0 reports **Logged out** after supported writable XDG locations were used. No project link or VERCEL_TOKEN was present. No anonymous temporary deploy was attempted.
-- `api.vercel.com`, `api.github.com` and the direct Instagram URL returned proxy HTTP 403. Native Git read succeeds and initially returned no refs; this does not establish API/write/Vercel integration access. Final Git branch/push outcome is recorded in the deployment checklist.
+- `api.vercel.com`, `api.github.com` and the direct Instagram URL returned proxy HTTP 403. Native Git read succeeds and initially returned no refs; this does not establish API/write/Vercel integration access. Native Git write to `preview/tevorli` subsequently succeeded and the remote ref was verified; no main ref was written. GitHub API/Vercel integration access remains unverified.
 - Required observed domains and a VERCEL_TOKEN requirement are saved in the cloud draft. Saving does not apply live network changes, populate secrets, authenticate Vercel or publish. Enter credentials only securely in settings; never chat or source.
 - **NOT VERIFIED:** actual Preview URL/project/Git integration, free Deployment Protection availability/settings, logged-out denial/authorized access, hosted headers/TLS/redirects/404 and hosted tests. noindex is not a substitute for any of these.
 - **NOT VERIFIED:** Firefox (download returned 403), WebKit (downloaded but fails launch due to missing host libraries), actual Safari/iOS and human screen-reader review. Install-deps dry-run could not locate required system packages; no sudo/system installation capability was available.

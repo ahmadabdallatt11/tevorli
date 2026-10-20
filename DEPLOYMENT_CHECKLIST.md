@@ -7,7 +7,7 @@ Target: protected **Vercel Preview** on branch `preview/tevorli`. No custom doma
 - [x] Approved email/Instagram integrated; no invented phone/WhatsApp/address.
 - [x] Five grouped standalone services and Request a Quote; no internal shop-system integration.
 - [x] Approved palette, Inter/Cairo; no replacement logo.
-- [x] Development branch selected locally; main/master guarded from Preview builds.
+- [x] Development branch `preview/tevorli` created and successfully pushed to `origin`; remote ref verified. No main branch was written. The initially empty remote has no main ref yet; explicitly configure the intended Production branch before Vercel import. main/master remain guarded from Preview builds.
 - [x] Vercel Build Output API v3, per-build CSP, error routes and method guard prepared.
 - [x] Preview noindex meta, X-Robots-Tag and robots.txt, independent of optional origin.
 - [x] No application secrets/customer data/backend contact submissions.
