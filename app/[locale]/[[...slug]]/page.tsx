@@ -34,6 +34,7 @@ function pageInfo(locale: Locale, slug: string) {
     work: t.workTitle,
     about: t.aboutTitle,
     contact: t.contactTitle,
+    quote: t.quote,
     privacy: t.privacy,
     terms: t.terms,
   };
@@ -43,6 +44,7 @@ function pageInfo(locale: Locale, slug: string) {
     work: t.workBody,
     about: t.aboutBody,
     contact: t.contactBody,
+    quote: t.contactBody,
     privacy: t.legalNote,
     terms: t.legalNote,
   };

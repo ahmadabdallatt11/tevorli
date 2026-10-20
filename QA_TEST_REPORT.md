@@ -1,93 +1,87 @@
-# TEVORLI — complete review QA report
+# TEVORLI — desktop contact, responsive and security QA
 
-Date: 2026-10-20. Source branch: `preview/tevorli`. Tests below target the current matching local static export. They are not substituted for authenticated hosted testing. No Production command, custom domain purchase, protection removal, tracking, backend form or paid feature was performed.
+Date: 2026-10-20. Branch: `preview/tevorli`. Results apply to the matching current local static export, not authenticated hosted application content. No Production deployment, domain purchase, paid feature, tracking or backend form was added.
 
-## User-visible improvements
+## Changes verified
 
-- The supplied web asset ZIP is readable and its selected original files are integrated: logo in header/footer/404, real favicon/Apple icon, desktop background and lightweight approved white T. Nine asset fingerprints match source and exported output; no replacement logo was created.
-- New routes begin at the top, footer/same-route navigation resets document position, and exact/deep section links scroll to and focus their target. Initial focus remains suitable for keyboard skip navigation. Modified/new-tab/external links retain normal behavior.
-- The five approved service groups have clearer audience guidance and project-based quote labels. A help card directs uncertain visitors to real contact channels; native FAQs answer pricing/scope/languages/security questions without new JavaScript dependencies.
-- Per-service Request a Quote opens the approved mailbox with a safely encoded subject, plus an accessible alternative contact link. No message is sent automatically. Approved email/Instagram are retained; no phone, WhatsApp, reviews, projects or company metrics were invented.
-- Inter/Cairo stay self-hosted. Intrinsic logo dimensions prevent image layout shift; noncritical images are lazy; the mobile decorative background was removed after LCP analysis and an unnecessary image client was avoided. New movement is limited; reduced-motion preferences are explicitly tested.
+- All Request a Quote CTAs open a dedicated bilingual quote page. A service-specific request carries only an allowlisted service ID; its translated name is retained across language switching and browser history. Query-only navigation back to a generic quote resets the selection correctly.
+- The quote/contact pages offer Gmail in a browser, a configured mail app, copy email and Instagram. Gmail avoids relying on a Windows mail handler and may require Google sign-in. Copy failure selects the address for manual keyboard/phone copying. Generic contact options remain visible without JavaScript. No action sends a message automatically.
+- Footer includes a direct Gmail alternative to mailto. No device sniffing or forced OS setting change was added. Mailto still depends on a configured mail client; browser automation does not establish OS registration or mailbox delivery.
+- Replaced the floating hero mockup with a localized service-studio illustration using the approved T and five actual services, laid out in normal flow. No new animation dependency or loaded hero background. Logo/image originals remain unchanged and verified.
+- Anchor clicks use one scroll operation instead of competing native/JavaScript/CSS scrolling. Targets align at a 20px margin; repeated clicks, history, deep links, route-top reset and reduced motion are tested. The quote shortcut opens the quote route instead of a distant CTA section.
+- Footer links keep their space without splitting Arabic labels. The about-page decorative arrow occupies its own grid cell and is hidden on narrow screens, so it cannot cover the slogan.
+- All content retains the approved email, Instagram, five standalone services and project-based pricing. No fabricated work, reviews, phone, WhatsApp or company claims.
 
-## Environment and reproducible commands
+## Actual final local results
 
-Node 24.19.0, npm 11.9.0, Next 16.4.2, React 19.3.1, TypeScript 6.0.3, ESLint 10.13.0, Vitest 5.0.5, Playwright 1.64.1, axe Playwright 4.14.0, Lighthouse 13.5.0. The dependency lock remains pinned.
+| Check | Result |
+| --- | --- |
+| Production static build | PASS; 26 localized pages, Arabic root and custom 404 |
+| Vercel manifest | PASS; routes, aliases, method guards and generated headers |
+| Original assets | 9 SHA-256 source/export matches |
+| TypeScript / ESLint | PASS / PASS |
+| Unit tests | 11 passed; 0 failed |
+| Chromium E2E | 63 passed; 0 failed, skipped or flaky; desktop, Pixel 7 and iPad Mini emulation |
+| Accessibility | 78 localized axe WCAG 2 A/AA + 2.1 AA scans; no configured violations |
+| HTTP security | 33 passed; malformed paths, query injection, secrets paths, methods and headers |
+| Dependency audit | 0 vulnerabilities reported, including development dependencies |
+| Secret signatures | 216 source/export text files; 0 findings; limited signatures, not entropy/history |
+| Semgrep | 203 rules; 55 targets; 18 reviewed findings; 0 scan errors |
+| Existing prior hosted Preview | TLS verification passed; HTTP 302 to Vercel SSO; unauthenticated app content not returned |
+| Newest authenticated hosted app | NOT VERIFIED; direct URL/session access remains outstanding |
+| Firefox / WebKit / actual Safari | NOT EXECUTED on this revision; prior environment launch failures remain documented |
+
+Final Chromium run: 2026-10-20T18:13:29.133000+03:00 (Asia/Amman), 118.9s. Raw counters: expected=63, unexpected=0, skipped=0, flaky=0. Earlier candidate runs are superseded by this matching final 63-case run. The last pass also verifies the studio is contained without clipped content at small widths.
+
+## Lighthouse — local synthetic run
+
+| Locale | Profile | Performance | Accessibility | Best practices | SEO | LCP ms | CLS |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| ar | mobile | 95 | 100 | 100 | 66 | 2905 | 0.0000 |
+| ar | desktop | 100 | 100 | 100 | 66 | 587 | 0.0000 |
+| en | mobile | 95 | 100 | 100 | 66 | 2883 | 0.0000 |
+| en | desktop | 100 | 100 | 100 | 66 | 600 | 0.0000 |
+
+All configured performance/accessibility gates passed. Desktop/mobile profiles were checked in Lighthouse output, not inferred from labels. Mobile LCP is about 2.91s Arabic / 2.88s English in this run and remains a performance improvement opportunity; these are not real-user field metrics. SEO is deliberately constrained by Preview noindex/robots. Preview indexing was not enabled to raise a score.
+
+## Functional, visual and security coverage
+
+All 13 routes per language are visited and internal destinations checked, including service details, quote, contact, about, work, legal pages and recovery from 404. Checks include H1/title/description, lang/dir, no horizontal overflow, logos/favicons, five service cards, menus/Escape, keyboard skip links/FAQs/copy fallback, route focus, reduced motion, unindexed Preview and safe legacy redirects.
+
+Layout geometry and actual button hit-testing cover 320/390/760/820/1024/1280/1440 widths in both locales; existing 320/360/768/1024/1440 checks also pass. Hero content and illustration, quote panels and header pieces do not overlap. Home, quote and about screenshots were captured in both locales across all three profiles; desktop Arabic, mobile English and representative home/about screenshots were visually reviewed. This does not claim every possible device or a human screen-reader assessment.
+
+Browser security probes reject unknown/prototype/tag/URL-like service values and ignore arbitrary recipient/redirect query parameters. Compose destinations and recipients stay fixed. External Gmail/Instagram popup navigation is tested using local fixtures with exact URL assertions; no email or Instagram message was sent. Successful fixture navigation is not proof of Google account availability, mail-client configuration or delivery. CSP blocks an unapproved inline script, and no CSP relaxation was needed for Gmail links. See SECURITY_AUDIT_REPORT.md for reviewed findings and limits.
+
+## Hosted and browser limitations
+
+- Prior immutable URL: `https://tevorli-mh3zk947z-dentfiy.vercel.app/`. A fresh unauthenticated request now passes TLS verification and receives 302 to `vercel.com/sso-api`, without app content. The earlier CONNECT proxy block is resolved for this host and the dashboard. This older URL must not be labeled as the current revised source.
+- GitHub–Vercel deployment status/dashboard evidence for the final pushed commit is saved separately in artifacts/hosting-final.json. A completed deployment is not proof of the authenticated hosted app's behavior.
+- Vercel CLI/API access is not authenticated and no secure token binding is present. Newest direct URL, project settings and authorized content/header/CSP/navigation/a11y/performance checks remain unverified. Authentication settings were not removed or bypassed.
+- Firefox: a previous 15-case attempt failed at launch before application assertions. Diagnosis exposed namespace writes rejected with EROFS; an owned hung process was terminated without disabling the sandbox. This was not rerun as a current-revision app test.
+- WebKit previously failed launch for missing GTK4/Graphene/Harfbuzz-ICU/manette/hyphen/GLES libraries. Actual Safari/iOS, real hardware and human assistive-technology tests remain unverified.
+- Dependabot alerts are disabled for this repository; this is not a passed Dependabot audit. npm audit ran independently.
+- Comprehensive ZAP, entropy/history secret scanning, full ASVS/WCAG conformance and independent external security review are not claimed.
+
+## Reproduction and release decision
+
+Node 24.19.0, npm 11.9.0, Next 16.4.2, React 19.3.1, TypeScript 6.0.3, ESLint 10.13.0, Vitest 5.0.5, Playwright 1.64.1, axe 4.14.0, Lighthouse 13.5.0. Runtime/dependency declarations and lockfile are unchanged.
 
 ```sh
+npm run typecheck
+npm run lint
+npm test -- --reporter=json --outputFile=artifacts/vitest.json
+# Stop only an earlier local server you started before rebuilding:
 npm run build:preview
 npm run test:deployment
-npm run lint
-npm run typecheck
-npm test -- --reporter=json --outputFile=artifacts/vitest.json
-npm audit --json > artifacts/npm-audit.json
-npm run test:secrets
 npm start
-# Matching server, one browser invocation at a time:
+# Use the matching build/server. One browser suite at a time:
 npm run test:security
 npm run test:e2e
 npm run test:performance
+npm audit --json > artifacts/npm-audit.json
+npm run test:secrets
 ```
 
-An extra engine runner is available with `playwright.additional.config.ts` and TEST_BROWSER=firefox/webkit. It does not silently replace Chromium coverage or mix its JSON result file. Actual engine failure results are documented below.
+**Ready for owner review with documented limits. Public launch is not yet fully verified or approved.** Remaining launch work is authenticated newest-Preview verification, Firefox/Safari coverage where supported, owner design/content/policy sign-off, supplied domain/DNS and separately authorized Production/indexing/origin configuration. No confirmed unresolved High/Critical issue is known within this scoped review; unknown issues can remain.
 
-## Final measured local results
-
-| Check                              | Actual final result                                                              |
-| ---------------------------------- | -------------------------------------------------------------------------------- |
-| Production static build / manifest | PASS; 24 localized routes plus root/404, headers, aliases, method guard          |
-| Approved assets                    | 9 source/export SHA-256 matches; original supplied bytes                         |
-| TypeScript / ESLint                | PASS / PASS                                                                      |
-| Unit tests                         | 6 passed, 0 failed; includes quote-URI parameter injection cases                 |
-| Chromium E2E                       | 45 passed, 0 failed, 0 skipped; 3 profiles                                       |
-| Accessibility                      | 72 localized axe A/AA scans; no configured violations                            |
-| HTTP security                      | 29 passed                                                                        |
-| npm audit                          | 0 reported vulnerabilities across all installed dependencies                     |
-| Secret signatures                  | No findings in source and exported text; limited signatures, not entropy/history |
-| Semgrep                            | 26 reviewed findings, 0 errors; 203 effective rules / 52 targets                 |
-| Firefox runner                     | 15 launch failures; 0 successful app cases; environment diagnosis below          |
-| WebKit / real Safari               | Engine lacks host libraries / NOT VERIFIED                                       |
-| Hosted app/Authentication/TLS      | NOT VERIFIED independently; existing Git integration status is separate          |
-
-Final Chromium run (UTC): 2026-10-20T14:24:32.924Z; duration 98.0s. Current JSON expected=45, unexpected=0, skipped=0, flaky=0.
-
-### Final Lighthouse (local synthetic)
-
-| Locale | Profile | Performance | Accessibility | Best practices | SEO | LCP ms | CLS    |
-| ------ | ------- | ----------- | ------------- | -------------- | --- | ------ | ------ |
-| ar     | mobile  | 95          | 100           | 100            | 66  | 2817   | 0.0000 |
-| ar     | desktop | 100         | 100           | 100            | 66  | 617    | 0.0000 |
-| en     | mobile  | 94          | 100           | 100            | 66  | 2403   | 0.0000 |
-| en     | desktop | 100         | 100           | 100            | 66  | 640    | 0.0000 |
-
-All four measurements passed the configured performance >=90 and accessibility >=95 gates. SEO 66 is intentionally limited by Preview noindex; it was not raised by removing that protection. Scores are synthetic, not field Core Web Vitals or security guarantees. Arabic simulated mobile LCP remains above the 2.5s good threshold; preserve this observation for real-device/hosted follow-up. CLS is zero in these measurements.
-
-An earlier design candidate scored 93 on mobile because its decorative background became the LCP image. The mobile background work was removed, the lighter supplied T variant used, and an unnecessary image client avoided. Final tests and metrics above are from the resulting matching build. No original SVG bytes were edited to obtain the improvement.
-
-## Functional and accessibility coverage
-
-All 24 localized content routes (12 per language) are exercised across Chromium desktop, Pixel 7 and iPad Mini profiles. There are 72 axe page scans for configured WCAG 2 A/AA and 2.1 AA rules, plus H1, title/description, lang/dir, internal-link destination and horizontal-overflow assertions. Additional widths are 320/360/768/1024/1440 in both languages. Device profiles do not prove actual iOS/Android hardware or Safari compatibility.
-
-The suite covers home → services → detail → language switch → alternate contact; exact quote-recipient/encoded subject; footer contacts and Instagram popup destination using a local fixture; absence of form/phone/WhatsApp; all five quote labels; all three legacy aliases per locale; root language switching; keyboard skip/menu/Escape/focus; FAQs by Enter; logo/image loading; missing/invalid/injected routes; rejected submissions; CSP inline blocking; Preview noindex; footer-to-route top reset, repeated-route reset, direct hash entry and all homepage section targets; reduced-motion preference.
-
-Initial last-section tests incorrectly demanded an exact near-top alignment even where the document end prevents that on a tall tablet. The test was fixed to require the exact last target to be visible/focused under native scroll clamping. Earlier sections still require near-top alignment; no route-top assertion was disabled. Final tests passed after the correction.
-
-Full-page screenshots in both locales and all Chromium profiles were inspected, particularly approved logo readability, Arabic direction, mobile card hierarchy, contact wrapping and FAQ/CTA layout. User design/content sign-off remains distinct from these checks.
-
-## Failed, blocked and unrun checks
-
-- **Firefox:** now downloadable after network changes; the 15-case Firefox run recorded **15 launch failures, 0 application passes**, before application assertions could execute. Standard temporary profiles failed to launch. A supported persistent-profile/XDG diagnosis reached the browser but exposed content-process namespace writes rejected with EROFS (`/proc/self/uid_map`); the owned hung process was terminated. Browser sandbox protections were not disabled. These are diagnosed environment failures, not passing Firefox tests or confirmed app defects.
-- **WebKit:** downloaded, but a current launch check fails for absent GTK4/Graphene/Harfbuzz-ICU/manette/hyphen/GLES libraries. No app test executed. **Actual Safari/iOS and real device testing: NOT VERIFIED.**
-- **Hosted Preview:** owner supplied `https://tevorli-mh3zk947z-dentfiy.vercel.app/`, a previous immutable deployment reportedly protected by Vercel Authentication. The environment's CONNECT proxy rejected that host before Vercel; **TLS/certificate/protection enforcement/content verification are NOT VERIFIED**, not failed authentication tests.
-- **New hosted deployment:** GitHub exposes Vercel integration status/dashboard links. Final push/deployment status is saved separately in artifacts/hosting-final.json when observed; a green build is not proof of the hosted flows. Do not label the old owner-provided URL as the newest deployed code. Authorized Vercel API access is not available, so direct current URL and settings remain bounded by actual evidence.
-- **Dependabot:** API now reachable, but alerts are disabled for this repository (403). Not a passed alert audit. npm audit was executed independently.
-- Instagram test uses a local popup fixture and exact destination assertions; mailbox delivery/OS mail client and remote Instagram account availability are not proven. No email or social message was sent.
-- Human screen-reader assessment, comprehensive WCAG conformance, full ZAP/commercial scan, entropy/history secret scanning and independent human security review are not claimed.
-
-## Domain and release readiness
-
-**Local review: READY WITH DOCUMENTED LIMITATIONS. Public/domain launch: NOT APPROVED / NOT FULLY VERIFIED.** Domain purchase/connection and Production deployment are outside current authorization.
-
-The original asset-transfer blocker is resolved. What remains is owner review, authorized hosted app/protection/TLS/header/navigation verification, responsible-operator/policy/log-retention review without fabricated legal registration, a supplied owned domain and explicit Production permission. A deliberate Production/indexing configuration change, verified origin, DNS/certificate/canonical redirects/hreflang/social metadata/sitemap and post-launch checks must follow that permission. Preview must stay protected and unindexed throughout.
-
-Raw current evidence: artifacts/playwright.json, vitest.json, npm-audit.json, semgrep.json, secret-scan.json (source + exported text), dynamic-security.json, deployment-check.json, preview-guards.json, firefox-availability.json, playwright-firefox.json, webkit-availability.json, hosted-protection.json, screenshots and Lighthouse JSON. Previous-revision evidence is separate under artifacts/previous-release/.
+Evidence: artifacts/playwright.json, vitest.json, npm-audit.json, semgrep.json, secret-scan.json, dynamic-security.json, deployment-check.json, hosted-protection.json, performance-summary.json, Lighthouse reports and localized screenshots. Earlier results are retained separately in artifacts/previous-release/.

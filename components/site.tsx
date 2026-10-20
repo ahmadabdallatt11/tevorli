@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ContactOptions } from "./contact-options";
 import { BrandLogo } from "./brand-logo";
 import { experience } from "@/lib/experience";
 import {
@@ -23,7 +24,7 @@ import {
   pathFor,
   type Locale,
 } from "@/lib/site";
-import { contact, quoteEmailHref } from "@/lib/contact";
+import { contact, gmailHref, quotePageHref } from "@/lib/contact";
 const icons = [Code2, Utensils, QrCode, ContactRound, BookOpen];
 export function ContactLinks({ locale }: { locale: Locale }) {
   return (
@@ -41,10 +42,19 @@ export function ContactLinks({ locale }: { locale: Locale }) {
         Instagram · @tevorli
         <ArrowUpRight size={16} aria-hidden="true" />
       </a>
+      <a
+        className="text-link browser-email"
+        href={gmailHref(locale)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {locale === "ar" ? "فتح Gmail في المتصفح" : "Open Gmail in browser"}
+        <ArrowUpRight size={16} aria-hidden="true" />
+      </a>
       <span className="contact-hint">
         {locale === "ar"
-          ? "يفتح البريد تطبيق البريد؛ ويفتح إنستغرام نافذة جديدة."
-          : "Email opens your mail app; Instagram opens a new tab."}
+          ? "فتح البريد يتطلب إعداد تطبيق بريد. يمكنك أيضًا استخدام Gmail في المتصفح."
+          : "Mail app setup is required. You can also use Gmail in your browser."}
       </span>
     </div>
   );
@@ -89,7 +99,7 @@ export function Footer({ locale }: { locale: Locale }) {
 }
 export function Action({
   locale,
-  slug = "contact",
+  slug = "quote",
   children,
   secondary = false,
 }: {
@@ -186,69 +196,79 @@ export function ServiceGrid({
   );
 }
 function HeroArt({ locale }: { locale: Locale }) {
+  const ar = locale === "ar";
+  const labels = ar
+    ? ["موقعك", "قائمتك", "روابط QR", "بطاقتك الرقمية", "كتالوجك"]
+    : [
+        "Your website",
+        "Your menu",
+        "QR links",
+        "Your digital card",
+        "Your catalog",
+      ];
   return (
-    <div className="hero-art" aria-hidden="true">
-      <img
-        className="hero-brand-mark"
-        src="/assets/logo/logo-mark-white.svg"
-        width={119}
-        height={104}
-        alt=""
-        loading="lazy"
-        decoding="async"
-      />
-      <div className="orbit orbit-one" />
-      <div className="orbit orbit-two" />
-      <div className="art-grid" />
-      <div className="browser-card">
-        <div className="browser-bar">
-          <span />
-          <span />
-          <span />
-          <div>your next idea</div>
+    <div className="hero-art" aria-hidden="true" dir={ar ? "rtl" : "ltr"}>
+      <div className="idea-studio">
+        <div className="studio-topline">
+          <span dir="ltr">TEVORLI / DIGITAL SOLUTIONS</span>
+          <span className="studio-dots">
+            <i />
+            <i />
+            <i />
+          </span>
         </div>
-        <div className="browser-content">
-          <div className="tiny-label">MADE FOR YOUR BUSINESS</div>
-          <div className="art-heading">
-            Small business.
-            <br />
-            <span>Big possibilities.</span>
-          </div>
-          <div className="art-line" />
-          <div className="art-line short" />
-          <div className="art-button">
-            Let’s get started <ArrowUpRight size={12} />
-          </div>
-          <div className="art-tiles">
-            <div>
-              <Code2 />
-              <span>Web</span>
+        <div className="studio-intro">
+          <span className="studio-symbol">
+            <img
+              src="/assets/logo/logo-mark-white.svg"
+              width={119}
+              height={104}
+              alt=""
+            />
+          </span>
+          <div>
+            <span className="studio-kicker">
+              {ar ? "من فكرة إلى حضور" : "FROM IDEA TO PRESENCE"}
+            </span>
+            <div className="studio-title">
+              {ar ? "مساحة لفكرتك." : "Room for your idea."}
             </div>
-            <div>
-              <QrCode />
-              <span>Connect</span>
-            </div>
-            <div>
-              <Sparkles />
-              <span>Grow</span>
-            </div>
+            <p>
+              {ar
+                ? "حل بسيط. تفاصيل تصنع الفرق."
+                : "Simple solutions. Thoughtful details."}
+            </p>
           </div>
         </div>
-      </div>
-      <div className="floating-label label-top">
-        <span className="status-dot" />
-        {locale === "ar" ? "فكرتك، متصلة بالعالم" : "YOUR IDEA, CONNECTED"}
-      </div>
-      <div className="floating-label label-bottom">
-        <ShieldCheck size={20} />
-        <div>
-          Built Smart.
-          <br />
-          <strong>Built Secure.</strong>
+        <div className="studio-preview">
+          <div className="preview-lines">
+            <span />
+            <span />
+            <span />
+          </div>
+          <div className="preview-emblem">
+            <QrCode size={46} strokeWidth={1.2} />
+          </div>
+        </div>
+        <div className="studio-solutions">
+          {labels.map((label, i) => {
+            const Icon = icons[i];
+            return (
+              <div key={label}>
+                <Icon size={18} strokeWidth={1.5} />
+                <span>{label}</span>
+              </div>
+            );
+          })}
+        </div>
+        <div className="studio-bottomline">
+          <span>
+            <ShieldCheck size={16} />
+            {ar ? "الخصوصية من البداية" : "PRIVACY FROM THE START"}
+          </span>
+          <span dir="ltr">AR / EN</span>
         </div>
       </div>
-      <span className="art-cross cross-one">+</span>
-      <span className="art-cross cross-two">+</span>
     </div>
   );
 }
@@ -275,7 +295,7 @@ export function Home({ locale }: { locale: Locale }) {
             <Link
               prefetch={false}
               className="text-link"
-              href={pathFor(locale, "contact")}
+              href={quotePageHref(locale)}
             >
               {t.secondary}
               <ArrowRight size={18} aria-hidden="true" />
@@ -312,7 +332,9 @@ export function Home({ locale }: { locale: Locale }) {
         <a href="#solutions">{experience[locale].solutions}</a>
         <a href="#process">{experience[locale].process}</a>
         <a href="#questions">{experience[locale].faqLink}</a>
-        <a href="#next-step">{t.quote}</a>
+        <Link prefetch={false} href={quotePageHref(locale)}>
+          {t.quote}
+        </Link>
       </nav>
       <section id="solutions" tabIndex={-1} className="section container">
         <div className="section-heading">
@@ -440,13 +462,14 @@ export function ContentPage({
               <p className="detail-body">{body}</p>
               <p className="quote-context">{experience[locale].quoteNote}</p>
               <div className="detail-actions">
-                <a
+                <Link
+                  prefetch={false}
                   className="button quote-service"
-                  href={quoteEmailHref(locale, title)}
+                  href={quotePageHref(locale, serviceIds[i])}
                 >
                   {t.quote}
                   <ArrowUpRight size={18} aria-hidden="true" />
-                </a>
+                </Link>
                 <Link
                   prefetch={false}
                   className="text-link other-contact"
@@ -528,30 +551,25 @@ export function ContentPage({
         <Callout locale={locale} />
       </>
     );
-  if (slug === "contact")
+  if (slug === "contact" || slug === "quote")
     return (
-      <section className="container section">
+      <section className="container section contact-section">
         <PageIntro
-          eyebrow={t.nav[4]}
-          title={t.contactTitle}
-          body={t.contactBody}
+          eyebrow={slug === "quote" ? t.quote : t.nav[4]}
+          title={
+            slug === "quote"
+              ? locale === "ar"
+                ? "فكرتك تبدأ بمحادثة."
+                : "Your idea starts with a conversation."
+              : t.contactTitle
+          }
+          body={
+            locale === "ar"
+              ? "اختر الطريقة الأنسب لك، سواء كنت تستخدم الكمبيوتر أو الهاتف. التسعير حسب نطاق مشروعك، والتواصل مباشرة عبر بريدك أو إنستغرام."
+              : "Choose what works for you, on a laptop or phone. Pricing depends on your project scope. Contact us directly through your email or Instagram."
+          }
         />
-        <div className="contact-panel">
-          <div className="icon-box">
-            <ContactRound size={30} aria-hidden="true" />
-          </div>
-          <h2>{t.contactNote}</h2>
-          <p>{t.contactHelp}</p>
-          <ContactLinks locale={locale} />
-          <Link
-            prefetch={false}
-            className="text-link"
-            href={pathFor(locale, "services")}
-          >
-            {t.primary}
-            <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
+        <ContactOptions locale={locale} quote={slug === "quote"} />
       </section>
     );
   const kind = slug as "privacy" | "terms";

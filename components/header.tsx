@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Globe2, Menu, X } from "lucide-react";
 import type { Locale } from "@/lib/site";
 import { pathFor } from "@/lib/navigation";
-import { quoteEmailHref } from "@/lib/contact";
+import { quotePageHref } from "@/lib/contact";
+import { useQuoteService } from "@/lib/quote-state";
 import { BrandLogo } from "./brand-logo";
 const paths = ["", "services", "work", "about", "contact"];
 type HeaderLabels = {
@@ -86,23 +87,32 @@ export function Header({
           ))}
         </nav>
         <div className="header-actions">
+          <Suspense
+            fallback={
+              <LanguageLink
+                href={alternate}
+                other={other}
+                label={t.switch}
+                close={() => setOpen(false)}
+              />
+            }
+          >
+            <LanguageSwitch
+              alternate={alternate}
+              quote={pathname.endsWith("/quote/")}
+              other={other}
+              label={t.switch}
+              close={() => setOpen(false)}
+            />
+          </Suspense>
           <Link
             prefetch={false}
-            href={alternate}
-            className="language"
-            lang={other}
-            onClick={() => setOpen(false)}
-          >
-            <Globe2 size={16} aria-hidden="true" />
-            {t.switch}
-          </Link>
-          <a
-            href={quoteEmailHref(locale)}
+            href={quotePageHref(locale)}
             className="button button-small header-cta"
           >
             {t.secondary}
             <ArrowUpRight size={16} aria-hidden="true" />
-          </a>
+          </Link>
           <button
             ref={toggle}
             className="menu-toggle"
@@ -117,5 +127,53 @@ export function Header({
         </div>
       </div>
     </header>
+  );
+}
+
+function LanguageLink({
+  href,
+  other,
+  label,
+  close,
+}: {
+  href: string;
+  other: Locale;
+  label: string;
+  close: () => void;
+}) {
+  return (
+    <Link
+      prefetch={false}
+      href={href}
+      className="language"
+      lang={other}
+      onClick={close}
+    >
+      <Globe2 size={16} aria-hidden="true" />
+      {label}
+    </Link>
+  );
+}
+function LanguageSwitch({
+  alternate,
+  quote,
+  other,
+  label,
+  close,
+}: {
+  alternate: string;
+  quote: boolean;
+  other: Locale;
+  label: string;
+  close: () => void;
+}) {
+  const service = useQuoteService();
+  return (
+    <LanguageLink
+      href={quote ? quotePageHref(other, service) : alternate}
+      other={other}
+      label={label}
+      close={close}
+    />
   );
 }

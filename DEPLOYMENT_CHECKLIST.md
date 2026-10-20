@@ -7,7 +7,8 @@ Allowed: changes on `preview/tevorli` and protected Preview through the existing
 - [x] Approved public email/Instagram and five project-priced services; no fabricated phone/WhatsApp, projects, reviews or achievements.
 - [x] Supplied web Brand Kit read and selected logos/icons copied without changes. Header/footer/404 use the logo; favicon replaced. Nine source/export asset hashes verified.
 - [x] New pages start at top; same-page return links reset position; section/deep hashes target and focus the actual section. Keyboard and reduced-motion journeys tested.
-- [x] Service/audience guidance, quote subjects and native FAQs, without backend forms or extra libraries.
+- [x] Dedicated bilingual quote route with browser Gmail, mail app and clipboard/manual-copy options; validated service context survives locale and query-only changes. No backend form or new runtime dependency.
+- [x] Localized hero studio, separated footer links and about-page decoration; layout bounds, control hit-testing and exact anchor alignment tested at laptop and phone widths.
 - [x] Production static build, type/lint/unit/E2E/axe/HTTP security checks, dependency audit, source+export secret signatures and SAST run. See actual reports for counts and limits.
 - [x] Preview meta/HTTP/robots noindex, CSP hashes, frame/MIME/referrer/permissions/HSTS headers, safe aliases, rejected mutations and custom 404.
 - [x] No application credential/customer data added. Production/main/master build guards retained.
@@ -19,10 +20,11 @@ Owner-provided prior URL: `https://tevorli-mh3zk947z-dentfiy.vercel.app/`. The o
 
 - [ ] Newest deployment's **direct application URL** confirmed against the latest branch commit. GitHub's Vercel target links to the dashboard, not necessarily a direct app URL. Current status evidence is captured separately in `artifacts/hosting-final.json` when available.
 - [ ] Preview environment/project and Production branch settings read through authorized Vercel access. CLI is logged out; VERCEL_TOKEN requirement has no saved binding. Never paste its value in chat/source.
-- [ ] Anonymous request rejected by Vercel Authentication, plus successful authorized content request. The environment's CONNECT proxy denied the provided app host before Vercel; this is not an authentication test result.
+- [x] Prior owner-provided immutable host: verified TLS and anonymous request redirected with HTTP 302 to Vercel SSO without returning app content. No setting or bypass was used.
+- [ ] Repeat protection/TLS checks on the newest direct URL and verify successful authorized application access. An older immutable deployment is not evidence for the new application build.
 - [ ] Hosted HTTPS/certificate, application headers/CSP, statuses, assets, 404/aliases, RTL/LTR, quote links and browser-console/a11y/performance checks completed inside authorized access. Local checks and a successful deployment build alone do not prove these.
 
-Network domain additions for `vercel.com` and the exact owner-provided app host are saved alongside existing custom domains in the cloud draft. Save/publish the development environment settings to apply reusable configuration and recheck actual runtime access. Future immutable Preview hosts may need their observed hostname added. Don't enable anonymous temporary deployment or bypass/remove protection just to run tests.
+Network domain additions for `vercel.com` and the exact owner-provided app host are saved alongside existing custom domains in the cloud draft; both hosts now respond at runtime. Review/save/publish the development environment settings to retain the reusable configuration. Future immutable Preview hosts may need their observed hostname added. Don't enable anonymous temporary deployment or bypass/remove protection just to run tests.
 
 GitHub API now works, but the Vercel API returns forbidden without authentication; do not describe that as a continuing GitHub API network failure. Dependabot reports alerts disabled for this repository; npm audit ran independently. No paid security feature was enabled.
 

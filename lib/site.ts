@@ -16,6 +16,7 @@ export const routeNames = [
   "work",
   "about",
   "contact",
+  "quote",
   "privacy",
   "terms",
 ];
@@ -169,7 +170,7 @@ export const copy = {
       "Tell us what your business needs. Contact us by email or Instagram to discuss a standalone digital solution.",
     contactNote: "Email or Instagram",
     contactHelp:
-      "Use the links below to request a quote. There is no online submission form. Email opens your mail app; Instagram opens an external service with its own privacy practices.",
+      "Use the links below to request a quote. There is no online submission form. Choose Gmail in your browser or a configured mail app. Gmail and Instagram have their own privacy practices.",
     detailLabel: "THE SOLUTION",
     included: "What we can plan together",
     deliverables: [
@@ -247,7 +248,7 @@ export const copy = {
       "تواصل معنا عبر البريد أو إنستغرام لمناقشة حل رقمي مستقل يناسب عملك.",
     contactNote: "البريد أو إنستغرام",
     contactHelp:
-      "استخدم الروابط أدناه لطلب عرض سعر. لا يوجد نموذج مراسلة داخل الموقع. يفتح البريد تطبيقك للبريد، ويفتح إنستغرام خدمة خارجية تخضع لسياسة خصوصيتها.",
+      "استخدم الروابط أدناه لطلب عرض سعر. لا يوجد نموذج مراسلة داخل الموقع. اختر Gmail في المتصفح أو تطبيق بريد مُعدًّا. يخضع Gmail وإنستغرام لسياسات الخصوصية الخاصة بهما.",
     detailLabel: "الحل",
     included: "ما يمكننا التخطيط له معًا",
     deliverables: [
@@ -277,6 +278,10 @@ export const legal = {
       [
         "Information and cookies",
         "This website has no analytics, advertising trackers, account system, or enabled contact form. It does not set application cookies or collect form submissions. The hosting provider may process connection data such as IP addresses and request logs.",
+      ],
+      [
+        "External contact options",
+        "Gmail and Instagram open only when you choose their links and are governed by their providers’ policies. Opening an email option does not send a message. Copy email uses your clipboard only after you press the copy button; clipboard contents are not read or sent by this site.",
       ],
       [
         "Hosting and retention",
@@ -323,6 +328,10 @@ export const legal = {
       [
         "البيانات وملفات الارتباط",
         "لا يستخدم الموقع أدوات تحليل أو تتبّع إعلاني، ولا يحتوي على حسابات أو نموذج تواصل مفعّل. لا يضع ملفات ارتباط خاصة بالتطبيق ولا يستقبل بيانات نماذج. قد يعالج مزوّد الاستضافة بيانات الاتصال مثل عناوين IP وسجلات الطلبات.",
+      ],
+      [
+        "خيارات التواصل الخارجية",
+        "يُفتح Gmail أو إنستغرام عند اختيار رابطه فقط، ويخضع كل منهما لسياسة مزوّده. فتح خيار البريد لا يرسل رسالة. يُنسخ عنوان البريد إلى الحافظة عند ضغط زر النسخ فقط؛ لا يقرأ الموقع محتويات الحافظة ولا يرسلها.",
       ],
       [
         "الاستضافة والاحتفاظ",

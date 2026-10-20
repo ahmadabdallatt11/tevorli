@@ -51,7 +51,9 @@ for (const locale of ["ar", "en"] as const) {
         } else
           expect(
             href.startsWith("/") ||
-              href === "https://www.instagram.com/tevorli/",
+              href === "https://www.instagram.com/tevorli/" ||
+              new URL(href, "http://127.0.0.1:3000").origin ===
+                "https://mail.google.com",
           ).toBe(true);
         if (href.startsWith("/"))
           expect((await page.request.get(href)).status()).toBe(200);
@@ -94,7 +96,7 @@ for (const locale of ["ar", "en"] as const) {
     );
     await expect(page.locator(".quote-service")).toHaveAttribute(
       "href",
-      /^mailto:tevorli\.digital\.solutions@gmail\.com\?subject=/,
+      new RegExp(`/${other}/quote/\\?service=websites$`),
     );
     await page.locator(".other-contact").click();
     await expect(page).toHaveURL(new RegExp(`/${other}/contact/`));
@@ -163,6 +165,19 @@ test("visual evidence", async ({ page }, testInfo) => {
     path: `artifacts/${testInfo.project.name}-ar.png`,
     fullPage: true,
   });
+  for (const locale of ["ar", "en"]) {
+    await page.goto(`/${locale}/quote/?service=websites`);
+    await expect(page.locator(".selected-service")).toBeVisible();
+    await page.screenshot({
+      path: `artifacts/${testInfo.project.name}-quote-${locale}.png`,
+      fullPage: true,
+    });
+    await page.goto(`/${locale}/about/`);
+    await page.screenshot({
+      path: `artifacts/${testInfo.project.name}-about-${locale}.png`,
+      fullPage: true,
+    });
+  }
 });
 test("CSP blocks unapproved inline JavaScript", async ({ page }) => {
   await page.goto("/en/");
@@ -200,7 +215,7 @@ test("approved contacts and quote paths work without a backend", async ({
   for (const locale of ["ar", "en"]) {
     await page.goto(`/${locale}/contact/`);
     const email = page.locator(
-      '.contact-panel a[href="mailto:tevorli.digital.solutions@gmail.com"]',
+      '.contact-panel a[href^="mailto:tevorli.digital.solutions@gmail.com"]',
     );
     await expect(email).toBeVisible();
     const instagram = page.locator(
@@ -310,15 +325,13 @@ test("routes start at top after footer navigation; section targets stay correct"
     await page.locator("footer").scrollIntoViewIfNeeded();
     await page.locator("footer .wordmark").click();
     await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(10);
-    for (const id of ["solutions", "process", "questions", "next-step"]) {
+    for (const id of ["solutions", "process", "questions"]) {
       await page.locator(`.section-jumps a[href="#${id}"]`).click();
       await expect
         .poll(() =>
           page.locator(`#${id}`).evaluate((el) => {
             const y = el.getBoundingClientRect().top;
-            return (
-              y >= 0 && y < (el.id === "next-step" ? window.innerHeight : 180)
-            );
+            return y >= 0 && y <= 24;
           }),
         )
         .toBe(true);
@@ -354,4 +367,271 @@ test("reduced-motion preference keeps navigation and section links usable", asyn
   await page.locator("footer").scrollIntoViewIfNeeded();
   await page.locator("footer .footer-links a").first().click();
   await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(10);
+});
+
+test("quote journey supports browser email, mail apps, copy and language context", async ({
+  page,
+  context,
+}) => {
+  for (const locale of ["ar", "en"] as const) {
+    await page.goto(`/${locale}/services/websites/`);
+    await page.locator(".quote-service").click();
+    await expect(page).toHaveURL(
+      new RegExp(`/${locale}/quote/\\?service=websites$`),
+    );
+    await expect.poll(() => page.evaluate(() => scrollY)).toBeLessThan(10);
+    await expect(page.locator(".selected-service strong")).toHaveText(
+      services[locale][0][0],
+    );
+    const gmail = page.locator(".gmail-option");
+    const url = new URL((await gmail.getAttribute("href"))!);
+    expect(url.origin).toBe("https://mail.google.com");
+    expect(url.searchParams.get("to")).toBe(
+      "tevorli.digital.solutions@gmail.com",
+    );
+    expect(url.searchParams.get("su")).toContain(services[locale][0][0]);
+    await context.route("https://mail.google.com/**", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "text/html",
+        body: "<title>Email navigation fixture</title>",
+      }),
+    );
+    const popupPromise = page.waitForEvent("popup");
+    await gmail.click();
+    const popup = await popupPromise;
+    await expect(popup).toHaveURL(url.href);
+    await popup.close();
+    // OS mail-client registration cannot be tested by a browser runner.
+    const mail = new URL(
+      (await page.locator(".mail-app-option").getAttribute("href"))!,
+    );
+    expect(mail.protocol).toBe("mailto:");
+    expect(mail.pathname).toBe("tevorli.digital.solutions@gmail.com");
+    expect(mail.searchParams.get("subject")).toBe(url.searchParams.get("su"));
+    await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+    await page.locator(".copy-email-button").click();
+    await expect(page.locator(".copy-status")).toContainText(
+      locale === "ar" ? "تم نسخ البريد" : "Email copied",
+    );
+    expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(
+      "tevorli.digital.solutions@gmail.com",
+    );
+    await page.locator(".language").click();
+    const other = locale === "ar" ? "en" : "ar";
+    await expect(page).toHaveURL(
+      new RegExp(`/${other}/quote/\\?service=websites$`),
+    );
+    await expect(page.locator(".selected-service strong")).toHaveText(
+      services[other][0][0],
+    );
+    if (await page.locator(".header-cta").isVisible()) {
+      await page.locator(".header-cta").click();
+      await expect(page).toHaveURL(new RegExp(`/${other}/quote/$`));
+      await expect(page.locator(".selected-service")).toHaveCount(0);
+      await page.goBack();
+      await expect(page.locator(".selected-service strong")).toHaveText(
+        services[other][0][0],
+      );
+    }
+    await expect(page.locator("form,input,textarea")).toHaveCount(0);
+  }
+});
+
+test("clipboard denial has a usable keyboard fallback", async ({ page }) => {
+  await page.addInitScript(() =>
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        writeText: () => Promise.reject(new Error("Permission denied")),
+      },
+    }),
+  );
+  await page.goto("/en/quote/");
+  await page.locator(".copy-email-button").focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator(".copy-status")).toContainText("Ctrl+C");
+  await expect(page.locator("#copy-address")).toBeFocused();
+  expect(await page.evaluate(() => window.getSelection()?.toString())).toBe(
+    "tevorli.digital.solutions@gmail.com",
+  );
+});
+
+test("quote input cannot inject content, recipients or redirects", async ({
+  page,
+}) => {
+  for (const value of [
+    "__proto__",
+    "constructor",
+    "<img src=x onerror=alert(1)>",
+    "https://attacker.invalid",
+    "websites&to=attacker@example.test",
+  ]) {
+    await page.goto(
+      `/en/quote/?service=${encodeURIComponent(value)}&to=attacker@example.test&next=https://attacker.invalid`,
+    );
+    await expect(page.locator(".selected-service")).toHaveCount(0);
+    const href = new URL(
+      (await page.locator(".gmail-option").getAttribute("href"))!,
+    );
+    expect(href.origin).toBe("https://mail.google.com");
+    expect(href.searchParams.get("to")).toBe(
+      "tevorli.digital.solutions@gmail.com",
+    );
+    expect(href.searchParams.get("su")).toBe("Request a Quote");
+    expect(
+      await page.evaluate(() => document.querySelector("[onerror]")),
+    ).toBeNull();
+    await expect(page.locator("main")).not.toContainText("attacker");
+  }
+});
+
+test("repeated section clicks, back navigation and scope links stop at target", async ({
+  page,
+}) => {
+  for (const locale of ["ar", "en"]) {
+    await page.goto(`/${locale}/`);
+    for (const id of ["questions", "solutions", "solutions", "process"]) {
+      await page.locator(`.section-jumps a[href="#${id}"]`).click();
+      await expect
+        .poll(() =>
+          page
+            .locator(`#${id}`)
+            .evaluate((el) => Math.abs(el.getBoundingClientRect().top - 20)),
+        )
+        .toBeLessThan(3);
+    }
+    await page.goBack();
+    await expect(page).toHaveURL(/#solutions$/);
+    await expect
+      .poll(() =>
+        page
+          .locator("#solutions")
+          .evaluate((el) => Math.abs(el.getBoundingClientRect().top - 20)),
+      )
+      .toBeLessThan(3);
+    await page.goto(`/${locale}/services/websites/`);
+    await page.locator(".scope-jump").click();
+    await expect(page.locator("#service-scope")).toBeFocused();
+    await expect
+      .poll(() =>
+        page
+          .locator("#service-scope")
+          .evaluate((el) => Math.abs(el.getBoundingClientRect().top - 20)),
+      )
+      .toBeLessThan(3);
+  }
+});
+
+test("hero, contact controls and headers do not overlap at laptop and phone widths", async ({
+  page,
+}) => {
+  for (const locale of ["ar", "en"]) {
+    for (const width of [320, 390, 760, 820, 1024, 1280, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      for (const route of ["", "quote/?service=catalogs"]) {
+        await page.goto(`/${locale}/${route}`);
+        expect(
+          await page.evaluate(
+            () => document.documentElement.scrollWidth <= innerWidth,
+          ),
+        ).toBe(true);
+        const rectangles = await page
+          .locator(route ? ".contact-layout > *" : ".hero > *")
+          .evaluateAll((elements) =>
+            elements.map((el) => {
+              const r = el.getBoundingClientRect();
+              return { x: r.x, y: r.y, right: r.right, bottom: r.bottom };
+            }),
+          );
+        const [a, b] = rectangles;
+        expect(
+          a.right <= b.x ||
+            b.right <= a.x ||
+            a.bottom <= b.y ||
+            b.bottom <= a.y,
+        ).toBe(true);
+        const header = await page
+          .locator(".header-inner > *:visible")
+          .evaluateAll((elements) =>
+            elements.map((el) => {
+              const r = el.getBoundingClientRect();
+              return { x: r.x, right: r.right };
+            }),
+          );
+        for (let i = 0; i < header.length; i++)
+          for (let j = i + 1; j < header.length; j++)
+            expect(
+              header[i].right <= header[j].x || header[j].right <= header[i].x,
+            ).toBe(true);
+        if (route) {
+          const controls = page.locator(
+            ".gmail-option,.mail-app-option,.copy-email-button,.instagram-option",
+          );
+          for (const control of await controls.all()) {
+            await control.scrollIntoViewIfNeeded();
+            await expect(control).toBeVisible();
+            expect(
+              await control.evaluate((el) => {
+                const r = el.getBoundingClientRect();
+                const at = document.elementFromPoint(
+                  r.x + r.width / 2,
+                  r.y + r.height / 2,
+                );
+                return at === el || el.contains(at);
+              }),
+            ).toBe(true);
+          }
+        } else {
+          expect(
+            await page.locator(".studio-solutions").innerText(),
+          ).not.toContain(locale === "ar" ? "Your" : "موقعك");
+          await expect(page.locator(".studio-solutions > div")).toHaveCount(5);
+          expect(
+            await page.locator(".hero-art").evaluate((el) => {
+              const frame = el.getBoundingClientRect();
+              const studio = el
+                .querySelector(".idea-studio")!
+                .getBoundingClientRect();
+              return (
+                studio.top >= frame.top &&
+                studio.bottom <= frame.bottom &&
+                studio.left >= frame.left &&
+                studio.right <= frame.right
+              );
+            }),
+          ).toBe(true);
+          expect(
+            await page
+              .locator(".idea-studio")
+              .evaluate(
+                (el) =>
+                  el.scrollHeight <= el.clientHeight + 1 &&
+                  el.scrollWidth <= el.clientWidth + 1,
+              ),
+          ).toBe(true);
+        }
+      }
+    }
+  }
+});
+
+test("quote options remain available without JavaScript", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  try {
+    for (const locale of ["ar", "en"]) {
+      await page.goto(`/${locale}/quote/`);
+      await expect(page.locator(".gmail-option")).toBeVisible();
+      await expect(page.locator(".mail-app-option")).toBeVisible();
+      await expect(page.locator("#copy-address")).toHaveText(
+        "tevorli.digital.solutions@gmail.com",
+      );
+      await expect(page.locator(".instagram-option")).toBeVisible();
+    }
+  } finally {
+    await context.close();
+  }
 });

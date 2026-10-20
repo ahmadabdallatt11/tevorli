@@ -18,6 +18,7 @@ for (const locale of ["ar", "en"]) {
     "work",
     "about",
     "contact",
+    "quote",
     "privacy",
     "terms",
   ]) {
@@ -42,7 +43,7 @@ await writeFile(
       passed: true,
       scope:
         "Local Vercel Build Output API v3 manifest and filesystem; not a remote deployment",
-      localizedPages: 24,
+      localizedPages: 26,
       routingEntries: config.routes.length,
       cspBytes: Buffer.byteLength(headers["Content-Security-Policy"]),
     },
@@ -51,7 +52,7 @@ await writeFile(
   ),
 );
 console.log(
-  "Vercel manifest, 24 localized routes, root, 404, method guard and security headers verified locally.",
+  "Vercel manifest, 26 localized routes, root, 404, method guard and security headers verified locally.",
 );
 
 const approvedAssets = JSON.parse(
