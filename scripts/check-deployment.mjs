@@ -1,0 +1,54 @@
+import assert from "node:assert/strict";
+import { readFile, access, mkdir, writeFile } from "node:fs/promises";
+const config = JSON.parse(await readFile(".vercel/output/config.json", "utf8"));
+const headers = JSON.parse(await readFile("out/security-headers.json", "utf8"));
+assert.equal(config.version, 3);
+assert.equal(headers["X-Robots-Tag"],"noindex, nofollow, noarchive");
+assert.deepEqual(config.routes[0].headers, headers);
+for (const locale of ["ar", "en"]) {
+  for (const slug of [
+    "",
+    "services",
+    "services/websites",
+    "services/digital-menus",
+    "services/qr-solutions",
+    "services/business-cards",
+    "services/catalogs",
+    "work",
+    "about",
+    "contact",
+    "privacy",
+    "terms",
+  ]) {
+    const src = `/${locale}/${slug ? `${slug}/` : ""}`;
+    const route = config.routes.find((r) => r.src === src);
+    assert.ok(route, src);
+    await access(`.vercel/output/static${route.dest}`);
+  }
+}
+assert.equal(config.routes.at(-1).status, 404);
+assert.equal(config.routes.at(-1).dest, "/404.html");
+assert.ok(
+  config.routes.some((r) => r.status === 405 && r.methods.includes("POST")),
+);
+await assert.rejects(access(".vercel/output/static/security-headers.json"));
+await assert.rejects(access(".vercel/output/static/_headers"));
+await mkdir("artifacts", { recursive: true });
+await writeFile(
+  "artifacts/deployment-check.json",
+  JSON.stringify(
+    {
+      passed: true,
+      scope:
+        "Local Vercel Build Output API v3 manifest and filesystem; not a remote deployment",
+      localizedPages: 24,
+      routingEntries: config.routes.length,
+      cspBytes: Buffer.byteLength(headers["Content-Security-Policy"]),
+    },
+    null,
+    2,
+  ),
+);
+console.log(
+  "Vercel manifest, 24 localized routes, root, 404, method guard and security headers verified locally.",
+);
