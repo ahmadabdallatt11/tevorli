@@ -16,8 +16,8 @@ export default function GlobalNotFound() {
             <BrandLogo />
           </Link>
           <p className="error-code">404</p>
-          <h1>هذه الصفحة سلكت طريقًا آخر.</h1>
-          <p>تعذّر العثور على الصفحة المطلوبة.</p>
+          <h1>الصفحة غير موجودة.</h1>
+          <p>ممكن يكون الرابط غير صحيح. ارجع للرئيسية لتكمل التصفّح.</p>
           <div className="hero-actions">
             <Link prefetch={false} className="button" href="/ar/">
               العودة للرئيسية

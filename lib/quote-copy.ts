@@ -2,13 +2,13 @@ export const quoteCopy = {
   ar: {
     title: "تواصل بالطريقة التي تناسبك",
     intro:
-      "لا تحتاج إلى تعبئة نموذج. اختر بريد المتصفح أو تطبيق البريد، ثم اكتب لنا عن فكرتك.",
+      "اختَر كيف تحب تراسلنا: Gmail، تطبيق البريد، أو إنستغرام.",
     gmail: "فتح Gmail في المتصفح",
     gmailHelp:
       "يفتح رسالة جديدة في تبويب آخر. قد تحتاج إلى تسجيل الدخول إلى Google.",
     app: "فتح تطبيق البريد",
     appHelp:
-      "مناسب للهاتف أو لجهاز عليه تطبيق بريد مُعدّ، مثل Outlook على Windows.",
+      "يفتح رسالة في تطبيق البريد على جهازك، مثل Outlook. لازم يكون حسابك مضافًا للتطبيق.",
     copy: "نسخ البريد",
     copied: "تم نسخ البريد. يمكنك لصقه في خدمة البريد التي تستخدمها.",
     selectedCopy:
@@ -17,34 +17,34 @@ export const quoteCopy = {
     instagram: "أو تواصل عبر إنستغرام",
     selected: "الخدمة التي اخترتها:",
     services: {
-      websites: "المواقع وصفحات الهبوط",
-      "digital-menus": "القوائم الرقمية",
-      "qr-solutions": "حلول QR الذكية",
-      "business-cards": "بطاقات الأعمال الرقمية وNFC",
-      catalogs: "الكتالوجات الرقمية وصفحات الأعمال الذكية",
+      websites: "مواقع وصفحات إعلانية",
+      "digital-menus": "منيو إلكتروني",
+      "qr-solutions": "رموز QR",
+      "business-cards": "بطاقات أعمال رقمية وNFC",
+      catalogs: "كتالوجات وصفحات لعرض المنتجات",
     },
-    guideLabel: "لنبدأ بوضوح",
+    guideLabel: "قبل ما تراسلنا",
     guideTitle: "ماذا تكتب في رسالتك؟",
-    guideIntro: "تفاصيل بسيطة تساعدنا على فهم المطلوب وتحديد نطاق المشروع:",
+    guideIntro: "مش لازم تعرف المصطلحات. ابدأ بهالتفاصيل، وبنكمل معك:",
     guideItems: [
-      "نوع عملك والحل الذي تحتاجه",
-      "اللغات والصفحات أو المحتوى المطلوب",
-      "الموعد الذي تستهدفه، وأي متطلبات مهمة",
+      "شو طبيعة عملك؟ وشو حاب تعرض لزبائنك؟",
+      "عندك صور ونصوص جاهزة؟ وبدك عربي أو إنجليزي؟",
+      "متى حاب يكون جاهز؟ وفي شيء مهم لازم نعرفه؟",
     ],
     privacy:
-      "لا ترسل كلمات مرور أو بيانات عملاء أو معلومات حساسة. تتحدد التكلفة بعد الاتفاق على نطاق المشروع.",
+      "لا ترسل كلمات مرور أو بيانات زبائن أو معلومات خاصة. بنحدّد السعر بعد ما نفهم المطلوب ونتفق على التفاصيل.",
     servicesLink: "استعرض الخدمات",
   },
   en: {
     title: "Choose how to get in touch",
     intro:
-      "No form to fill in. Choose browser email or your mail app, then tell us about your idea.",
+      "Choose Gmail, your mail app, or Instagram to tell us what you need.",
     gmail: "Open Gmail in browser",
     gmailHelp:
       "Opens a new message in another tab. You may need to sign in to Google.",
     app: "Open mail app",
     appHelp:
-      "For your phone or a configured mail app, such as Outlook on Windows.",
+      "Opens a message in an app such as Outlook. Your email account needs to be set up in the app.",
     copy: "Copy email",
     copied: "Email copied. Paste it into the email service you use.",
     selectedCopy:
@@ -55,21 +55,21 @@ export const quoteCopy = {
     services: {
       websites: "Websites & Landing Pages",
       "digital-menus": "Digital Menus",
-      "qr-solutions": "Smart QR Solutions",
+      "qr-solutions": "QR Codes",
       "business-cards": "Digital Business Cards & NFC",
-      catalogs: "Digital Catalogs & Smart Pages",
+      catalogs: "Product Catalogs & Business Pages",
     },
-    guideLabel: "A CLEAR START",
+    guideLabel: "BEFORE YOU MESSAGE US",
     guideTitle: "What should you include?",
     guideIntro:
-      "A few details help us understand your needs and define the project scope:",
+      "You don’t need to know the technical terms. Start with these details and we’ll help with the rest:",
     guideItems: [
-      "Your business and the solution you need",
-      "Required languages, pages, or content",
-      "Your target date and any important requirements",
+      "What does your business do, and what would you like customers to see?",
+      "Do you have photos and text ready? Do you need Arabic, English, or both?",
+      "When would you like it ready? Is there anything else we should know?",
     ],
     privacy:
-      "Do not send passwords, customer data, or sensitive information. Pricing follows an agreed project scope.",
+      "Do not send passwords, customer data, or private information. We provide a price after we understand what you need and agree on the details.",
     servicesLink: "Explore services",
   },
 } as const;

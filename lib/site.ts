@@ -47,326 +47,331 @@ export const services = {
   en: [
     [
       "Websites & Landing Pages",
-      "A focused online home for your business.",
-      "Standalone websites and landing pages with clear content, responsive layouts, and a direct next step. No integration with internal shop systems.",
+      "Show people what you do and how to reach you.",
+      "A website for your business, or a single page for an offer or ad. Show your services, answer common questions, and give visitors a clear way to contact you."
     ],
     [
       "Digital Menus",
-      "Your menu, within easy reach.",
-      "Readable, mobile-friendly digital menus, shared by link or QR code. A simple independent presentation, without POS or internal ordering-system integration.",
+      "Let customers read your menu on their phones.",
+      "A menu with your food, drinks, and prices. Customers open it with a link or by scanning a QR code with their phone camera. It displays your menu; it does not take orders or payments."
     ],
     [
-      "Smart QR Solutions",
-      "A simple connection to the right page.",
-      "QR codes that open your approved menu, catalog, business page, or website. Standalone destinations without internal business-system integration.",
+      "QR Codes",
+      "Scan a code. Open your page.",
+      "A QR code is the square pattern you scan with a phone camera. We prepare one that opens your menu, product catalog, website, or contact page. Customers can reach the page without typing its address."
     ],
     [
       "Digital Business Cards & NFC",
-      "A simpler professional introduction.",
-      "Digital business cards and NFC-ready page links for compatible devices. Hardware and compatibility are agreed in the quote; no internal system integration.",
+      "Share your details in one link.",
+      "A page with your name, business, and contact links. Share it by link or QR code. NFC lets a compatible phone open the page with a tap on a suitable card. We agree on card costs and device compatibility before you order."
     ],
     [
-      "Digital Catalogs & Smart Pages",
-      "Your products and essentials, organized.",
-      "Standalone digital catalogs and smart business pages for products, services, and approved contact links. No stock, payment, or shop-system integration.",
-    ],
+      "Product Catalogs & Business Pages",
+      "Show your products in one place.",
+      "A catalog with product photos, descriptions, and prices, or a page with your services and contact links. Customers browse and contact you to ask about a product. It does not manage stock, take payments, or connect to your shop systems."
+    ]
   ],
   ar: [
     [
-      "المواقع وصفحات الهبوط",
-      "حضور رقمي واضح يناسب عملك.",
-      "مواقع وصفحات هبوط مستقلة بمحتوى واضح وتصميم متجاوب وخطوة تالية مباشرة، دون ربط بأنظمة المحل الداخلية.",
+      "مواقع وصفحات إعلانية",
+      "عرّف بعملك وخدماتك، وسهّل على الناس التواصل معك.",
+      "موقع يعرّف بعملك، أو صفحة واحدة لعرض خدمة أو إعلان. نرتّب فيها معلوماتك وخدماتك وأجوبة الأسئلة المتكررة، مع طريقة واضحة للتواصل معك."
     ],
     [
-      "القوائم الرقمية",
-      "قائمتك، في متناول الجميع.",
-      "قوائم رقمية واضحة ومتجاوبة، تُشارك برابط أو رمز QR، دون تكامل مع أنظمة نقاط البيع أو الطلبات الداخلية.",
+      "منيو إلكتروني",
+      "خلّي زبائنك يشوفوا المنيو على الموبايل.",
+      "قائمة بأصناف الأكل والمشروبات وأسعارها. يفتحها الزبون من رابط، أو يمسح الرمز المربّع QR بكاميرا الموبايل. المنيو لعرض الأصناف، ولا يستقبل طلبات أو دفعات."
     ],
     [
-      "حلول QR الذكية",
-      "وصول بسيط إلى الصفحة المناسبة.",
-      "رموز QR تفتح القائمة أو الكتالوج أو صفحة الأعمال أو الموقع المعتمد، بوجهات مستقلة دون ربط بأنظمة العمل الداخلية.",
+      "رموز QR",
+      "مسحة بالكاميرا تفتح صفحتك.",
+      "رمز QR هو المربّع الذي تمسحه بكاميرا الموبايل لفتح رابط. نجهّز لك رمزًا يفتح المنيو أو كتالوج المنتجات أو موقعك أو صفحة التواصل، بدل ما يكتب الزبون عنوان الصفحة."
     ],
     [
-      "بطاقات الأعمال الرقمية وNFC",
-      "تعارف مهني بخطوات أبسط.",
-      "بطاقات أعمال رقمية وروابط صفحات مناسبة لأجهزة NFC المتوافقة. تُحدّد الأجهزة والتوافق في عرض السعر، دون تكامل مع الأنظمة الداخلية.",
+      "بطاقات أعمال رقمية وNFC",
+      "معلوماتك وروابط التواصل معك، في رابط واحد.",
+      "صفحة تجمع اسمك وعملك وروابط التواصل معك، تشاركها برابط أو رمز QR. ويمكن فتحها بتقريب موبايل يدعم NFC من بطاقة مناسبة. نتفق على تكلفة البطاقة والأجهزة التي تدعمها قبل الطلب."
     ],
     [
-      "الكتالوجات الرقمية وصفحات الأعمال الذكية",
-      "منتجاتك ومعلوماتك، بصورة منظّمة.",
-      "كتالوجات وصفحات أعمال مستقلة لعرض المنتجات والخدمات وروابط التواصل المعتمدة، دون تكامل مع المخزون أو الدفع أو أنظمة المحل.",
-    ],
-  ],
+      "كتالوجات وصفحات لعرض المنتجات",
+      "اعرض منتجاتك وتفاصيلها في مكان واحد.",
+      "كتالوج فيه صور المنتجات ووصفها وأسعارها، أو صفحة تجمع خدماتك وروابط التواصل معك. يتصفّح الزبون ويتواصل معك للاستفسار. الخدمة لا تدير المخزون ولا تستقبل دفعات ولا ترتبط بأنظمة المحل."
+    ]
+  ]
 } as const;
 export const copy = {
   en: {
-    nav: ["Home", "Services", "Our work", "About", "Contact"],
+    nav: [
+      "Home",
+      "Services",
+      "Our work",
+      "About",
+      "Contact"
+    ],
     menu: "Menu",
     close: "Close menu",
     switch: "العربية",
     skip: "Skip to content",
-    eyebrow: "DIGITAL SOLUTIONS · JORDAN",
-    headline: "Your next step,",
-    accent: "built smarter.",
-    intro:
-      "Practical digital experiences for small businesses. Thoughtful design, dependable development, and security built in from the start.",
-    primary: "Explore our solutions",
-    secondary: "Let’s talk",
-    services: "Small ideas. Real possibilities.",
-    servicesIntro:
-      "Five practical, standalone solutions. No integration with internal shop systems. Security and privacy are included in every service, without an extra fee or an absolute security guarantee.",
+    eyebrow: "WEBSITES, MENUS & MORE · JORDAN",
+    headline: "Your business.",
+    accent: "Easy to reach.",
+    intro: "We build websites, digital menus, and pages that show your products and contact details. Help customers find what they need, on a phone or a laptop.",
+    primary: "See our services",
+    secondary: "Request a Quote",
+    services: "What would help your business?",
+    servicesIntro: "Introduce your business, share your menu, or show your products. Choose a service below to see how it works.",
     quote: "Request a Quote",
     viewAll: "View all services",
-    details: "Explore service",
-    process: "A clear path from idea to launch.",
+    details: "See how it works",
+    process: "What happens after you get in touch?",
     steps: [
       [
         "01",
-        "Understand",
-        "We start with your business, your audience, and what you need to achieve.",
+        "Tell us what you need",
+        "Tell us about your business and what you want to show your customers. We help you choose a service."
       ],
       [
         "02",
-        "Build",
-        "Design and development come together around a clear, agreed scope.",
+        "Agree on the details",
+        "We agree on the pages, content, price, and delivery date before starting."
       ],
       [
         "03",
-        "Refine",
-        "We check usability, accessibility, and security before a considered handover.",
-      ],
+        "Build, test, and review",
+        "We build it, check it on phones and computers, and review it with you before launch."
+      ]
     ],
-    cta: "Have something in mind?",
-    ctaBody: "Let’s find a practical way to bring it online.",
-    footer: "Practical digital solutions for growing businesses in Jordan.",
+    cta: "Tell us what you have in mind.",
+    ctaBody: "Not sure which service to choose? Tell us about your business and we’ll help you decide.",
+    footer: "Websites, digital menus, and product pages for small businesses in Jordan.",
     privacy: "Privacy policy",
     terms: "Terms of use",
     rights: "TEVORLI. Built Smart. Built Secure.",
-    serviceTitle: "Digital solutions, with purpose.",
-    workTitle: "Good work starts with a clear idea.",
-    workBody:
-      "Our portfolio will be shared here when projects are approved for publication. No client projects or results are being claimed on this page.",
-    workNote: "Portfolio coming soon",
-    aboutTitle: "Practical thinking. Thoughtful digital.",
-    aboutBody:
-      "TEVORLI is a digital solutions agency in Jordan, focused on practical tools for small businesses. We bring design and development together to make everyday business interactions simpler.",
+    serviceTitle: "Choose what your business needs.",
+    workTitle: "See our work.",
+    workBody: "There are no projects to show here yet. We’ll add completed work once we have permission to share it.",
+    workNote: "No published projects yet",
+    aboutTitle: "We make it easier to find your business online.",
+    aboutBody: "TEVORLI provides digital solutions in Jordan. We help small businesses introduce themselves, show their menus and products, and make it easier for customers to get in touch.",
     values: [
       [
-        "Clarity first",
-        "Useful experiences start with understandable content and straightforward navigation.",
+        "Easy to understand",
+        "Visitors should be able to find what you offer and how to contact you without having to figure things out."
       ],
       [
-        "Security included",
-        "Privacy and security are included in every service without additional fees. No absolute security guarantee is made.",
+        "Security is part of the work",
+        "We check security and privacy as part of every service, without an extra fee. These checks reduce risks; they cannot remove every risk."
       ],
       [
-        "A considered fit",
-        "The right solution should match the business need and avoid unnecessary complexity.",
-      ],
+        "Only what you need",
+        "We help you choose the pages and features that serve your business, without adding things you won’t use."
+      ]
     ],
-    contactTitle: "Let’s build your next step.",
-    contactBody:
-      "Tell us what your business needs. Contact us by email or Instagram to discuss a standalone digital solution.",
+    contactTitle: "How can we help?",
+    contactBody: "Tell us about your business and what you need. Reach us by email or Instagram to ask a question or request a quote.",
     contactNote: "Email or Instagram",
-    contactHelp:
-      "Use the links below to request a quote. There is no online submission form. Choose Gmail in your browser or a configured mail app. Gmail and Instagram have their own privacy practices.",
-    detailLabel: "THE SOLUTION",
-    included: "What we can plan together",
+    contactHelp: "Choose Gmail in your browser, open your mail app, or message us on Instagram. Nothing is sent until you send it yourself. Gmail and Instagram have their own privacy policies.",
+    detailLabel: "ABOUT THIS SERVICE",
+    included: "What we agree on before starting",
     deliverables: [
-      "A clear structure shaped around your business",
-      "Responsive layouts for mobile, tablet, and desktop",
-      "Arabic and English content options",
-      "Usability, accessibility, and security checks",
+      "The pages and information your customers need",
+      "A layout for phones, tablets, and computers",
+      "Whether you need Arabic, English, or both",
+      "Checks for usability, keyboard access, and security"
     ],
-    scope:
-      "Final features, content, price, and delivery dates are agreed in the project scope. No fixed performance or business outcome is promised.",
+    scope: "We agree on the content, features, price, and delivery date in writing. These services do not connect to your shop’s sales, stock, or payment systems.",
     back: "All services",
-    notFound: "This page took a different path.",
-    notFoundBody:
-      "The page you requested could not be found. Return home or explore our services.",
+    notFound: "We couldn’t find this page.",
+    notFoundBody: "The link may be incorrect. Go back to the home page or browse our services.",
     home: "Back to home",
-    legalNote:
-      "Draft policy — business details and legal approval pending. Review before public launch.",
+    legalNote: "Draft for review. Business details and legal wording still need confirmation before public launch."
   },
   ar: {
-    nav: ["الرئيسية", "الخدمات", "أعمالنا", "من نحن", "تواصل معنا"],
+    nav: [
+      "الرئيسية",
+      "الخدمات",
+      "أعمالنا",
+      "من نحن",
+      "تواصل معنا"
+    ],
     menu: "القائمة",
     close: "إغلاق القائمة",
     switch: "English",
     skip: "انتقل إلى المحتوى",
-    eyebrow: "حلول رقمية · الأردن",
-    headline: "خطوتك القادمة،",
-    accent: "بُنيت بذكاء.",
-    intro:
-      "تجارب رقمية عملية للأعمال الصغيرة. تصميم مدروس، وتطوير موثوق، وأمان حاضر من البداية.",
-    primary: "اكتشف حلولنا",
-    secondary: "لنتحدث",
-    services: "أفكار صغيرة. إمكانات حقيقية.",
-    servicesIntro:
-      "خمسة حلول عملية ومستقلة، دون ربط بأنظمة المحلات الداخلية. الأمان والخصوصية ضمن جميع الخدمات دون رسوم إضافية أو ضمان أمان مطلق.",
+    eyebrow: "مواقع ومنيو إلكتروني وأكثر · الأردن",
+    headline: "عرّف الناس بعملك،",
+    accent: "وسهّل التواصل.",
+    intro: "نصمّم مواقع ومنيو إلكتروني وصفحات لعرض منتجاتك ومعلومات التواصل معك. زبونك يلاقي اللي يحتاجه بسهولة، من الموبايل أو الكمبيوتر.",
+    primary: "شوف خدماتنا",
+    secondary: "اطلب عرض سعر",
+    services: "شو يحتاج عملك؟",
+    servicesIntro: "موقع يعرّف بعملك، منيو للمطعم، أو صفحة لمنتجاتك. اختر الخدمة لتعرف كيف ممكن تفيدك.",
     quote: "اطلب عرض سعر",
     viewAll: "جميع الخدمات",
-    details: "اكتشف الخدمة",
-    process: "طريق واضح من الفكرة إلى الإطلاق.",
+    details: "تعرّف على الخدمة",
+    process: "شو بصير بعد ما تراسلنا؟",
     steps: [
-      ["01", "نفهم", "نبدأ بفهم عملك وجمهورك والهدف الذي تريد الوصول إليه."],
-      ["02", "نبني", "نجمع التصميم والتطوير ضمن نطاق واضح ومتفق عليه."],
+      [
+        "01",
+        "احكِ لنا عن عملك",
+        "شو بتقدّم؟ وشو بدك تعرض لزبائنك؟ نسمع منك ونساعدك تختار الخدمة المناسبة."
+      ],
+      [
+        "02",
+        "نتفق على التفاصيل",
+        "نحدّد الصفحات والمحتوى والسعر وموعد التسليم قبل ما نبدأ."
+      ],
       [
         "03",
-        "نُحسّن",
-        "نراجع سهولة الاستخدام وإمكانية الوصول والأمان قبل التسليم.",
-      ],
+        "نجهّز ونراجع معك",
+        "نصمّم ونفحص على الموبايل والكمبيوتر، ونراجع النتيجة معك قبل النشر."
+      ]
     ],
-    cta: "لديك فكرة؟",
-    ctaBody: "لنجد طريقة عملية لنقلها إلى العالم الرقمي.",
-    footer: "حلول رقمية عملية للأعمال الصغيرة في الأردن.",
+    cta: "احكِ لنا شو في بالك.",
+    ctaBody: "مش متأكد أي خدمة تختار؟ عرّفنا بعملك وبنساعدك تحدّد اللي تحتاجه.",
+    footer: "مواقع ومنيو إلكتروني وصفحات منتجات للأعمال الصغيرة في الأردن.",
     privacy: "سياسة الخصوصية",
     terms: "شروط الاستخدام",
     rights: "TEVORLI. Built Smart. Built Secure.",
-    serviceTitle: "حلول رقمية، بهدف واضح.",
-    workTitle: "كل عمل جيد يبدأ بفكرة واضحة.",
-    workBody:
-      "سنشارك أعمالنا هنا عند اعتماد المشاريع للنشر. لا تعرض هذه الصفحة مشاريع عملاء أو نتائج غير موثّقة.",
-    workNote: "معرض الأعمال قريبًا",
-    aboutTitle: "تفكير عملي. تجربة رقمية مدروسة.",
-    aboutBody:
-      "TEVORLI وكالة حلول رقمية في الأردن، تركّز على الأدوات العملية للأعمال الصغيرة. نجمع التصميم والتطوير لتبسيط تفاعلات الأعمال اليومية.",
+    serviceTitle: "اختَر اللي يحتاجه عملك.",
+    workTitle: "تعرّف على أعمالنا.",
+    workBody: "ما في مشاريع منشورة هنا حاليًا. سنضيف أعمالًا مكتملة بعد الحصول على موافقة أصحابها على عرضها.",
+    workNote: "لا توجد أعمال منشورة بعد",
+    aboutTitle: "نساعد الناس يتعرّفوا على عملك أونلاين.",
+    aboutBody: "TEVORLI تقدّم حلولًا رقمية في الأردن. نساعد أصحاب الأعمال الصغيرة يعرّفوا بخدماتهم، ويعرضوا المنيو والمنتجات، ويسهّلوا على الزبائن التواصل معهم.",
     values: [
-      ["الوضوح أولًا", "تبدأ التجربة المفيدة بمحتوى مفهوم وتنقّل مباشر."],
       [
-        "الأمان ضمن الأساس",
-        "الخصوصية والأمان ضمن جميع الخدمات دون رسوم إضافية، ولا نقدّم ضمان أمان مطلقًا.",
+        "كلام واضح واستخدام سهل",
+        "الزائر يعرف شو بتقدّم وكيف يتواصل معك، بدون ما يحتار أو يضيع بين الصفحات."
       ],
       [
-        "حل يناسب الحاجة",
-        "الحل المناسب يلائم حاجة العمل ويتجنّب التعقيد غير الضروري.",
+        "الأمان جزء من الشغل",
+        "نفحص الأمان والخصوصية ضمن كل خدمة، بدون رسوم إضافية. الفحوصات تقلّل المخاطر، لكنها ما بتلغيها بالكامل."
       ],
+      [
+        "على قدّ حاجتك",
+        "نساعدك تختار الصفحات والميزات اللي تفيد عملك، بدون إضافات ما رح تستخدمها."
+      ]
     ],
-    contactTitle: "لنبنِ خطوتك القادمة.",
-    contactBody:
-      "تواصل معنا عبر البريد أو إنستغرام لمناقشة حل رقمي مستقل يناسب عملك.",
-    contactNote: "البريد أو إنستغرام",
-    contactHelp:
-      "استخدم الروابط أدناه لطلب عرض سعر. لا يوجد نموذج مراسلة داخل الموقع. اختر Gmail في المتصفح أو تطبيق بريد مُعدًّا. يخضع Gmail وإنستغرام لسياسات الخصوصية الخاصة بهما.",
-    detailLabel: "الحل",
-    included: "ما يمكننا التخطيط له معًا",
+    contactTitle: "كيف نقدر نساعدك؟",
+    contactBody: "احكِ لنا عن عملك واللي تحتاجه. راسلنا بالإيميل أو على إنستغرام للاستفسار أو طلب عرض سعر.",
+    contactNote: "الإيميل أو إنستغرام",
+    contactHelp: "افتح Gmail من المتصفح، أو استخدم تطبيق البريد، أو راسلنا على إنستغرام. ما بتنرسل أي رسالة إلا لما ترسلها بنفسك. لكل من Gmail وإنستغرام سياسة خصوصية خاصة فيه.",
+    detailLabel: "عن الخدمة",
+    included: "شو بنتفق عليه قبل ما نبدأ؟",
     deliverables: [
-      "هيكل واضح يناسب طبيعة عملك",
-      "تصميم متجاوب للهاتف والجهاز اللوحي والحاسوب",
-      "خيارات محتوى بالعربية والإنجليزية",
-      "مراجعات سهولة الاستخدام وإمكانية الوصول والأمان",
+      "الصفحات والمعلومات اللي يحتاجها زبونك",
+      "شكل مناسب للموبايل والتابلت والكمبيوتر",
+      "المحتوى بالعربي أو الإنجليزي أو الاثنين",
+      "فحص سهولة الاستخدام، والتنقّل بالكيبورد، والأمان"
     ],
-    scope:
-      "تُحدّد الميزات والمحتوى والسعر ومواعيد التسليم ضمن اتفاق المشروع. لا نقدّم وعودًا ثابتة بالأداء أو النتائج التجارية.",
+    scope: "نتفق كتابةً على المحتوى والميزات والسعر وموعد التسليم. خدماتنا لا ترتبط بأنظمة البيع أو المخزون أو الدفع في المحل.",
     back: "جميع الخدمات",
-    notFound: "هذه الصفحة سلكت طريقًا آخر.",
-    notFoundBody:
-      "تعذّر العثور على الصفحة المطلوبة. يمكنك العودة للرئيسية أو استكشاف خدماتنا.",
+    notFound: "الصفحة غير موجودة.",
+    notFoundBody: "ممكن يكون الرابط غير صحيح. ارجع للرئيسية أو تعرّف على خدماتنا.",
     home: "العودة للرئيسية",
-    legalNote:
-      "مسودة سياسة — بيانات المنشأة والمراجعة القانونية قيد الاعتماد. تُراجع قبل الإطلاق العام.",
-  },
+    legalNote: "مسودة للمراجعة. بيانات العمل والصياغة القانونية بحاجة إلى تأكيد قبل إطلاق الموقع للعامة."
+  }
 } as const;
 export const legal = {
   en: {
     privacy: [
       [
-        "Scope",
-        "This draft describes the current static TEVORLI website. Legal registration has not been confirmed. Privacy requests can be sent to tevorli.digital.solutions@gmail.com.",
+        "About this policy",
+        "This draft explains privacy on the current TEVORLI website. Legal registration has not been confirmed. For privacy questions, email tevorli.digital.solutions@gmail.com."
       ],
       [
-        "Information and cookies",
-        "This website has no analytics, advertising trackers, account system, or enabled contact form. It does not set application cookies or collect form submissions. The hosting provider may process connection data such as IP addresses and request logs.",
+        "What the website collects",
+        "The website has no analytics, advertising trackers, customer accounts, or contact form. It does not collect form responses or set its own cookies. Vercel hosts the site and may process your IP address and visit logs. Its sign-in protection for this preview may use cookies."
       ],
       [
-        "External contact options",
-        "Gmail and Instagram open only when you choose their links and are governed by their providers’ policies. Opening an email option does not send a message. Copy email uses your clipboard only after you press the copy button; clipboard contents are not read or sent by this site.",
+        "Email, Instagram, and copying our address",
+        "Gmail and Instagram open only when you choose their links. They have their own privacy policies. Opening an email option does not send a message. The copy button copies our email address only after you press it. We do not read or send the contents of your clipboard."
       ],
       [
-        "Hosting and retention",
-        "The hosting provider, processing location, log retention period, and deletion procedure must be confirmed before public launch. No specific retention period is promised at this stage.",
+        "Hosting records",
+        "Before public launch, we still need to confirm where Vercel processes hosting records, how long it keeps them, and how deletion requests are handled. We cannot give a confirmed retention period yet."
       ],
       [
         "Your choices",
-        "You can browse without submitting personal information. For privacy requests use tevorli.digital.solutions@gmail.com. Applicable rights and final legal wording require review under Jordanian law.",
+        "You can browse without sending us personal details. Send privacy questions or requests to tevorli.digital.solutions@gmail.com. Your rights and the final policy need review under Jordanian law."
       ],
       [
-        "Changes",
-        "This policy must be updated if forms, analytics, integrations, or hosting practices change.",
-      ],
+        "Policy changes",
+        "We will need to update this policy if we add forms, analytics, connections to other services, or change how the site is hosted."
+      ]
     ],
     terms: [
       [
-        "Status and scope",
-        "These draft terms describe the informational TEVORLI website. Legal registration has not been confirmed. The official contact email is tevorli.digital.solutions@gmail.com.",
+        "About these terms",
+        "These draft terms cover the TEVORLI information website. Legal registration has not been confirmed. Contact us at tevorli.digital.solutions@gmail.com."
       ],
       [
-        "Website information",
-        "Service descriptions provide general information. Deliverables, payment terms, timelines, and responsibilities require a separate written project agreement.",
+        "Services and prices",
+        "The service pages explain what we offer. The exact work, price, payment terms, delivery dates, and responsibilities must be agreed in a separate written project agreement."
       ],
       [
-        "Permitted use",
-        "Use the website lawfully. Do not attempt unauthorized access, interfere with availability, or misuse the site or its content.",
+        "Using the website",
+        "Use the website lawfully. Do not try to access it without permission, disrupt it, or misuse its content."
       ],
       [
         "Content and availability",
-        "Use of brand assets requires appropriate authorization. Information may change. No uninterrupted availability or specific business result is guaranteed; any limitations must comply with applicable law.",
+        "You need permission to use TEVORLI brand materials. Website information may change. We cannot guarantee that the site will always be available or that a service will produce a particular business result. Any limits on responsibility must follow applicable law."
       ],
       [
-        "Governing terms",
-        "Jordanian jurisdiction, consumer rights, dispute procedures, and final legal wording require review by qualified counsel before public launch.",
-      ],
-    ],
+        "Legal review before launch",
+        "A qualified legal adviser still needs to review the final terms, including Jordanian law, consumer rights, and how disputes are handled, before public launch."
+      ]
+    ]
   },
   ar: {
     privacy: [
       [
-        "النطاق",
-        "تصف هذه المسودة موقع TEVORLI الثابت الحالي. لم يتم تأكيد التسجيل القانوني. يمكن إرسال طلبات الخصوصية إلى tevorli.digital.solutions@gmail.com.",
+        "عن هذه السياسة",
+        "هذه مسودة توضّح الخصوصية في موقع TEVORLI الحالي. لم يتم تأكيد التسجيل القانوني. لأسئلة الخصوصية، راسلنا على tevorli.digital.solutions@gmail.com."
       ],
       [
-        "البيانات وملفات الارتباط",
-        "لا يستخدم الموقع أدوات تحليل أو تتبّع إعلاني، ولا يحتوي على حسابات أو نموذج تواصل مفعّل. لا يضع ملفات ارتباط خاصة بالتطبيق ولا يستقبل بيانات نماذج. قد يعالج مزوّد الاستضافة بيانات الاتصال مثل عناوين IP وسجلات الطلبات.",
+        "ما البيانات التي يجمعها الموقع؟",
+        "لا نستخدم أدوات لتحليل الزيارات أو تتبّع الإعلانات، ولا توجد حسابات زبائن أو نماذج مراسلة. الموقع لا يستقبل بيانات نماذج ولا يضع ملفات تعريف ارتباط خاصة به. تستضيف Vercel الموقع، وقد تعالج عنوان اتصالك بالإنترنت وسجل الزيارات. وقد يستخدم تسجيل الدخول لحماية هذه المعاينة ملفات تعريف ارتباط."
       ],
       [
-        "خيارات التواصل الخارجية",
-        "يُفتح Gmail أو إنستغرام عند اختيار رابطه فقط، ويخضع كل منهما لسياسة مزوّده. فتح خيار البريد لا يرسل رسالة. يُنسخ عنوان البريد إلى الحافظة عند ضغط زر النسخ فقط؛ لا يقرأ الموقع محتويات الحافظة ولا يرسلها.",
+        "الإيميل وإنستغرام ونسخ العنوان",
+        "لا يُفتح Gmail أو إنستغرام إلا عند اختيار رابطه، ولكل منهما سياسة خصوصية خاصة به. فتح البريد لا يرسل رسالة. زر النسخ ينسخ عنوان بريدنا فقط بعد الضغط عليه. لا نقرأ محتويات الحافظة ولا نرسلها."
       ],
       [
-        "الاستضافة والاحتفاظ",
-        "يجب تأكيد مزوّد الاستضافة ومكان المعالجة ومدة الاحتفاظ بالسجلات وآلية حذفها قبل الإطلاق العام. لا نحدّد مدة احتفاظ غير موثّقة في هذه المرحلة.",
+        "سجلات الاستضافة",
+        "قبل الإطلاق العام، نحتاج إلى تأكيد مكان معالجة Vercel لسجلات الاستضافة، ومدة حفظها، وطريقة طلب حذفها. لم تتأكد مدة الحفظ بعد."
       ],
       [
-        "خياراتك",
-        "يمكنك التصفّح دون تقديم معلومات شخصية. يمكن إرسال طلبات الخصوصية إلى tevorli.digital.solutions@gmail.com. تخضع الحقوق المنطبقة والصياغة النهائية لمراجعة وفق القانون الأردني.",
+        "خياراتك وطلباتك",
+        "يمكنك التصفّح دون إرسال معلومات شخصية لنا. لأسئلة الخصوصية أو طلباتها، راسل tevorli.digital.solutions@gmail.com. الحقوق التي تنطبق عليك والصياغة النهائية بحاجة إلى مراجعة وفق القانون الأردني."
       ],
       [
-        "التغييرات",
-        "تُحدّث السياسة عند إضافة نماذج أو تحليلات أو تكاملات أو تغيير ممارسات الاستضافة.",
-      ],
+        "تحديث السياسة",
+        "نحتاج إلى تحديث هذه السياسة إذا أضفنا نماذج أو أدوات تحليل أو ربطًا بخدمات أخرى، أو غيّرنا طريقة استضافة الموقع."
+      ]
     ],
     terms: [
       [
-        "الحالة والنطاق",
-        "تصف هذه الشروط الأولية موقع TEVORLI التعريفي. لم يتم تأكيد التسجيل القانوني. بريد التواصل الرسمي هو tevorli.digital.solutions@gmail.com.",
+        "عن هذه الشروط",
+        "هذه شروط أولية لموقع TEVORLI التعريفي. لم يتم تأكيد التسجيل القانوني. بريد التواصل هو tevorli.digital.solutions@gmail.com."
       ],
       [
-        "معلومات الموقع",
-        "أوصاف الخدمات للتعريف العام. تُحدّد المخرجات والدفع والمواعيد والمسؤوليات ضمن اتفاق مشروع مكتوب ومستقل.",
+        "الخدمات والأسعار",
+        "صفحات الخدمات تشرح ما نقدّمه. العمل المطلوب والسعر وشروط الدفع وموعد التسليم ومسؤوليات الطرفين تُحدّد في اتفاق مشروع مكتوب ومنفصل."
       ],
       [
-        "الاستخدام المسموح",
-        "استخدم الموقع بصورة قانونية. يُمنع الوصول غير المصرّح به أو تعطيل الموقع أو إساءة استخدام محتواه.",
+        "استخدام الموقع",
+        "استخدم الموقع بشكل قانوني. لا تحاول الدخول إليه دون إذن، أو تعطيله، أو إساءة استخدام محتواه."
       ],
       [
-        "المحتوى والتوافر",
-        "يتطلّب استخدام أصول العلامة إذنًا مناسبًا. قد تتغيّر المعلومات ولا يُضمن توافر دائم أو نتيجة تجارية محدّدة. يجب أن تتوافق أي حدود للمسؤولية مع القانون المنطبق.",
+        "المحتوى وتوفّر الموقع",
+        "استخدام شعار TEVORLI وملفات هويتها يحتاج إلى إذن. قد تتغيّر معلومات الموقع. لا نضمن أن يبقى متاحًا دون انقطاع أو أن تحقّق الخدمة نتيجة تجارية محدّدة. أي حدود للمسؤولية يجب أن تلتزم بالقانون الذي ينطبق عليها."
       ],
       [
-        "الأحكام القانونية",
-        "تحتاج أحكام الاختصاص الأردني وحقوق المستهلك وتسوية النزاعات والصياغة النهائية إلى مراجعة قانونية مؤهلة قبل الإطلاق العام.",
-      ],
-    ],
-  },
-};
+        "المراجعة القانونية قبل الإطلاق",
+        "ما زالت الشروط النهائية بحاجة إلى مراجعة قانونية مؤهلة قبل الإطلاق العام، بما يشمل القانون الأردني وحقوق المستهلك وطريقة حل النزاعات."
+      ]
+    ]
+  }
+} as const;

@@ -39,7 +39,7 @@ export function ContactLinks({ locale }: { locale: Locale }) {
         rel="noopener noreferrer"
         dir="ltr"
       >
-        Instagram · @tevorli
+        {locale === "ar" ? "إنستغرام" : "Instagram"} · <bdi>@tevorli</bdi>
         <ArrowUpRight size={16} aria-hidden="true" />
       </a>
       <a
@@ -53,8 +53,8 @@ export function ContactLinks({ locale }: { locale: Locale }) {
       </a>
       <span className="contact-hint">
         {locale === "ar"
-          ? "فتح البريد يتطلب إعداد تطبيق بريد. يمكنك أيضًا استخدام Gmail في المتصفح."
-          : "Mail app setup is required. You can also use Gmail in your browser."}
+          ? "ما فتح تطبيق البريد؟ جرّب Gmail من المتصفح."
+          : "Mail app didn’t open? Try Gmail in your browser."}
       </span>
     </div>
   );
@@ -126,8 +126,8 @@ export function Callout({ locale }: { locale: Locale }) {
       <div>
         <span className="eyebrow">
           {locale === "ar"
-            ? "لنبدأ شيئًا مميزًا"
-            : "LET’S MAKE SOMETHING MATTER"}
+            ? "عندك سؤال؟"
+            : "HAVE A QUESTION?"}
         </span>
         <h2>{t.cta}</h2>
         <p>{t.ctaBody}</p>
@@ -198,11 +198,11 @@ export function ServiceGrid({
 function HeroArt({ locale }: { locale: Locale }) {
   const ar = locale === "ar";
   const labels = ar
-    ? ["موقعك", "قائمتك", "روابط QR", "بطاقتك الرقمية", "كتالوجك"]
+    ? ["موقعك", "المنيو", "رمز يفتح رابطك", "بطاقتك الرقمية", "منتجاتك"]
     : [
         "Your website",
         "Your menu",
-        "QR links",
+        "Scan to open",
         "Your digital card",
         "Your catalog",
       ];
@@ -228,15 +228,15 @@ function HeroArt({ locale }: { locale: Locale }) {
           </span>
           <div>
             <span className="studio-kicker">
-              {ar ? "من فكرة إلى حضور" : "FROM IDEA TO PRESENCE"}
+              {ar ? "عملك في صفحة" : "YOUR BUSINESS ON A PAGE"}
             </span>
             <div className="studio-title">
-              {ar ? "مساحة لفكرتك." : "Room for your idea."}
+              {ar ? "عرّفهم عليك." : "Show what you do."}
             </div>
             <p>
               {ar
-                ? "حل بسيط. تفاصيل تصنع الفرق."
-                : "Simple solutions. Thoughtful details."}
+                ? "خدماتك وروابطك، بمكان واحد."
+                : "Your services and links, in one place."}
             </p>
           </div>
         </div>
@@ -311,11 +311,11 @@ export function Home({ locale }: { locale: Locale }) {
       <div className="capability-strip">
         <div className="container">
           <span>
-            {locale === "ar" ? "مصمّم لهدف" : "DESIGNED WITH PURPOSE"}
+            {locale === "ar" ? "معلومات واضحة" : "CLEAR INFORMATION"}
           </span>
           <span className="strip-dot" />
           <span>
-            {locale === "ar" ? "متجاوب على كل شاشة" : "RESPONSIVE BY DESIGN"}
+            {locale === "ar" ? "للموبايل والكمبيوتر" : "FOR PHONES & COMPUTERS"}
           </span>
           <span className="strip-dot" />
           <span>
@@ -559,14 +559,14 @@ export function ContentPage({
           title={
             slug === "quote"
               ? locale === "ar"
-                ? "فكرتك تبدأ بمحادثة."
-                : "Your idea starts with a conversation."
+                ? "شو حاب نجهّز لعملك؟"
+                : "What does your business need?"
               : t.contactTitle
           }
           body={
             locale === "ar"
-              ? "اختر الطريقة الأنسب لك، سواء كنت تستخدم الكمبيوتر أو الهاتف. التسعير حسب نطاق مشروعك، والتواصل مباشرة عبر بريدك أو إنستغرام."
-              : "Choose what works for you, on a laptop or phone. Pricing depends on your project scope. Contact us directly through your email or Instagram."
+              ? "راسلنا بالإيميل أو على إنستغرام. بنفهم المطلوب وبنتفق على التفاصيل والسعر قبل ما نبدأ."
+              : "Email us or message us on Instagram. We’ll discuss what you need and agree on the details and price before starting."
           }
         />
         <ContactOptions locale={locale} quote={slug === "quote"} />
