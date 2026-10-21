@@ -1,84 +1,80 @@
 export const experience = {
   en: {
     jump: "On this page",
-    solutions: "Find your solution",
-    process: "How we work",
-    faq: "Good questions, clear answers.",
+    solutions: "Our services",
+    process: "How it works",
+    faq: "Before you decide.",
     faqLink: "Common questions",
-    guideTitle: "Not sure where to start?",
-    guideBody:
-      "Tell us what you need to share, present, or simplify. We can discuss which standalone solution fits.",
-    guideAction: "Discuss your idea",
-    fit: "A good fit for",
+    guideTitle: "Not sure what you need?",
+    guideBody: "Tell us about your business. We’ll help you choose a website, menu, product page, or another service from this list.",
+    guideAction: "Ask us for help",
+    fit: "Useful for",
     fits: [
-      "A business website or a focused campaign",
-      "Cafés, restaurants, and readable menus",
-      "Sharing an approved page from a physical touchpoint",
-      "Professional introductions and contact sharing",
-      "Presenting products and essential business information",
+      "Introducing your business or promoting an offer",
+      "Restaurants and cafés sharing food and drink prices",
+      "Putting a menu or page link on a table, sign, or printed card",
+      "Sharing your name, business, and contact details",
+      "Helping customers browse your products and ask about them"
     ],
-    quoteNote:
-      "Pricing is based on the project scope. Tell us the solution you have in mind to request a quote.",
-    otherContact: "Other ways to contact us",
-    scopeLink: "What is included",
+    quoteNote: "The price depends on what you need. Tell us about your project and we’ll send you a quote.",
+    otherContact: "Contact us another way",
+    scopeLink: "What do we agree on?",
     faqs: [
       [
-        "How is a project priced?",
-        "We provide a quote after agreeing the requirements, content, and deliverables. There are no fixed package prices on this website.",
+        "How much does it cost?",
+        "The price depends on the pages, content, and features you need. We agree on those details and send you a quote before starting."
       ],
       [
-        "Will this connect to my shop’s internal systems?",
-        "These are simple, standalone digital solutions. POS, inventory, payments, and internal shop-system integrations are outside the offered scope.",
+        "Can I use it to take orders or manage my shop?",
+        "These services show your menu, products, or business information. They do not take payments or connect to your till, stock, or internal ordering system. Customers can contact you using the links on your page."
       ],
       [
-        "Can the content be Arabic and English?",
-        "Arabic and English content options are available, with the language scope agreed for each project.",
+        "Can I have Arabic and English?",
+        "Yes. You can choose Arabic, English, or both. We agree on the languages and content before starting."
       ],
       [
-        "Is security an additional paid service?",
-        "Privacy and security are included in the development approach without an extra fee. No website can be promised absolute security.",
-      ],
-    ],
+        "Do security checks cost extra?",
+        "No. Security and privacy checks are part of every service. They help reduce risks, but no website can be guaranteed completely secure."
+      ]
+    ]
   },
   ar: {
     jump: "في هذه الصفحة",
-    solutions: "اختر الحل المناسب",
-    process: "كيف نعمل",
-    faq: "أسئلة واضحة. إجابات مباشرة.",
+    solutions: "خدماتنا",
+    process: "كيف نشتغل",
+    faq: "أسئلة ممكن تكون في بالك.",
     faqLink: "أسئلة شائعة",
-    guideTitle: "غير متأكد من نقطة البداية؟",
-    guideBody:
-      "أخبرنا بما تريد عرضه أو مشاركته أو تبسيطه، لنناقش الحل الرقمي المستقل الأنسب لحاجتك.",
-    guideAction: "لنتحدث عن فكرتك",
+    guideTitle: "مش عارف شو تختار؟",
+    guideBody: "احكِ لنا عن عملك. بنساعدك تختار موقع، منيو، صفحة منتجات، أو خدمة ثانية من القائمة.",
+    guideAction: "اسألنا وبنساعدك",
     fit: "مناسب لـ",
     fits: [
-      "موقع تعريفي للعمل أو حملة بصفحة مركّزة",
-      "المقاهي والمطاعم وعرض القوائم بوضوح",
-      "مشاركة صفحة معتمدة من نقطة تواصل فعلية",
-      "التعريف المهني ومشاركة قنوات التواصل",
-      "عرض المنتجات ومعلومات العمل الأساسية",
+      "التعريف بعملك أو الإعلان عن عرض",
+      "المطاعم والمقاهي لعرض الأصناف والأسعار",
+      "وضع رابط منيو أو صفحة على طاولة أو لافتة أو بطاقة مطبوعة",
+      "مشاركة اسمك وعملك ومعلومات التواصل معك",
+      "مساعدة الزبون يشوف منتجاتك ويسأل عنها"
     ],
-    quoteNote:
-      "التسعير حسب نطاق المشروع. أخبرنا بالحل الذي تفكّر فيه لطلب عرض سعر.",
-    otherContact: "طرق أخرى للتواصل",
-    scopeLink: "ما الذي يشمله الحل",
+    quoteNote: "السعر حسب اللي تحتاجه. احكِ لنا عن مشروعك وبنرسل لك عرض سعر.",
+    otherContact: "تواصل معنا بطريقة ثانية",
+    scopeLink: "شو بنتفق عليه؟",
     faqs: [
       [
-        "كيف يتم تسعير المشروع؟",
-        "نقدّم عرض سعر بعد الاتفاق على المتطلبات والمحتوى والمخرجات. لا توجد أسعار باقات ثابتة على هذا الموقع.",
+        "كم بتكلّف الخدمة؟",
+        "السعر حسب الصفحات والمحتوى والميزات اللي تحتاجها. بنحدّدها معك وبنرسل عرض سعر قبل ما نبدأ."
       ],
       [
-        "هل يرتبط الحل بأنظمة المحل الداخلية؟",
-        "نقدّم حلولًا رقمية بسيطة ومستقلة. التكامل مع نقاط البيع أو المخزون أو الدفع أو أنظمة المحل الداخلية خارج نطاق الخدمات المعروضة.",
+        "بقدر أستقبل طلبات أو أدير المحل من خلالها؟",
+        "الخدمات لعرض المنيو أو المنتجات أو معلومات عملك. ما بتستقبل دفعات، وما بترتبط بالكاشير أو المخزون أو نظام الطلبات داخل المحل. الزبون بقدر يتواصل معك من الروابط الموجودة في صفحتك."
       ],
       [
-        "هل يمكن أن يكون المحتوى بالعربية والإنجليزية؟",
-        "تتوفر خيارات محتوى بالعربية والإنجليزية، ويُتفق على نطاق اللغات ضمن كل مشروع.",
+        "بقدر أختار عربي وإنجليزي؟",
+        "نعم، عربي أو إنجليزي أو الاثنين. بنتفق على اللغات والمحتوى قبل ما نبدأ."
       ],
       [
-        "هل الأمان خدمة إضافية مدفوعة؟",
-        "الخصوصية والأمان ضمن منهجية التطوير دون رسوم إضافية، ولا يمكن تقديم وعد بأمان مطلق لأي موقع.",
-      ],
-    ],
-  },
+        "فحوصات الأمان عليها تكلفة إضافية؟",
+        "لا، فحص الأمان والخصوصية جزء من كل خدمة. الفحوصات بتساعد على تقليل المخاطر، لكن ما في موقع ممكن نضمن أمانه بالكامل."
+      ]
+    ]
+  }
 } as const;
