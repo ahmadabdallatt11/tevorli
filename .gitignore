@@ -10,3 +10,6 @@ artifacts/
 *.tsbuildinfo
 
 .vercel/
+
+__pycache__/
+*.pyc

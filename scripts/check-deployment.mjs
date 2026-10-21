@@ -1,9 +1,11 @@
+import { validateStaticHeaders } from "../security/headers.mjs";
 import { createHash } from "node:crypto";
 import assert from "node:assert/strict";
 import { readFile, access, mkdir, writeFile } from "node:fs/promises";
 const config = JSON.parse(await readFile(".vercel/output/config.json", "utf8"));
 const headers = JSON.parse(await readFile("out/security-headers.json", "utf8"));
 assert.equal(config.version, 3);
+validateStaticHeaders(new Headers(headers), { https: true });
 assert.equal(headers["X-Robots-Tag"], "noindex, nofollow, noarchive");
 assert.deepEqual(config.routes[0].headers, headers);
 for (const locale of ["ar", "en"]) {

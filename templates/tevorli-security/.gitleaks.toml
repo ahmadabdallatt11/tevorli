@@ -1,0 +1,4 @@
+title = "TEVORLI secret baseline — upstream default rules"
+[extend]
+useDefault = true
+# No credential-pattern allowlist. .gitignore is not a security exemption.

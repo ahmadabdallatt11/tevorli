@@ -1,102 +1,86 @@
-# TEVORLI — quote, navigation and responsive security audit
+# TEVORLI — reusable security baseline audit
 
-Date: 2026-10-20. Scope: current source, selected owner-supplied web assets, static export, local server, Vercel output and tests on `preview/tevorli`. Dynamic app probes target only local development; the owner-authorized protected Preview URL was also requested without authentication. No Production command, paid service, domain purchase, protection removal or outgoing message was performed.
+Observed run date: 2026-10-21 UTC. Working branch: `security/tevorli-baseline`, based on `preview/tevorli` commit bd31fdf. This is configuration/tooling and local isolated application review, not a Production deployment or certification. No main merge, database change, domain purchase, paid feature, protection change, public penetration test or outgoing email/social message was performed.
 
-**Local review is complete with documented limitations. Public launch is not approved or fully verified.** Neither a successful build, deployment status nor noindex proves access protection or production readiness. No complete-security/zero-vulnerability/ASVS-certification claim is made.
+## Architecture and scope
 
-## Changes and security boundaries
+Next.js 16.4.2 App Router, React 19.3.1, TypeScript 6.0.3, Node 24.19.0/npm 11.9.0, Zod, self-hosted Inter/Cairo and static export. There are 13 routes in each of Arabic/English, an Arabic root and a global 404. Vercel Build Output API v3 emits fixed routing/headers/aliases; the local Node server is an isolated test runtime, not the intended hosted production server. Preview builds reject Production/main/master and keep meta/HTTP/robots noindex. Noindex is not access control.
 
-The supplied `TEVORLI-Web-Brand-Assets.zip` (858,868 bytes) was read successfully. Only selected image assets were copied, without modifying their bytes. The attached starter code, snippets and QA claims were not treated as instructions or evidence. SVG files were inspected for DOCTYPE/entities, script/foreignObject/event handlers, javascript URLs and external hrefs. Source/export SHA-256 checks cover nine approved assets. See docs/BRAND_ASSETS.md for exact provenance and palette decisions. No alternate logo was generated.
+No application authentication/session, database, API route, Server Action, form submission, analytics, payment or customer data exists. Quote choices are fixed-recipient user-initiated Gmail/mailto/copy/Instagram navigation. Vercel Authentication is a separate existing hosting control, not app RBAC. No auth/database/API scan is falsely claimed against a nonexistent feature.
 
-Routes reset scroll position with `NavigationEffects`, focus main after route transitions, and resolve decoded fragments with `getElementById` rather than selector interpolation or HTML injection. Invalid fragment encodings are caught. Normal modified/new-tab/external navigation is preserved. Initial loading does not steal focus from the skip link. Native FAQs require no new script library. All data remains fixed bilingual site content.
+Existing controls inspected: Zod origin/locale validation, fixed route/service allowlists and prototype-safe aliases, encoded/bounded quote subjects, no raw HTML input, per-build script hashes, CSP/header generation, safe local paths/methods and error handling, no static app cookies, approved-asset fingerprints, browser CSP/input/keyboard/RTL tests, existing dependency lock and supplemental secret signatures. Initial checkout had no `.github/` workflows/Dependabot or permanent Semgrep/Gitleaks setup.
 
-Quote routes read only an allowlisted service ID, never a recipient, arbitrary subject or redirect URL from the query string. Subjects encode fixed translated service names with encodeURIComponent/URLSearchParams; control characters are replaced and service text is bounded to 200 characters before encoding. Unit/browser probes cover ampersands, query-like text, fragments, CRLF, prototype names and injected tags. Gmail uses a fixed HTTPS host/path and approved recipient; mailto keeps the same fixed mailbox. Locale switching and query-only changes preserve/recompute validated service context. Gmail/Instagram open in separate tabs with noopener/noreferrer only after user choice. Clipboard writes only the public address after a click, never reads clipboard contents, and has a manual selection fallback on denial. The only recipient and Instagram destination are owner-approved. There is no automatic send, form endpoint, database, account/session, upload, Server Action, payment, analytics or third-party application script.
+## Findings and classification
 
-React text encoding, static locale/route allowlists and build-time Zod HTTPS-origin validation remain. No request-driven shell command, SQL, raw HTML rendering or remote application fetch exists. CSS/image/font resources are local. Source and exported text files are scanned for secret signatures without printing candidate values; credentials are not copied from environment or files into code.
+| ID | Severity | Evidence | Status / remediation |
+| --- | --- | --- | --- |
+| TV-SEC-001 | Medium | Initial checkout lacked `.github/workflows` and no enforced recurring security gate was verified | Workflow, final gate and weekly scans implemented; hosted run and branch/ruleset enforcement remain owner/admin tasks |
+| TV-SEC-002 | Low | `scripts/secret-scan.mjs` used a short signature list and excluded Git history | Supplemented by real Gitleaks upstream detection, full non-shallow Git history, working-tree and exported-build scopes; old checker is supplemental, not a Gitleaks substitute |
+| TV-SEC-003 | Low | Existing HTTP checks required presence of several headers but did not fully reject weak script sources/cookie regressions | Added strict static policy assertions and negative tests for unsafe-inline/eval/wildcards/external script sources, missing headers, weak HSTS and unexpected cookies |
+| TV-SEC-004 | Medium | Actual isolated ZAP 2.17.0 alert **10055: CSP style-src unsafe-inline**; existing export policy retains it | Open retained framework-compatibility risk; no untrusted HTML/style input. Owner: TEVORLI maintainer. Review before launch or 2026-11-20. Release acceptance pending; not hidden or falsely labeled fixed |
+| TV-SEC-005 | Medium verification gap | GitHub API/GraphQL CONNECT 403 prevents reading visibility/licensing, alert/rule settings and remote Actions/PR results | Exact manual settings documented. Checked-in YAML is not proof of enabled alerts, protected branches or a passing hosted workflow |
+| TV-SEC-006 | Medium verification gap | Newest protected hosted app/settings and hosting-auth cookie behavior not independently verified in this task | Owner-authorized hosted verification required; local HTTP ZAP and app-cookie N/A are not Vercel authentication/TLS evidence |
 
-## Controls actually assessed
+Pre-commit tooling self-review also fixed two local robustness issues: unsupported CLI arguments could select an error-report filename (now rejected before any filename construction), and the standalone CodeQL SARIF adapter did not create its output directory (now created and tested with High/clean/missing-report fixtures). These were unreleased local-tooling issues, not remotely exposed website flaws.
 
-| Area                         | Evidence and applicability                                                                                                                                                                        |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| XSS                          | React encoding, no user-authored HTML, per-build SHA-256 inline-script CSP hashes; browser rejects an unapproved inline script. SVGs have no inspected active/external content.                   |
-| Script/style CSP             | script-src self + exact hashes; no script unsafe-inline/unsafe-eval. Style unsafe-inline retained for framework compatibility; no untrusted style/HTML input. No CSP expansion for third parties. |
-| Input/redirects              | Locale/service allowlists, safe fixed same-origin legacy aliases using Object.hasOwn, malformed URL handling and non-reflection of injected queries/paths. Quote URI parameter encoding tested.   |
-| Backend/CSRF/auth/form abuse | N/A to the app: no authenticated state or mutating endpoint/contact form. Unsupported methods rejected; no fake rate limiter or unconfigured email API added.                                     |
-| Data minimization            | No submitted personal data, app cookies or trackers. Public email/Instagram are deliberate public contact data. External contact processing and host logs still need final policy review.         |
-| Headers                      | CSP, nosniff, frame restrictions, referrer/permissions policies, COOP, HSTS and X-Robots-Tag generated and checked locally, including error responses. Hosted propagation remains unverified.     |
-| Preview                      | Meta noindex/nofollow, robots disallow and X-Robots-Tag noindex/nofollow/noarchive. These do not control access. Production/main/master build rejections remain.                                  |
-| Local server                 | GET/HEAD only; safe path/dotfile handling, aliases, MIME types including WebP, generic errors, timeouts and no request-body logging. Not the intended production runtime.                         |
-| Vercel Authentication        | Owner reports existing Authentication. No setting was changed/disabled. Fresh TLS-verified unauthenticated request to the prior immutable URL returned 302 to Vercel SSO without app content. Authorized/newest-build content remains unverified.              |
+No confirmed Critical/High application vulnerability remains known within the executed scope. This is not a claim of zero unknown vulnerabilities. Untriaged scanner High/Critical results conservatively fail required jobs. Real High/Critical risks cannot be waived as accepted risks through `triage.json`.
 
-The review follows applicable OWASP input-validation, Top 10/ASVS and Node/Next security principles for this static architecture. It is not a complete ASVS verification. The official OWASP Input Validation/Node.js sheets and official Vercel build-output source were consulted during setup.
+### False positives and failed attempts
 
-## Multiple review passes and fixes
+- Gitleaks initially reported two generic-api-key matches in the new template checksum manifest. They were verified SHA-256 file digests, not credentials. Manifest serialization now uses explicit `path`/`sha256` records. Re-scan passed without a credential allowlist or detector suppression; no real credential required rotation.
+- The full ZAP image pull exceeded available Docker layer storage. The official pinned **bare** image fits and contains ZAP 2.17.0 plus Automation Framework. It lacks the Python `zap-baseline.py` launcher: that attempt exited 127 and was **not** counted as a scan. Replaced the launcher with the official Automation Framework spider/passive-wait/report/exit-status plan; the real completed passive scan is the evidence below. No active/AJAX attack job was added.
+- Initial actionlint caught shell empty-variable/readiness diagnostics; fixed the workflow. An image-user read permission issue was fixed with the host UID/GID, without broad filesystem permissions.
+- An initial rules smoke test timed out under concurrent image/resource pressure; explicit two-worker Semgrep budgets, offline containers and owned-container timeout cleanup were added. Negative controls must still execute and match the expected rules.
+- The final parallel-tool attempt also exhausted the tablet matrix deadline while ZAP saturated CPU. Serialized verification matched CI job ordering: strict ZAP completed, all 19 security controls passed, then the identical matrix passed with its original 90-second timeout and assertions.
+- The initial monolithic browser test grouped 13 routes under one timeout during resource contention: 2 batch timeouts, 16 passes, 3 interrupted and 42 unrun. It is not a successful run. Every route is now a separate case with the same status/SEO/link/layout/axe assertions, and the resource-limited local rerun uses one worker. CI uses two on its separate runner. No security assertion, scan or browser route was removed.
 
-1. Reviewed the entire change inventory and critical rendering/routes, navigation effects, quote helper, assets, environment use, server and deployment builder. Source protection and user-approved business data were preserved.
-2. Ran type/lint/unit checks, dependency audit, source+export secret signatures and Semgrep JavaScript/TypeScript rules. No warning was hidden by a suppression or disabled assertion.
-3. Ran actual browser flows across every page in both locales and three Chromium profiles: logo/image loading, bottom-to-new-page/top reset, same-route reset, section/deep hashes/focus, quote links, FAQ keyboard interaction, menu/Escape, reduced motion, error recovery, noindex and legacy redirects. axe scanned all localized routes.
-4. Ran 33 focused HTTP security checks and browser CSP checks. A comprehensive OWASP ZAP scan was **not run**; these are bounded local assertions, not a substitute claim for a full scanner.
-5. Ran the production static export, manifest/asset integrity checks and Lighthouse. The hero no longer loads its large decorative background; approved asset files themselves were not changed. Actual final metrics and failed/unrun engine cases appear in QA_TEST_REPORT.md.
-6. Re-read critical components and scripts after the fixes and repeated checks. Browser tests now require section-start alignment within 3px of the 20px margin, including repeated clicks/history and service scope. The quote shortcut opens its own page instead of scrolling to a distant callout. Both normal and reduced-motion paths pass. New browser tests validate Gmail popups, clipboard denial, language/service context, query-only changes and no-JavaScript generic contact options. This is a second pass by the same agent, not an independent assessor.
+## Implemented tools and boundaries
 
-Earlier local alias inherited-property hardening remains covered by three negative probes (`__proto__`, constructor, toString). Earlier High braces dependency findings were remediated by removing the affected Next lint dependency chain; current npm audit is independent and includes development dependencies.
+- **Semgrep CE 1.181.0:** eight versioned local JavaScript/TypeScript/Python core rules, offline/no metrics; real unsafe fixtures cover eval/raw HTML/DOM sinks/TLS bypass/public secret variables/shell boundaries/privileged PR triggers/Python evaluation. This is a bounded core set, not all proprietary/registry rules or ASVS coverage. Add reviewed product-specific rules for new architectures.
+- **Gitleaks 8.30.1:** upstream default rules, 100% redaction, non-shallow Git history and compiled export; local worktree snapshots include uncommitted canonical/template files. No global secret allowlist. Temp raw reports are removed; only safe location/rule/severity/fingerprint data is retained. Actual secret detection would require authorized rotation, not merely deletion.
+- **npm audit:** full pinned lock including dev dependencies, with registry/incomplete-report errors failing closed. This does not scan the Node executable, OS image CVEs or unpublished malicious packages.
+- **Dependabot:** npm, GitHub Actions and Docker image updates configured weekly to the observed default branch preview/tevorli. Dependency graph/vulnerability alerts/security updates still need admin verification/activation; YAML alone cannot enable them.
+- **CodeQL:** read-only visibility-gated JavaScript/TypeScript/Python security-extended workflow with no application autobuild and a severity gate. `upload: never` prevents granting untrusted PR code a security-events write token; only a sanitized artifact is published. Native Code Scanning alert publication is not enabled. Local CLI execution, repo visibility and licensing are unverified. Do not enable paid private-repo Code Security without approval.
+- **OWASP ZAP 2.17.0:** completed passive scan with a traditional bounded spider, using a fresh internal Docker network with **no external egress**, synthetic static app and no public target/auth bypass. No active scan, AJAX crawling, logged-in scanner or full penetration test is claimed.
+- **Application controls:** strict success/error header and CSP assertions, no app-cookie assertion, malformed/prototype/XSS/query/path/method tests, browser inline-script blocking and quote-recipient/redirect controls. Reusable cookie and six-category auth harness tests use mock/seeded synthetic identities only. Static profile fails on unreviewed API introduction; real app RBAC/JWT/tenant tests are N/A until such features exist.
+- **Monitoring:** uptime/5xx/certificate/security-job notification and incident/log-retention recommendations are documented only; no external monitor, paid feature or message was enabled.
 
-## Commands and actual evidence
+## Actual verification results
 
-```sh
-npm run build:preview
-npm run test:deployment
-npm run lint
-npm run typecheck
-npm test -- --reporter=json --outputFile=artifacts/vitest.json
-npm audit --json > artifacts/npm-audit.json
-npm run test:secrets
-npm start
-# Matching static server, one browser invocation at a time:
-npm run test:security
-npm run test:e2e
-npm run test:performance
-PLAYWRIGHT_BROWSERS_PATH=/tmp/tevorli-browsers TEST_BROWSER=firefox npx playwright test --config playwright.additional.config.ts
-```
+Tool reports are sanitized in `artifacts/security/` and generated by the current tool runs, not fabricated stubs. Docker images and Actions are immutable; provenance is in `security/tool-provenance.json` and `security/images/`.
 
-The prior Firefox availability run did **not** pass: engine launch failed before app assertions; it was not rerun as a current-revision compatibility check. A separate persistent-profile/XDG diagnosis exposed unsupported namespace writes (EROFS); the owned hung process was terminated without disabling browser sandbox protection. WebKit lacks required host libraries. These are engine/environment limitations, not successful application compatibility results.
+| Check | Result |
+| --- | --- |
+| Frozen install | PASS: npm ci --ignore-scripts --no-audit --no-fund; no dependency/lockfile changes |
+| Local static production artifact build | PASS: npm run build:vercel; no deploy command |
+| Deployment manifest/assets | PASS: 26 localized routes, root/404, method guard, strict headers and 9 original asset hashes |
+| TypeScript / ESLint / existing units | PASS / PASS / 11 passed |
+| Node security contracts | 14 passed; includes insecure-cookie/header and auth-harness bypass negative controls, not real product sessions |
+| Python gate/rule controls | 19 passed in the final sequential run, including actual eight-rule negative controls, redaction, zero-file/error handling, CLI path guard and synthetic CodeQL adapter cases |
+| Semgrep core | PASS; eight rules, 0 findings; valid nonempty scan, parser/tool errors fail |
+| Gitleaks | PASS history/worktree/export, 0 findings after checksum-format correction |
+| npm audit | PASS; 0 known vulnerabilities reported, including dev dependencies |
+| actionlint | PASS with shellcheck diagnostics enabled |
+| ZAP | Completed; 1 Medium alert type, 0 High/Critical; no alerts suppressed |
+| Browser regression | Full 135-case run: 134 passed, 1 aggregate-matrix timeout, 0 skipped; exact failed case then passed unchanged in isolation (59.8s). No single all-green 135-case run is claimed |
+| Template parity | PASS; canonical files and standalone manifest synchronized |
+| GitHub-hosted Actions | NOT VERIFIED: API access blocked; actionlint/local tools are not a hosted run |
+| CodeQL | NOT EXECUTED; opt-in configuration only, eligibility/access unresolved |
+| Dependabot alerts / branch rules | NOT VERIFIED or silently enabled |
+| Hosted Vercel/real Safari/Firefox | NOT EXECUTED in this baseline task; no cross-browser/hosting guarantee |
 
-Semgrep CE 1.181.0 uses official rule checkout `17e31e11ebac99fb7dfe1cd288f7a32151b6f3f9`:
+Pinned upstream CodeQL action metadata was inspected through native Git after raw-file access returned 404. Its annotated tag was dereferenced to the actual commit, upload is explicitly `never`, and interpreted languages use separate matrix jobs because build-mode is supported for one language per job. These are configuration checks, not a claim of actual CodeQL analysis.
 
-```sh
-SEMGREP_LOG_FILE=/tmp/tevorli-semgrep.log \
-SEMGREP_SETTINGS_FILE=/tmp/tevorli-semgrep-settings.yml \
-/tmp/tevorli-security-venv/bin/semgrep scan \
- --config /tmp/tevorli-semgrep-rules/javascript \
- --config /tmp/tevorli-semgrep-rules/typescript \
- --metrics=off --disable-version-check --no-git-ignore \
- --exclude node_modules --exclude out --exclude .next --exclude .vercel \
- --exclude artifacts --exclude test-results \
- --json --output artifacts/semgrep.json .
-```
+## GitHub Actions and release gates
 
-Final Semgrep: **203 effective rules, 55 targets, 18 findings, 0 scan errors**. Findings by rule: `typescript.react.portability.i18next.jsx-not-internationalized`: 9; `javascript.lang.correctness.no-stringify-keys`: 1; `javascript.lang.security.html-in-template-string`: 1; `javascript.audit.detect-replaceall-sanitization`: 2; `javascript.lang.correctness.no-replaceall`: 2; `typescript.react.security.react-insecure-request`: 3. No findings were silently suppressed.
+`.github/workflows/security.yml` runs PRs, relevant development/release pushes, Monday 04:23 UTC schedule and manual dispatch. Feature-branch pushes rely on PR events to avoid duplicate scans. No path filters bypass checks; concurrency cancels obsolete runs. Source and application jobs are independent; final **Security gate** requires both and the optional CodeQL job when enabled. Build artifacts are reused inside the application job. npm lifecycle scripts are disabled at install and audit is not duplicated by install. No continue-on-error policy hides failures.
 
-| Rule group                                               | Disposition                                                                                                                                                                                                          |
-| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| jsx-not-internationalized                                | Portability suggestions for approved brand/Instagram/slogan text, the aria-hidden illustration and deliberately bilingual 404. Actual navigable content uses typed locale copy; no security issue requiring i18next. |
-| no-stringify-keys                                        | Diagnostic JSON serialization, with fixed header-name property access, not JSON-derived object keys or canonical-order dependence. False positive.                                                                   |
-| html-in-template-string / detect-replaceall-sanitization | Build-time XML sitemap text, not executable HTML or rich user content. Build validates origin; routes are fixed and XML text escapes ampersand/less-than. Not confirmed XSS in this scope.                           |
-| no-replaceall                                            | Node >=22 build utility supports replaceAll; no older-browser dependency here.                                                                                                                                       |
-| react-insecure-request                                   | Fixed loopback HTTP assertions, no remote secrets/customer data. Does not establish hosted HTTPS.                                                                                                                    |
+All jobs have contents:read or no token permissions; no deployment/cloud secret, write-capable PR trigger, persisted checkout credential, automatic merge or Production job exists. Only sanitized scanner summaries are generic artifacts, retained 14 days. CODEOWNERS must be enforced by actual rules; code alone cannot assert reviewer identity. Default-branch schedule/Dependabot activation requires landing the reviewed files there.
 
-Raw findings/counts and reviewed groups are retained in artifacts/semgrep.json. Source/export secret scanning is signature-based and excludes Git history, dependency trees and binary assets; it cannot prove absence of unknown secrets or provide a high-entropy audit. Package integrity/TLS checks were not disabled and no credential value is printed in reports.
+## Remaining actions and release decision
 
-## Hosted evidence and remaining limits
+Read **security/MANUAL_SETTINGS.md** for exact GitHub/Vercel paths and **security/RELEASE_CHECKLIST.md** for promotion gates. Owner/admin must review and land the PR, run real hosted CI on its exact SHA, enable eligible/free alerts, enforce branch/ruleset/CODEOWNERS settings, determine CodeQL eligibility and explicitly handle its unavailable/disabled status, accept/remediate the retained Medium CSP risk, and verify the actual protected deployment. Do not change Production/DB/security settings or buy services to complete this task.
 
-- Existing owner-provided previous deployment: `https://tevorli-mh3zk947z-dentfiy.vercel.app/`. Do not label this immutable old URL as the newest code without evidence. GitHub shows an existing Vercel integration/status; final current-commit deployment observations are captured in artifacts/hosting-final.json and the delivery message when available.
-- GitHub API/native Git now work. Dependabot responds that alerts are disabled for this repository (403); it is **not a passed Dependabot audit**. No paid security feature was enabled. npm audit still ran.
-- Vercel API responds forbidden; CLI is logged out and secure VERCEL_TOKEN has no saved binding. The token is not required in the application or in the repository to use an existing Git deployment integration.
-- The previous CONNECT proxy block is resolved for the known app/dashboard hosts. A fresh request to the prior immutable app verified TLS (curl verification result 0) and returned HTTP 302 to `vercel.com/sso-api`; no app content was returned. Evidence omits cookies and auth query strings. This is evidence for that prior deployment only. Saved draft configuration still does not itself apply runtime changes or authenticate.
-- **NOT VERIFIED:** newest direct app URL/project deployment target through Vercel API, newest-build Authentication enforcement/HTTPS and authorized access, hosted app headers/CSP, protected page navigation and hosted browser/a11y/performance. Protection settings were not modified or bypassed.
-- **NOT VERIFIED:** actual Firefox/Safari/WebKit application compatibility, real iOS/device coverage and human assistive-technology review. Chromium device emulation and axe do not establish those.
-- **NOT VERIFIED:** comprehensive ZAP, entropy/history secret scan, independent human/external audit or full ASVS compliance. No confirmed unresolved High/Critical vulnerability is known in this scoped review; unknown issues can remain.
-- Legal registration is unconfirmed; draft privacy/terms, responsible operator, hosting log/retention and domain settings need owner review before a separately authorized public launch. No fabricated legal/company/project data was introduced.
-- Next global-not-found is experimental in the pinned release; local custom-404 regression tests remain required on upgrades.
+The reusable template is at `templates/tevorli-security/`, with AGENTS.md, workflows/config, SECURITY.md, policy, onboarding/checklists/report format and a parity manifest. It must be adapted to each product's actual framework, auth/API/tenant/data risk; copying it does not implement SaaS security.
 
-The source supports review and local development with these limits. Production authorization and hosted verification must precede domain launch; a build or CI success alone is insufficient.
+**Baseline implemented for review; enforcement/hosted CI and public release are not yet verified or approved.** Unknown issues remain possible; no 100%-secure, ASVS-certified or full penetration-test claim is made.

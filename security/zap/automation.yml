@@ -1,0 +1,34 @@
+env:
+  contexts:
+    - name: tevorli-local-only
+      urls:
+        - http://tevorli-test:3000/ar/
+        - http://tevorli-test:3000/en/
+      includePaths:
+        - "http://tevorli-test:3000/.*"
+  parameters:
+    failOnError: true
+    failOnWarning: true
+    progressToStdout: true
+jobs:
+  - type: spider
+    parameters:
+      context: tevorli-local-only
+      maxDuration: 1
+      maxDepth: 5
+  - type: passiveScan-wait
+    parameters:
+      maxDuration: 3
+  - type: report
+    parameters:
+      template: traditional-json
+      reportDir: /zap/wrk
+      reportFile: report
+      reportTitle: TEVORLI isolated passive scan
+  - type: exitStatus
+    parameters:
+      errorLevel: High
+      warnLevel: Medium
+      okExitValue: 0
+      errorExitValue: 1
+      warnExitValue: 2

@@ -1,0 +1,9 @@
+# Must be enforced with branch/ruleset review settings; this file alone is advisory.
+/.github/ @ahmadabdallatt11
+/AGENTS.md @ahmadabdallatt11
+/SECURITY.md @ahmadabdallatt11
+/security/ @ahmadabdallatt11
+/templates/ @ahmadabdallatt11
+/scripts/ @ahmadabdallatt11
+/.gitleaks.toml @ahmadabdallatt11
+/package*.json @ahmadabdallatt11

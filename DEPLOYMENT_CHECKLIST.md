@@ -38,3 +38,12 @@ GitHub API now works, but the Vercel API returns forbidden without authenticatio
 - [ ] Run authenticated hosted regressions before/after approved launch and retain no unresolved confirmed High/Critical findings. Real Safari/iOS and assistive-technology checks remain explicitly bounded by actual test availability.
 
 No Production deployment, domain purchase, paid feature, tracking service or backend mail form has been performed during this task.
+
+
+## Security baseline release gate
+
+- [ ] Review and land the security baseline branch through a PR; do not merge main as part of setup.
+- [ ] Enforce the actual GitHub **Security gate** check and sensitive-file review; verify hosted execution, not only local actionlint.
+- [ ] Enable/verify eligible free Dependabot alerts/security updates and decide CodeQL eligibility without purchasing a service.
+- [ ] Close confirmed High/Critical and disposition Medium ZAP CSP style allowance before public launch.
+- [ ] Complete [security/RELEASE_CHECKLIST.md](security/RELEASE_CHECKLIST.md) and [manual settings](security/MANUAL_SETTINGS.md). No new Production/domain authorization is implied.

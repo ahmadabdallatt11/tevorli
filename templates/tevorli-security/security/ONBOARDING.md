@@ -1,0 +1,11 @@
+# Developer onboarding
+
+Use the existing isolated checkout; no worktree unless requested. Read root AGENTS.md/SECURITY.md, project.json, POLICY.md and the audit. Install the pinned Node version, Docker and Python 3, then use the commands in README.md. No cloud secret is needed to run local checks. Keep npm signature/integrity/TLS verification enabled; scanner errors are blockers, not reasons to skip checks.
+
+The application is a static Next export, with Vercel routing/security headers emitted by repository scripts. npm run build:vercel is a local artifact build and does not deploy. A server caches CSP at startup: stop only your server, rebuild, restart and exercise the matching output. Preserve the approved identity and public contacts. Do not replace local security checks with a build-only readiness claim.
+
+When adapting to a new client: copy the standalone template, replace repository-specific identifiers/CODEOWNERS/branch names and security contact, map Node/build/start commands to that product, and update project.json explicitly. The static-profile guard deliberately fails on unreviewed API introduction. For accounts/loyalty/SaaS add real server-side validation/authorization tests using seeded synthetic identities; adapt the six-category auth contract and cookie tests to real isolated endpoints. The mock harness proves test infrastructure only. Supply ephemeral fixture tokens through local test setup; never production sessions or customer data. Bind DAST to an internal isolated test network and review all scan exclusions.
+
+Use risk-based ASVS: brochure/standalone QR presentation generally L1; loyalty, account/data processing and multi-tenant SaaS generally L2, with selected L3 controls for high-risk functions. Add payment/tenant isolation/webhook/replay/rate-limit/backup controls as relevant. Human design/architecture review remains necessary. Record tools that are unavailable and manual settings separately from code configuration.
+
+Dependabot PRs changing workflow/image pins also need `python3 security/template.py sync` and a parity check before merge. Update the provenance record when pins change; a stale template must fail rather than silently lag behind.

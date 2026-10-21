@@ -1,0 +1,11 @@
+{
+  "product": "TEVORLI",
+  "architecture": "static-export",
+  "risk_profile": "brochure-L1-risk-based",
+  "application_auth": false,
+  "database": false,
+  "api": false,
+  "hosting_auth": "Vercel Authentication; verified separately with authorized access",
+  "dast_target": "http://tevorli-test:3000",
+  "customer_data_allowed_in_tests": false
+}

@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: "tests",
   testMatch: "**/*.e2e.ts",
   fullyParallel: true,
-  workers: 3,
+  workers: process.env.CI ? 2 : 3,
   retries: 0,
   reporter: [["list"], ["json", { outputFile: "artifacts/playwright.json" }]],
   use: { baseURL: "http://127.0.0.1:3000", trace: "retain-on-failure" },
@@ -20,7 +20,10 @@ export default defineConfig({
       use: {
         ...devices["Desktop Chrome"],
         launchOptions: {
-          executablePath: process.env.CHROMIUM_PATH || "/usr/bin/chromium",
+          executablePath:
+            process.env.CHROMIUM_PATH === ""
+              ? undefined
+              : process.env.CHROMIUM_PATH || "/usr/bin/chromium",
         },
       },
     },
@@ -29,7 +32,10 @@ export default defineConfig({
       use: {
         ...devices["Pixel 7"],
         launchOptions: {
-          executablePath: process.env.CHROMIUM_PATH || "/usr/bin/chromium",
+          executablePath:
+            process.env.CHROMIUM_PATH === ""
+              ? undefined
+              : process.env.CHROMIUM_PATH || "/usr/bin/chromium",
         },
       },
     },
@@ -39,7 +45,10 @@ export default defineConfig({
         ...devices["iPad Mini"],
         defaultBrowserType: "chromium",
         launchOptions: {
-          executablePath: process.env.CHROMIUM_PATH || "/usr/bin/chromium",
+          executablePath:
+            process.env.CHROMIUM_PATH === ""
+              ? undefined
+              : process.env.CHROMIUM_PATH || "/usr/bin/chromium",
         },
       },
     },

@@ -1,0 +1,138 @@
+[
+  {
+    "path": "AGENTS.md",
+    "sha256": "502362d48911b33158cb72bb7060eb482c09fe1750c6a811af37832b8e663040"
+  },
+  {
+    "path": "SECURITY.md",
+    "sha256": "bd9639a27fd0a794a083d5eda9bda5c1ca4ccfb15372bcfba01dcbe8198e66f3"
+  },
+  {
+    "path": ".gitleaks.toml",
+    "sha256": "d727507a140c43ee148d12e8e0d8ccea3a1d7f5f2d9b4f50d58add039276ec94"
+  },
+  {
+    "path": ".github/CODEOWNERS",
+    "sha256": "b1767050a7b958df4d0491a26455968ea09dd1b7e6bb2ac912e3be710ce38301"
+  },
+  {
+    "path": ".github/dependabot.yml",
+    "sha256": "0cc59f98df3fc555d44ba37ccd0f103c4a9d47957d5b71e9779e74699e7ca994"
+  },
+  {
+    "path": ".github/workflows/security.yml",
+    "sha256": "f67e62720b333a5461060fa5019f5139152a2c1898956ab9b5d536efb93efd30"
+  },
+  {
+    "path": "security/template.py",
+    "sha256": "af1422a9dc09564e1608992c54754700c494a538f84ada4d871919eff82ed15c"
+  },
+  {
+    "path": "security/run.py",
+    "sha256": "39229f3695983aaebbd4855141f37300354be8e7043b992cf9cfaaaa595fcccb"
+  },
+  {
+    "path": "security/codeql-gate.py",
+    "sha256": "5cf256ce3a040b0410bdb8d91dbbae4796b180ab40c3bc6ea7a9501ce8752dd0"
+  },
+  {
+    "path": "security/codeql.yml",
+    "sha256": "d6f8294b086d384886459f8b3bff26bcd62d9b989dc9ffdacc770d9e72d98d85"
+  },
+  {
+    "path": "security/MANUAL_SETTINGS.md",
+    "sha256": "01124ba0d7171b61a430868f76e477ab49c143c17cce4bda1cc472e7dfda3718"
+  },
+  {
+    "path": "security/tool-provenance.json",
+    "sha256": "ad278ba1181a57cf45f9ec7dd322cd4fcfb0df0553b9400cadea313eb895e985"
+  },
+  {
+    "path": "security/project.json",
+    "sha256": "973604a2382dd36049137401e4fbeb46e1e9b38ffb7ea91273aa0e7cb2c65046"
+  },
+  {
+    "path": "security/auth-cases.example.json",
+    "sha256": "6b2c5b7f13abce54181e0bf466af7f47e92b74c0c64df9aa918cc0d80a274a7e"
+  },
+  {
+    "path": "security/triage.json",
+    "sha256": "8c2a93e0f767af0b99a72cb526c79a97b39edadbad62b71cb62c4049b268092d"
+  },
+  {
+    "path": "security/POLICY.md",
+    "sha256": "b18d465433a91ecec112568710ded7e765be35859b6b9392e21595bc2b7c37ee"
+  },
+  {
+    "path": "security/headers.mjs",
+    "sha256": "6113b31f8f1eeba5db54069381b349cf302ce64525635b07a9f344490a1efb18"
+  },
+  {
+    "path": "security/ONBOARDING.md",
+    "sha256": "87f7b01f5396cd2af9dde6485ddfb577d3fd6d05500dcc0167b02ecf62d8c1c2"
+  },
+  {
+    "path": "security/README.md",
+    "sha256": "0475068b8ee275fbfd0217939134ac71dd4404aaf3cfa45450826e7cc4547644"
+  },
+  {
+    "path": "security/CHECKLIST.md",
+    "sha256": "81a2262d915a8d24a212bc361b39972474ff7fea6aa326beda5c4884193bdebc"
+  },
+  {
+    "path": "security/auth-contract.mjs",
+    "sha256": "1e0074ab623f689a2f018d06d83b165307c00c355a0892574d97cf80c4c8c81d"
+  },
+  {
+    "path": "security/RELEASE_CHECKLIST.md",
+    "sha256": "45a09d1ef4a3f2343f2b729e3932b25855508faec8968e29733e50dc8a3d859f"
+  },
+  {
+    "path": "security/gate.py",
+    "sha256": "76b5b457cf34691e1f116a3fba76a377f2d21a9fb9fb0736082bc8b5bdf5a1df"
+  },
+  {
+    "path": "security/REPORT_TEMPLATE.md",
+    "sha256": "c7131417203249772a429f26cb1c27545bfd252cfaee7ce0729ae787c12db5f6"
+  },
+  {
+    "path": "security/zap/automation.yml",
+    "sha256": "6f4abb2f86ec0e402b7d813d84d1ffafa443dfe022e46b925f335be13ebf9569"
+  },
+  {
+    "path": "security/tests/contracts.test.mjs",
+    "sha256": "3411c8748feb05d60aa192557cf91d4d7bb0161ad1975fa03db30f702ef23d02"
+  },
+  {
+    "path": "security/tests/test_rules.py",
+    "sha256": "325cd4d8f4062fa25192ca0981f23d0856ceae17260566227077ed1d5ef89273"
+  },
+  {
+    "path": "security/tests/test_gate.py",
+    "sha256": "819a5e218fd869df53ee6e5ed5e07e8038c0d7ba355f70b94a9d61677bc21fc4"
+  },
+  {
+    "path": "security/images/semgrep.Dockerfile",
+    "sha256": "a3b98ad53ae7235071381f93a628a56b5dd2b5710e8eea654db67b2648d11c61"
+  },
+  {
+    "path": "security/images/actionlint.Dockerfile",
+    "sha256": "a7376b730cd680c3e8d6a199c2c7490acbefb0249fad63e9ccb2849c9347c6e3"
+  },
+  {
+    "path": "security/images/node.Dockerfile",
+    "sha256": "67a58a455b861d6f9232922301c32eb0f65ca02d70d26181942379a96ece2d9d"
+  },
+  {
+    "path": "security/images/zap.Dockerfile",
+    "sha256": "6d6cf2f6a517166964fcaa51d4666fa981d030b0c51924e3533f2fb9b2f111b6"
+  },
+  {
+    "path": "security/images/gitleaks.Dockerfile",
+    "sha256": "44bb4eac482eee92f5fcb86a16393cd504d9d6d4befee24a23ccc4a39afc56fc"
+  },
+  {
+    "path": "security/semgrep/rules.yml",
+    "sha256": "1e4ca78d17a798c527dcca01b35c159362e5958ece996e51ac2f037b82efccf9"
+  }
+]

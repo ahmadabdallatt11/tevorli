@@ -2,10 +2,10 @@ import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { routeNames, services, serviceIds } from "../lib/site";
 for (const locale of ["ar", "en"] as const) {
-  test(`${locale}: all routes, SEO, links, layouts and accessibility`, async ({
-    page,
-  }) => {
-    for (const slug of routeNames) {
+  for (const slug of routeNames)
+    test(`${locale}/${slug || "home"}: SEO, links, layout and accessibility`, async ({
+      page,
+    }) => {
       const response = await page.goto(`/${locale}/${slug ? `${slug}/` : ""}`);
       expect(response?.status()).toBe(200);
       await expect(page.locator("html")).toHaveAttribute("lang", locale);
@@ -58,8 +58,7 @@ for (const locale of ["ar", "en"] as const) {
         if (href.startsWith("/"))
           expect((await page.request.get(href)).status()).toBe(200);
       }
-    }
-  });
+    });
   test(`${locale}: service discovery, details, language switch and contact`, async ({
     page,
   }) => {

@@ -72,3 +72,10 @@ Reports/artifacts are under ignored `artifacts/`; prior revision evidence is kep
 No application secret is needed. `.env.example` contains only instructions; `NEXT_PUBLIC_*` data is public. Keep deployment credentials in secure settings/authenticated tooling, never source or chat. Optional HTTPS origin is validated metadata only and cannot enable Preview indexing. Self-hosted font license notices are under `public/licenses/`. Next's global-not-found feature is experimental; regression tests cover its current export.
 
 Before domain launch: obtain owner content/design sign-off, confirm responsible legal/policy wording without inventing registration, verify hosted protection/app behavior and real-domain DNS/TLS/redirects/canonical metadata. Production and indexing require a separate explicit authorization. Do not purchase a domain or activate a paid feature.
+
+
+## Automated security baseline
+
+See [security/README.md](security/README.md), [SECURITY.md](SECURITY.md), [release gates](security/RELEASE_CHECKLIST.md) and [manual settings](security/MANUAL_SETTINGS.md). A read-only GitHub Actions workflow covers PRs, development/release pushes and weekly scans: Semgrep CE, Gitleaks history/export, npm audit, application/headers/API-boundary regression and passive isolated ZAP. CodeQL runs for public repositories or explicitly opted-in already-licensed private repositories; Dependabot YAML does not itself enable alerts. Current run evidence and limits are in SECURITY_AUDIT_REPORT.md. Never interpret checked-in configuration as verified hosted CI or branch-rule enforcement.
+
+The standalone [TEVORLI template](templates/tevorli-security/README.md) mirrors the tested core and includes agent instructions, workflow/configuration, onboarding, risk policy, reporting and release checklists. Update canonical files and run `python3 security/template.py sync` plus `check` after changes.

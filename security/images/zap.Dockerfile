@@ -1,0 +1,1 @@
+FROM ghcr.io/zaproxy/zaproxy:bare@sha256:0cbc40e0fa1562d5170a18a247eca579c4d155ad869f8944c3b8526d4a58c64c

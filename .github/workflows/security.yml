@@ -1,0 +1,162 @@
+name: TEVORLI Security
+on:
+  pull_request:
+  push:
+    branches: [main, master, develop, development, "preview/**", "release/**"]
+  schedule:
+    - cron: "23 4 * * 1"
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: security-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  source:
+    name: Source security
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+      - name: Validate workflows
+        run: python3 security/run.py actionlint
+      - name: Security gate self-tests
+        if: ${{ !cancelled() }}
+        run: python3 -m unittest discover -s security/tests -p 'test_*.py' -v
+      - name: Template parity
+        if: ${{ !cancelled() }}
+        run: python3 security/template.py check
+      - name: Semgrep CE
+        if: ${{ !cancelled() }}
+        run: python3 security/run.py semgrep
+      - name: Gitleaks full history
+        if: ${{ !cancelled() }}
+        run: python3 security/run.py gitleaks
+      - name: npm dependency audit
+        if: ${{ !cancelled() }}
+        run: python3 security/run.py audit
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        if: ${{ !cancelled() }}
+        with:
+          name: source-security-${{ github.run_attempt }}
+          path: artifacts/security/*.json
+          if-no-files-found: error
+          retention-days: 14
+  application:
+    name: Application security
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - name: Frozen install without lifecycle scripts
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: TypeScript, lint, unit and security contracts
+        run: |
+          npm run typecheck
+          npm run lint
+          npm test
+          node --test security/tests/*.test.mjs
+      - name: Build isolated artifacts (never deploy)
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: |
+          npm run build:vercel
+          npm run test:deployment
+      - name: Export secret scan
+        run: python3 security/run.py gitleaks-export
+      - name: Chromium browser regressions
+        run: |
+          npx playwright install --with-deps chromium
+          CHROMIUM_PATH='' npm run test:e2e
+      - name: HTTP security assertions
+        run: |
+          node scripts/serve.mjs > /tmp/tevorli-security-server.log 2>&1 &
+          test_server_pid=$!
+          trap 'kill "$test_server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 30); do
+            echo "Readiness attempt $attempt"
+            if curl --fail --silent http://127.0.0.1:3000/en/ > /dev/null; then break; fi
+            sleep 1
+          done
+          npm run test:security
+      - name: Passive ZAP in isolated Docker network
+        if: ${{ !cancelled() && success() }}
+        run: python3 security/run.py zap
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        if: ${{ !cancelled() }}
+        with:
+          name: application-security-${{ github.run_attempt }}
+          path: |
+            artifacts/security/*.json
+            artifacts/dynamic-security.json
+            artifacts/deployment-check.json
+            artifacts/playwright.json
+          if-no-files-found: error
+          retention-days: 14
+  codeql:
+    name: CodeQL security (${{ matrix.language }})
+    if: ${{ github.event.repository.visibility == 'public' || vars.TEVORLI_CODEQL_ENABLED == 'true' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [javascript-typescript, python]
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      # JS/TS build-mode none does not execute PR application build scripts.
+      - uses: github/codeql-action/init@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: none
+          config-file: security/codeql.yml
+      - uses: github/codeql-action/analyze@6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee # v4
+        with:
+          output: artifacts/codeql-raw
+          upload: never
+      - name: CodeQL severity gate
+        run: python3 security/codeql-gate.py
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        if: ${{ !cancelled() }}
+        with:
+          name: codeql-summary-${{ matrix.language }}-${{ github.run_attempt }}
+          path: artifacts/security/codeql.json
+          if-no-files-found: error
+          retention-days: 14
+  security-gate:
+    name: Security gate
+    if: ${{ always() }}
+    needs: [source, application, codeql]
+    runs-on: ubuntu-24.04
+    permissions: {}
+    steps:
+      - name: Required results must succeed
+        env:
+          SOURCE_RESULT: ${{ needs.source.result }}
+          APP_RESULT: ${{ needs.application.result }}
+          CODEQL_RESULT: ${{ needs.codeql.result }}
+          CODEQL_ENABLED: ${{ github.event.repository.visibility == 'public' || vars.TEVORLI_CODEQL_ENABLED == 'true' }}
+        run: |
+          test "$SOURCE_RESULT" = success
+          test "$APP_RESULT" = success
+          if [ "$CODEQL_ENABLED" = true ]; then
+            test "$CODEQL_RESULT" = success
+          else
+            test "$CODEQL_RESULT" = skipped
+          fi

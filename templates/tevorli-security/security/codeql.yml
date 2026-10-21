@@ -1,0 +1,11 @@
+name: TEVORLI extended JavaScript and TypeScript security
+queries:
+  - uses: security-extended
+paths-ignore:
+  - templates
+  - node_modules
+  - out
+  - .next
+  - .vercel
+  - artifacts
+  - test-results

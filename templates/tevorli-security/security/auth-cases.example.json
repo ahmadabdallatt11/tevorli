@@ -1,0 +1,11 @@
+{
+  "note": "Only an example contract; adapt paths/statuses and seed synthetic tenants in an isolated API test server. No app auth exists in this static site.",
+  "cases": [
+    {"category": "unauthenticated", "path": "/api/account", "status": 401},
+    {"category": "expired-token", "path": "/api/account", "tokenRef": "TEST_EXPIRED_TOKEN", "status": 401},
+    {"category": "wrong-role", "path": "/api/admin", "tokenRef": "TEST_USER_TOKEN", "status": 403},
+    {"category": "cross-tenant", "path": "/api/tenants/fixture-b/orders", "tokenRef": "TEST_TENANT_A_TOKEN", "status": 403},
+    {"category": "ownership", "path": "/api/orders/fixture-other-user", "tokenRef": "TEST_USER_TOKEN", "status": 404},
+    {"category": "authorized", "path": "/api/account", "tokenRef": "TEST_USER_TOKEN", "status": 200}
+  ]
+}

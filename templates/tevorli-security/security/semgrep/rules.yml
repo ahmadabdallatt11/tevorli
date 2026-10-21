@@ -1,0 +1,85 @@
+rules:
+  - id: tevorli.no-eval
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: Dynamic code evaluation requires removal or a documented exact false-positive review.
+    metadata: { security-severity: "8.1", category: security, cwe: "CWE-95" }
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: new Function(...)
+      - pattern: Function(...)
+  - id: tevorli.no-raw-react-html
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: Raw HTML rendering requires a reviewed sanitization boundary; use React text by default.
+    metadata: { security-severity: "8.1", category: security, cwe: "CWE-79" }
+    pattern: <$TAG ... dangerouslySetInnerHTML={$VALUE} ... />
+  - id: tevorli.no-dom-html-sink
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: Avoid raw DOM HTML sinks and use safe DOM text APIs.
+    metadata: { security-severity: "8.1", category: security, cwe: "CWE-79" }
+    pattern-either:
+      - pattern: $EL.innerHTML = $VALUE
+      - pattern: $EL.outerHTML = $VALUE
+      - pattern: $EL.insertAdjacentHTML(...)
+      - pattern: document.write(...)
+  - id: tevorli.no-tls-bypass
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: TLS verification must remain enabled.
+    metadata: { security-severity: "8.1", category: security, cwe: "CWE-295" }
+    pattern-either:
+      - pattern: process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
+      - pattern: "{..., rejectUnauthorized: false, ...}"
+  - id: tevorli.no-public-secret-variable
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: Secret variables must not be bundled into browser code.
+    metadata: { security-severity: "8.1", category: security, cwe: "CWE-200" }
+    patterns:
+      - pattern: process.env.$KEY
+      - metavariable-regex:
+          metavariable: $KEY
+          regex: "^(NEXT_PUBLIC_|VITE_).*(SECRET|TOKEN|PASSWORD|PRIVATE_KEY).*$"
+  - id: tevorli.no-shell-exec
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: Use execFile/spawn with fixed executables and argument arrays; review shell boundaries.
+    metadata: { security-severity: "8.1", category: security, cwe: "CWE-78" }
+    pattern-either:
+      - pattern: require('child_process').exec(...)
+      - pattern: require('child_process').execSync(...)
+      - patterns:
+          - pattern-inside: |
+              import { ..., exec as $EXEC, ... } from 'node:child_process';
+              ...
+          - pattern: $EXEC(...)
+      - patterns:
+          - pattern-inside: |
+              import { ..., execSync as $EXEC, ... } from 'node:child_process';
+              ...
+          - pattern: $EXEC(...)
+  - id: tevorli.no-privileged-pr-trigger
+    languages: [generic]
+    severity: ERROR
+    message: Never use a privileged PR trigger to execute untrusted head code.
+    metadata: { security-severity: "8.1", category: security, cwe: "CWE-269" }
+    paths:
+      include: [".github/workflows/*.yml", ".github/workflows/*.yaml"]
+    pattern-regex: '(?m)^\s*pull_request_target\s*:'
+  - id: tevorli.python-no-code-or-shell-evaluation
+    languages: [python]
+    severity: ERROR
+    message: Avoid Python dynamic evaluation, shell injection and TLS bypass in security tooling or services.
+    metadata:
+      security-severity: '8.1'
+      category: security
+      cwe: CWE-78
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: exec(...)
+      - pattern: os.system(...)
+      - pattern: subprocess.run(..., shell=True, ...)
+      - pattern: subprocess.Popen(..., shell=True, ...)
+      - pattern: requests.$METHOD(..., verify=False, ...)

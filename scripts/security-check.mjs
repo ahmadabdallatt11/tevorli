@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { validateStaticHeaders } from "../security/headers.mjs";
 import { mkdir, writeFile } from "node:fs/promises";
 const origin = "http://127.0.0.1:3000";
 const results = [];
@@ -33,6 +34,7 @@ const tests = [
 for (const [url, status] of tests) {
   const response = await fetch(origin + url, { redirect: "manual" });
   const body = await response.text();
+  validateStaticHeaders(response.headers);
   assert.equal(response.status, status, url);
   for (const header of [
     "content-security-policy",

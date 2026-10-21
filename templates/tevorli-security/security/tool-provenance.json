@@ -1,0 +1,19 @@
+{
+  "verified_on": "2026-10-21",
+  "action_pin_source": "Native upstream git refs, dereferencing annotated tags to actual commit SHAs. CodeQL pinned commit/action metadata inspected through native Git.",
+  "actions": {
+    "actions/checkout@v6": "d23441a48e516b6c34aea4fa41551a30e30af803",
+    "actions/setup-node@v6": "249970729cb0ef3589644e2896645e5dc5ba9c38",
+    "actions/upload-artifact@v6": "b7c566a772e6b6bfb58ed0dc250532a479d7789f",
+    "github/codeql-action@v4": "6f2ac81f5cd81fe351a197ba0b00d91d03cd2aee"
+  },
+  "image_pins": "Docker pull digest verified against official published images; exact values in security/images/*.Dockerfile",
+  "tools": {
+    "semgrep_ce": "1.181.0",
+    "gitleaks": "8.30.1",
+    "actionlint": "1.7.12",
+    "zap_core": "2.17.0",
+    "node": "24.19.0"
+  },
+  "codeql": "Workflow configured for public visibility or licensed opt-in; local execution and repository entitlement NOT VERIFIED"
+}

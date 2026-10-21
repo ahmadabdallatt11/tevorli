@@ -1,0 +1,15 @@
+# TEVORLI engineering and security instructions
+
+Preserve existing functionality, approved branding, bilingual/RTL behavior and user changes. Work on a development branch; never merge main, deploy Production, remove Vercel Authentication, purchase services, or alter production data/settings without explicit authorization. An existing protected Preview is not a penetration-testing target by default.
+
+For every significant change, assess trust boundaries, data sensitivity, authorization, input/output handling, dependencies, secrets and deployment effects. Follow secure coding practices and applicable OWASP ASVS controls: risk-based L1 for this static brochure site; generally L2 for accounts, loyalty and SaaS, with L3 controls/threat modelling for sensitive/high-value features. Do not claim ASVS certification from a scanner run.
+
+Never hardcode credentials, log tokens, copy secrets/customer data to reports, or expose secret values through public environment variables. Use secure bindings, scoped credentials and synthetic test fixtures. External sends, tracking and new services require authorization.
+
+All stateful/API projects must validate inputs and authorize every operation server-side, including ownership, role and tenant boundaries. UI hiding, CORS and client validation are not authorization. Use parameterized database operations, safe output encoding and Secure/HttpOnly/SameSite cookies where applicable. This repository currently has no application authentication, API or database; adding them requires updating security/project.json, its threat model and positive/negative tests. Vercel Authentication is a separate hosting boundary. Never bypass it or mistake noindex for access control.
+
+Before completion run the relevant checks in security/README.md, including security regression tests and affected build/type/lint/unit/E2E checks. Inspect reports; distinguish pass, failed, unavailable, skipped and not applicable. Never weaken a check, suppress a finding, add a broad exclusion or accept a risk merely to get green CI. Exact false-positive dispositions require evidence, an owner, expiry and protected review. Confirmed High/Critical issues block release. Report unrun tools, unsupported browsers and remote checks requiring permission/access explicitly. Never claim the application is 100% secure.
+
+Use only isolated synthetic environments for DAST. The repository ZAP runner uses an internal Docker network without external egress; do not change it to a public target. Keep scanner images/actions immutable and review tool/rule updates. Never run untrusted PR code with deployment/cloud secrets or privileged pull_request_target/workflow_run automation.
+
+Cloud tasks already have isolated checkouts: do not create worktrees unless requested. Install frozen dependencies. Stop only servers you started before rebuilding; the local static server loads CSP at startup. Preserve Preview noindex and Production guards. Template changes must be synchronized with `python3 security/template.py sync` and verified with `python3 security/template.py check`.
